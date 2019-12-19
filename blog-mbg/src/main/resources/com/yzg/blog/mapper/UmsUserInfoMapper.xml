@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yzg.blog.mapper.UmsUserInfoMapper">
+  <resultMap id="BaseResultMap" type="com.yzg.blog.model.UmsUserInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+    <result column="blog_address" jdbcType="VARCHAR" property="blogAddress" />
+    <result column="collected_entries_count" jdbcType="INTEGER" property="collectedEntriesCount" />
+    <result column="collections_count" jdbcType="INTEGER" property="collectionsCount" />
+    <result column="created_date" jdbcType="TIMESTAMP" property="createdDate" />
+    <result column="updated_date" jdbcType="TIMESTAMP" property="updatedDate" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="followees_count" jdbcType="INTEGER" property="followeesCount" />
+    <result column="followers_count" jdbcType="INTEGER" property="followersCount" />
+    <result column="outline" jdbcType="VARCHAR" property="outline" />
+    <result column="last_login_date" jdbcType="TIMESTAMP" property="lastLoginDate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, username, password, avatar, blog_address, collected_entries_count, collections_count, 
+    created_date, updated_date, email, followees_count, followers_count, outline, last_login_date
+  </sql>
+  <select id="selectByExample" parameterType="com.yzg.blog.model.UmsUserInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ums_user_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ums_user_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from ums_user_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yzg.blog.model.UmsUserInfoExample">
+    delete from ums_user_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yzg.blog.model.UmsUserInfo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ums_user_info (username, password, avatar, 
+      blog_address, collected_entries_count, collections_count, 
+      created_date, updated_date, email, 
+      followees_count, followers_count, outline, 
+      last_login_date)
+    values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, 
+      #{blogAddress,jdbcType=VARCHAR}, #{collectedEntriesCount,jdbcType=INTEGER}, #{collectionsCount,jdbcType=INTEGER}, 
+      #{createdDate,jdbcType=TIMESTAMP}, #{updatedDate,jdbcType=TIMESTAMP}, #{email,jdbcType=VARCHAR}, 
+      #{followeesCount,jdbcType=INTEGER}, #{followersCount,jdbcType=INTEGER}, #{outline,jdbcType=VARCHAR}, 
+      #{lastLoginDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yzg.blog.model.UmsUserInfo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ums_user_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="username != null">
+        username,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="avatar != null">
+        avatar,
+      </if>
+      <if test="blogAddress != null">
+        blog_address,
+      </if>
+      <if test="collectedEntriesCount != null">
+        collected_entries_count,
+      </if>
+      <if test="collectionsCount != null">
+        collections_count,
+      </if>
+      <if test="createdDate != null">
+        created_date,
+      </if>
+      <if test="updatedDate != null">
+        updated_date,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="followeesCount != null">
+        followees_count,
+      </if>
+      <if test="followersCount != null">
+        followers_count,
+      </if>
+      <if test="outline != null">
+        outline,
+      </if>
+      <if test="lastLoginDate != null">
+        last_login_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null">
+        #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="blogAddress != null">
+        #{blogAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="collectedEntriesCount != null">
+        #{collectedEntriesCount,jdbcType=INTEGER},
+      </if>
+      <if test="collectionsCount != null">
+        #{collectionsCount,jdbcType=INTEGER},
+      </if>
+      <if test="createdDate != null">
+        #{createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedDate != null">
+        #{updatedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="followeesCount != null">
+        #{followeesCount,jdbcType=INTEGER},
+      </if>
+      <if test="followersCount != null">
+        #{followersCount,jdbcType=INTEGER},
+      </if>
+      <if test="outline != null">
+        #{outline,jdbcType=VARCHAR},
+      </if>
+      <if test="lastLoginDate != null">
+        #{lastLoginDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yzg.blog.model.UmsUserInfoExample" resultType="java.lang.Long">
+    select count(*) from ums_user_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ums_user_info
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.username != null">
+        username = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null">
+        password = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.avatar != null">
+        avatar = #{record.avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="record.blogAddress != null">
+        blog_address = #{record.blogAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.collectedEntriesCount != null">
+        collected_entries_count = #{record.collectedEntriesCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.collectionsCount != null">
+        collections_count = #{record.collectionsCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.createdDate != null">
+        created_date = #{record.createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatedDate != null">
+        updated_date = #{record.updatedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.email != null">
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.followeesCount != null">
+        followees_count = #{record.followeesCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.followersCount != null">
+        followers_count = #{record.followersCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.outline != null">
+        outline = #{record.outline,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lastLoginDate != null">
+        last_login_date = #{record.lastLoginDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ums_user_info
+    set id = #{record.id,jdbcType=INTEGER},
+      username = #{record.username,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=VARCHAR},
+      avatar = #{record.avatar,jdbcType=VARCHAR},
+      blog_address = #{record.blogAddress,jdbcType=VARCHAR},
+      collected_entries_count = #{record.collectedEntriesCount,jdbcType=INTEGER},
+      collections_count = #{record.collectionsCount,jdbcType=INTEGER},
+      created_date = #{record.createdDate,jdbcType=TIMESTAMP},
+      updated_date = #{record.updatedDate,jdbcType=TIMESTAMP},
+      email = #{record.email,jdbcType=VARCHAR},
+      followees_count = #{record.followeesCount,jdbcType=INTEGER},
+      followers_count = #{record.followersCount,jdbcType=INTEGER},
+      outline = #{record.outline,jdbcType=VARCHAR},
+      last_login_date = #{record.lastLoginDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yzg.blog.model.UmsUserInfo">
+    update ums_user_info
+    <set>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null">
+        avatar = #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="blogAddress != null">
+        blog_address = #{blogAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="collectedEntriesCount != null">
+        collected_entries_count = #{collectedEntriesCount,jdbcType=INTEGER},
+      </if>
+      <if test="collectionsCount != null">
+        collections_count = #{collectionsCount,jdbcType=INTEGER},
+      </if>
+      <if test="createdDate != null">
+        created_date = #{createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedDate != null">
+        updated_date = #{updatedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="followeesCount != null">
+        followees_count = #{followeesCount,jdbcType=INTEGER},
+      </if>
+      <if test="followersCount != null">
+        followers_count = #{followersCount,jdbcType=INTEGER},
+      </if>
+      <if test="outline != null">
+        outline = #{outline,jdbcType=VARCHAR},
+      </if>
+      <if test="lastLoginDate != null">
+        last_login_date = #{lastLoginDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yzg.blog.model.UmsUserInfo">
+    update ums_user_info
+    set username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      avatar = #{avatar,jdbcType=VARCHAR},
+      blog_address = #{blogAddress,jdbcType=VARCHAR},
+      collected_entries_count = #{collectedEntriesCount,jdbcType=INTEGER},
+      collections_count = #{collectionsCount,jdbcType=INTEGER},
+      created_date = #{createdDate,jdbcType=TIMESTAMP},
+      updated_date = #{updatedDate,jdbcType=TIMESTAMP},
+      email = #{email,jdbcType=VARCHAR},
+      followees_count = #{followeesCount,jdbcType=INTEGER},
+      followers_count = #{followersCount,jdbcType=INTEGER},
+      outline = #{outline,jdbcType=VARCHAR},
+      last_login_date = #{lastLoginDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

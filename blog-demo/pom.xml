@@ -11,13 +11,10 @@
 
     <artifactId>blog-demo</artifactId>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
-
+    <dependencies>
+        <dependency>
+            <groupId>com.yzg.blog</groupId>
+            <artifactId>blog-mbg</artifactId>
+        </dependency>
+    </dependencies>
 </project>
