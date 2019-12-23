@@ -505,63 +505,63 @@ public class UmsUserInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andCollectionsCountIsNull() {
-            addCriterion("collections_count is null");
+        public Criteria andCollectionCountIsNull() {
+            addCriterion("collection_count is null");
             return (Criteria) this;
         }
 
-        public Criteria andCollectionsCountIsNotNull() {
-            addCriterion("collections_count is not null");
+        public Criteria andCollectionCountIsNotNull() {
+            addCriterion("collection_count is not null");
             return (Criteria) this;
         }
 
-        public Criteria andCollectionsCountEqualTo(Integer value) {
-            addCriterion("collections_count =", value, "collectionsCount");
+        public Criteria andCollectionCountEqualTo(Integer value) {
+            addCriterion("collection_count =", value, "collectionCount");
             return (Criteria) this;
         }
 
-        public Criteria andCollectionsCountNotEqualTo(Integer value) {
-            addCriterion("collections_count <>", value, "collectionsCount");
+        public Criteria andCollectionCountNotEqualTo(Integer value) {
+            addCriterion("collection_count <>", value, "collectionCount");
             return (Criteria) this;
         }
 
-        public Criteria andCollectionsCountGreaterThan(Integer value) {
-            addCriterion("collections_count >", value, "collectionsCount");
+        public Criteria andCollectionCountGreaterThan(Integer value) {
+            addCriterion("collection_count >", value, "collectionCount");
             return (Criteria) this;
         }
 
-        public Criteria andCollectionsCountGreaterThanOrEqualTo(Integer value) {
-            addCriterion("collections_count >=", value, "collectionsCount");
+        public Criteria andCollectionCountGreaterThanOrEqualTo(Integer value) {
+            addCriterion("collection_count >=", value, "collectionCount");
             return (Criteria) this;
         }
 
-        public Criteria andCollectionsCountLessThan(Integer value) {
-            addCriterion("collections_count <", value, "collectionsCount");
+        public Criteria andCollectionCountLessThan(Integer value) {
+            addCriterion("collection_count <", value, "collectionCount");
             return (Criteria) this;
         }
 
-        public Criteria andCollectionsCountLessThanOrEqualTo(Integer value) {
-            addCriterion("collections_count <=", value, "collectionsCount");
+        public Criteria andCollectionCountLessThanOrEqualTo(Integer value) {
+            addCriterion("collection_count <=", value, "collectionCount");
             return (Criteria) this;
         }
 
-        public Criteria andCollectionsCountIn(List<Integer> values) {
-            addCriterion("collections_count in", values, "collectionsCount");
+        public Criteria andCollectionCountIn(List<Integer> values) {
+            addCriterion("collection_count in", values, "collectionCount");
             return (Criteria) this;
         }
 
-        public Criteria andCollectionsCountNotIn(List<Integer> values) {
-            addCriterion("collections_count not in", values, "collectionsCount");
+        public Criteria andCollectionCountNotIn(List<Integer> values) {
+            addCriterion("collection_count not in", values, "collectionCount");
             return (Criteria) this;
         }
 
-        public Criteria andCollectionsCountBetween(Integer value1, Integer value2) {
-            addCriterion("collections_count between", value1, value2, "collectionsCount");
+        public Criteria andCollectionCountBetween(Integer value1, Integer value2) {
+            addCriterion("collection_count between", value1, value2, "collectionCount");
             return (Criteria) this;
         }
 
-        public Criteria andCollectionsCountNotBetween(Integer value1, Integer value2) {
-            addCriterion("collections_count not between", value1, value2, "collectionsCount");
+        public Criteria andCollectionCountNotBetween(Integer value1, Integer value2) {
+            addCriterion("collection_count not between", value1, value2, "collectionCount");
             return (Criteria) this;
         }
 
@@ -755,123 +755,123 @@ public class UmsUserInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andFolloweesCountIsNull() {
-            addCriterion("followees_count is null");
+        public Criteria andFolloweeCountIsNull() {
+            addCriterion("followee_count is null");
             return (Criteria) this;
         }
 
-        public Criteria andFolloweesCountIsNotNull() {
-            addCriterion("followees_count is not null");
+        public Criteria andFolloweeCountIsNotNull() {
+            addCriterion("followee_count is not null");
             return (Criteria) this;
         }
 
-        public Criteria andFolloweesCountEqualTo(Integer value) {
-            addCriterion("followees_count =", value, "followeesCount");
+        public Criteria andFolloweeCountEqualTo(Integer value) {
+            addCriterion("followee_count =", value, "followeeCount");
             return (Criteria) this;
         }
 
-        public Criteria andFolloweesCountNotEqualTo(Integer value) {
-            addCriterion("followees_count <>", value, "followeesCount");
+        public Criteria andFolloweeCountNotEqualTo(Integer value) {
+            addCriterion("followee_count <>", value, "followeeCount");
             return (Criteria) this;
         }
 
-        public Criteria andFolloweesCountGreaterThan(Integer value) {
-            addCriterion("followees_count >", value, "followeesCount");
+        public Criteria andFolloweeCountGreaterThan(Integer value) {
+            addCriterion("followee_count >", value, "followeeCount");
             return (Criteria) this;
         }
 
-        public Criteria andFolloweesCountGreaterThanOrEqualTo(Integer value) {
-            addCriterion("followees_count >=", value, "followeesCount");
+        public Criteria andFolloweeCountGreaterThanOrEqualTo(Integer value) {
+            addCriterion("followee_count >=", value, "followeeCount");
             return (Criteria) this;
         }
 
-        public Criteria andFolloweesCountLessThan(Integer value) {
-            addCriterion("followees_count <", value, "followeesCount");
+        public Criteria andFolloweeCountLessThan(Integer value) {
+            addCriterion("followee_count <", value, "followeeCount");
             return (Criteria) this;
         }
 
-        public Criteria andFolloweesCountLessThanOrEqualTo(Integer value) {
-            addCriterion("followees_count <=", value, "followeesCount");
+        public Criteria andFolloweeCountLessThanOrEqualTo(Integer value) {
+            addCriterion("followee_count <=", value, "followeeCount");
             return (Criteria) this;
         }
 
-        public Criteria andFolloweesCountIn(List<Integer> values) {
-            addCriterion("followees_count in", values, "followeesCount");
+        public Criteria andFolloweeCountIn(List<Integer> values) {
+            addCriterion("followee_count in", values, "followeeCount");
             return (Criteria) this;
         }
 
-        public Criteria andFolloweesCountNotIn(List<Integer> values) {
-            addCriterion("followees_count not in", values, "followeesCount");
+        public Criteria andFolloweeCountNotIn(List<Integer> values) {
+            addCriterion("followee_count not in", values, "followeeCount");
             return (Criteria) this;
         }
 
-        public Criteria andFolloweesCountBetween(Integer value1, Integer value2) {
-            addCriterion("followees_count between", value1, value2, "followeesCount");
+        public Criteria andFolloweeCountBetween(Integer value1, Integer value2) {
+            addCriterion("followee_count between", value1, value2, "followeeCount");
             return (Criteria) this;
         }
 
-        public Criteria andFolloweesCountNotBetween(Integer value1, Integer value2) {
-            addCriterion("followees_count not between", value1, value2, "followeesCount");
+        public Criteria andFolloweeCountNotBetween(Integer value1, Integer value2) {
+            addCriterion("followee_count not between", value1, value2, "followeeCount");
             return (Criteria) this;
         }
 
-        public Criteria andFollowersCountIsNull() {
-            addCriterion("followers_count is null");
+        public Criteria andFollowerCountIsNull() {
+            addCriterion("follower_count is null");
             return (Criteria) this;
         }
 
-        public Criteria andFollowersCountIsNotNull() {
-            addCriterion("followers_count is not null");
+        public Criteria andFollowerCountIsNotNull() {
+            addCriterion("follower_count is not null");
             return (Criteria) this;
         }
 
-        public Criteria andFollowersCountEqualTo(Integer value) {
-            addCriterion("followers_count =", value, "followersCount");
+        public Criteria andFollowerCountEqualTo(Integer value) {
+            addCriterion("follower_count =", value, "followerCount");
             return (Criteria) this;
         }
 
-        public Criteria andFollowersCountNotEqualTo(Integer value) {
-            addCriterion("followers_count <>", value, "followersCount");
+        public Criteria andFollowerCountNotEqualTo(Integer value) {
+            addCriterion("follower_count <>", value, "followerCount");
             return (Criteria) this;
         }
 
-        public Criteria andFollowersCountGreaterThan(Integer value) {
-            addCriterion("followers_count >", value, "followersCount");
+        public Criteria andFollowerCountGreaterThan(Integer value) {
+            addCriterion("follower_count >", value, "followerCount");
             return (Criteria) this;
         }
 
-        public Criteria andFollowersCountGreaterThanOrEqualTo(Integer value) {
-            addCriterion("followers_count >=", value, "followersCount");
+        public Criteria andFollowerCountGreaterThanOrEqualTo(Integer value) {
+            addCriterion("follower_count >=", value, "followerCount");
             return (Criteria) this;
         }
 
-        public Criteria andFollowersCountLessThan(Integer value) {
-            addCriterion("followers_count <", value, "followersCount");
+        public Criteria andFollowerCountLessThan(Integer value) {
+            addCriterion("follower_count <", value, "followerCount");
             return (Criteria) this;
         }
 
-        public Criteria andFollowersCountLessThanOrEqualTo(Integer value) {
-            addCriterion("followers_count <=", value, "followersCount");
+        public Criteria andFollowerCountLessThanOrEqualTo(Integer value) {
+            addCriterion("follower_count <=", value, "followerCount");
             return (Criteria) this;
         }
 
-        public Criteria andFollowersCountIn(List<Integer> values) {
-            addCriterion("followers_count in", values, "followersCount");
+        public Criteria andFollowerCountIn(List<Integer> values) {
+            addCriterion("follower_count in", values, "followerCount");
             return (Criteria) this;
         }
 
-        public Criteria andFollowersCountNotIn(List<Integer> values) {
-            addCriterion("followers_count not in", values, "followersCount");
+        public Criteria andFollowerCountNotIn(List<Integer> values) {
+            addCriterion("follower_count not in", values, "followerCount");
             return (Criteria) this;
         }
 
-        public Criteria andFollowersCountBetween(Integer value1, Integer value2) {
-            addCriterion("followers_count between", value1, value2, "followersCount");
+        public Criteria andFollowerCountBetween(Integer value1, Integer value2) {
+            addCriterion("follower_count between", value1, value2, "followerCount");
             return (Criteria) this;
         }
 
-        public Criteria andFollowersCountNotBetween(Integer value1, Integer value2) {
-            addCriterion("followers_count not between", value1, value2, "followersCount");
+        public Criteria andFollowerCountNotBetween(Integer value1, Integer value2) {
+            addCriterion("follower_count not between", value1, value2, "followerCount");
             return (Criteria) this;
         }
 
@@ -1002,6 +1002,66 @@ public class UmsUserInfoExample {
 
         public Criteria andLastLoginDateNotBetween(Date value1, Date value2) {
             addCriterion("last_login_date not between", value1, value2, "lastLoginDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIsNull() {
+            addCriterion("status is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIsNotNull() {
+            addCriterion("status is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusEqualTo(Byte value) {
+            addCriterion("status =", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotEqualTo(Byte value) {
+            addCriterion("status <>", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusGreaterThan(Byte value) {
+            addCriterion("status >", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusGreaterThanOrEqualTo(Byte value) {
+            addCriterion("status >=", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusLessThan(Byte value) {
+            addCriterion("status <", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusLessThanOrEqualTo(Byte value) {
+            addCriterion("status <=", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIn(List<Byte> values) {
+            addCriterion("status in", values, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotIn(List<Byte> values) {
+            addCriterion("status not in", values, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusBetween(Byte value1, Byte value2) {
+            addCriterion("status between", value1, value2, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotBetween(Byte value1, Byte value2) {
+            addCriterion("status not between", value1, value2, "status");
             return (Criteria) this;
         }
     }

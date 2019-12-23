@@ -1,36 +1,50 @@
 package com.yzg.blog.model;
 
+import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.util.Date;
 
 public class UmsUserInfo implements Serializable {
     private Integer id;
 
+    @ApiModelProperty(value = "用户名")
     private String username;
 
     private String password;
 
+    @ApiModelProperty(value = "头像地址")
     private String avatar;
 
+    @ApiModelProperty(value = "个人主页")
     private String blogAddress;
 
+    @ApiModelProperty(value = "关注的收藏集数量")
     private Integer collectedEntriesCount;
 
-    private Integer collectionsCount;
+    @ApiModelProperty(value = "创建的收藏集数量")
+    private Integer collectionCount;
 
     private Date createdDate;
 
     private Date updatedDate;
 
+    @ApiModelProperty(value = "绑定邮箱")
     private String email;
 
-    private Integer followeesCount;
+    @ApiModelProperty(value = "他关注的人数")
+    private Integer followeeCount;
 
-    private Integer followersCount;
+    @ApiModelProperty(value = "关注他的人数")
+    private Integer followerCount;
 
+    @ApiModelProperty(value = "个人简介")
     private String outline;
 
+    @ApiModelProperty(value = "最后登陆时间")
     private Date lastLoginDate;
+
+    @ApiModelProperty(value = "状态（1正常， 2已销户， 3封禁）")
+    private Byte status;
 
     private static final long serialVersionUID = 1L;
 
@@ -82,12 +96,12 @@ public class UmsUserInfo implements Serializable {
         this.collectedEntriesCount = collectedEntriesCount;
     }
 
-    public Integer getCollectionsCount() {
-        return collectionsCount;
+    public Integer getCollectionCount() {
+        return collectionCount;
     }
 
-    public void setCollectionsCount(Integer collectionsCount) {
-        this.collectionsCount = collectionsCount;
+    public void setCollectionCount(Integer collectionCount) {
+        this.collectionCount = collectionCount;
     }
 
     public Date getCreatedDate() {
@@ -114,20 +128,20 @@ public class UmsUserInfo implements Serializable {
         this.email = email;
     }
 
-    public Integer getFolloweesCount() {
-        return followeesCount;
+    public Integer getFolloweeCount() {
+        return followeeCount;
     }
 
-    public void setFolloweesCount(Integer followeesCount) {
-        this.followeesCount = followeesCount;
+    public void setFolloweeCount(Integer followeeCount) {
+        this.followeeCount = followeeCount;
     }
 
-    public Integer getFollowersCount() {
-        return followersCount;
+    public Integer getFollowerCount() {
+        return followerCount;
     }
 
-    public void setFollowersCount(Integer followersCount) {
-        this.followersCount = followersCount;
+    public void setFollowerCount(Integer followerCount) {
+        this.followerCount = followerCount;
     }
 
     public String getOutline() {
@@ -146,6 +160,14 @@ public class UmsUserInfo implements Serializable {
         this.lastLoginDate = lastLoginDate;
     }
 
+    public Byte getStatus() {
+        return status;
+    }
+
+    public void setStatus(Byte status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -158,14 +180,15 @@ public class UmsUserInfo implements Serializable {
         sb.append(", avatar=").append(avatar);
         sb.append(", blogAddress=").append(blogAddress);
         sb.append(", collectedEntriesCount=").append(collectedEntriesCount);
-        sb.append(", collectionsCount=").append(collectionsCount);
+        sb.append(", collectionCount=").append(collectionCount);
         sb.append(", createdDate=").append(createdDate);
         sb.append(", updatedDate=").append(updatedDate);
         sb.append(", email=").append(email);
-        sb.append(", followeesCount=").append(followeesCount);
-        sb.append(", followersCount=").append(followersCount);
+        sb.append(", followeeCount=").append(followeeCount);
+        sb.append(", followerCount=").append(followerCount);
         sb.append(", outline=").append(outline);
         sb.append(", lastLoginDate=").append(lastLoginDate);
+        sb.append(", status=").append(status);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

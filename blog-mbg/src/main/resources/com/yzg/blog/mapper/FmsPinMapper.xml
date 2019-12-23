@@ -5,9 +5,10 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="created_date" jdbcType="TIMESTAMP" property="createdDate" />
     <result column="updated_date" jdbcType="TIMESTAMP" property="updatedDate" />
-    <result column="likesCount" jdbcType="INTEGER" property="likescount" />
-    <result column="commentsCount" jdbcType="INTEGER" property="commentscount" />
+    <result column="like_count" jdbcType="INTEGER" property="likeCount" />
+    <result column="comment_count" jdbcType="INTEGER" property="commentCount" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="status" jdbcType="TINYINT" property="status" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.yzg.blog.model.FmsPin">
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
@@ -71,7 +72,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, created_date, updated_date, likesCount, commentsCount, user_id
+    id, created_date, updated_date, like_count, comment_count, user_id, status
   </sql>
   <sql id="Blob_Column_List">
     content
@@ -128,12 +129,12 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into fms_pin (created_date, updated_date, likesCount, 
-      commentsCount, user_id, content
-      )
-    values (#{createdDate,jdbcType=TIMESTAMP}, #{updatedDate,jdbcType=TIMESTAMP}, #{likescount,jdbcType=INTEGER}, 
-      #{commentscount,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR}
-      )
+    insert into fms_pin (created_date, updated_date, like_count, 
+      comment_count, user_id, status, 
+      content)
+    values (#{createdDate,jdbcType=TIMESTAMP}, #{updatedDate,jdbcType=TIMESTAMP}, #{likeCount,jdbcType=INTEGER}, 
+      #{commentCount,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, 
+      #{content,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.yzg.blog.model.FmsPin">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -147,14 +148,17 @@
       <if test="updatedDate != null">
         updated_date,
       </if>
-      <if test="likescount != null">
-        likesCount,
+      <if test="likeCount != null">
+        like_count,
       </if>
-      <if test="commentscount != null">
-        commentsCount,
+      <if test="commentCount != null">
+        comment_count,
       </if>
       <if test="userId != null">
         user_id,
+      </if>
+      <if test="status != null">
+        status,
       </if>
       <if test="content != null">
         content,
@@ -167,14 +171,17 @@
       <if test="updatedDate != null">
         #{updatedDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="likescount != null">
-        #{likescount,jdbcType=INTEGER},
+      <if test="likeCount != null">
+        #{likeCount,jdbcType=INTEGER},
       </if>
-      <if test="commentscount != null">
-        #{commentscount,jdbcType=INTEGER},
+      <if test="commentCount != null">
+        #{commentCount,jdbcType=INTEGER},
       </if>
       <if test="userId != null">
         #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
       </if>
       <if test="content != null">
         #{content,jdbcType=LONGVARCHAR},
@@ -199,14 +206,17 @@
       <if test="record.updatedDate != null">
         updated_date = #{record.updatedDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.likescount != null">
-        likesCount = #{record.likescount,jdbcType=INTEGER},
+      <if test="record.likeCount != null">
+        like_count = #{record.likeCount,jdbcType=INTEGER},
       </if>
-      <if test="record.commentscount != null">
-        commentsCount = #{record.commentscount,jdbcType=INTEGER},
+      <if test="record.commentCount != null">
+        comment_count = #{record.commentCount,jdbcType=INTEGER},
       </if>
       <if test="record.userId != null">
         user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=TINYINT},
       </if>
       <if test="record.content != null">
         content = #{record.content,jdbcType=LONGVARCHAR},
@@ -221,9 +231,10 @@
     set id = #{record.id,jdbcType=INTEGER},
       created_date = #{record.createdDate,jdbcType=TIMESTAMP},
       updated_date = #{record.updatedDate,jdbcType=TIMESTAMP},
-      likesCount = #{record.likescount,jdbcType=INTEGER},
-      commentsCount = #{record.commentscount,jdbcType=INTEGER},
+      like_count = #{record.likeCount,jdbcType=INTEGER},
+      comment_count = #{record.commentCount,jdbcType=INTEGER},
       user_id = #{record.userId,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=TINYINT},
       content = #{record.content,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -234,9 +245,10 @@
     set id = #{record.id,jdbcType=INTEGER},
       created_date = #{record.createdDate,jdbcType=TIMESTAMP},
       updated_date = #{record.updatedDate,jdbcType=TIMESTAMP},
-      likesCount = #{record.likescount,jdbcType=INTEGER},
-      commentsCount = #{record.commentscount,jdbcType=INTEGER},
-      user_id = #{record.userId,jdbcType=INTEGER}
+      like_count = #{record.likeCount,jdbcType=INTEGER},
+      comment_count = #{record.commentCount,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=TINYINT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -250,14 +262,17 @@
       <if test="updatedDate != null">
         updated_date = #{updatedDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="likescount != null">
-        likesCount = #{likescount,jdbcType=INTEGER},
+      <if test="likeCount != null">
+        like_count = #{likeCount,jdbcType=INTEGER},
       </if>
-      <if test="commentscount != null">
-        commentsCount = #{commentscount,jdbcType=INTEGER},
+      <if test="commentCount != null">
+        comment_count = #{commentCount,jdbcType=INTEGER},
       </if>
       <if test="userId != null">
         user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
       </if>
       <if test="content != null">
         content = #{content,jdbcType=LONGVARCHAR},
@@ -269,9 +284,10 @@
     update fms_pin
     set created_date = #{createdDate,jdbcType=TIMESTAMP},
       updated_date = #{updatedDate,jdbcType=TIMESTAMP},
-      likesCount = #{likescount,jdbcType=INTEGER},
-      commentsCount = #{commentscount,jdbcType=INTEGER},
+      like_count = #{likeCount,jdbcType=INTEGER},
+      comment_count = #{commentCount,jdbcType=INTEGER},
       user_id = #{userId,jdbcType=INTEGER},
+      status = #{status,jdbcType=TINYINT},
       content = #{content,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -279,9 +295,10 @@
     update fms_pin
     set created_date = #{createdDate,jdbcType=TIMESTAMP},
       updated_date = #{updatedDate,jdbcType=TIMESTAMP},
-      likesCount = #{likescount,jdbcType=INTEGER},
-      commentsCount = #{commentscount,jdbcType=INTEGER},
-      user_id = #{userId,jdbcType=INTEGER}
+      like_count = #{likeCount,jdbcType=INTEGER},
+      comment_count = #{commentCount,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER},
+      status = #{status,jdbcType=TINYINT}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

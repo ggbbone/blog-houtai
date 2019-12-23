@@ -1,41 +1,61 @@
 package com.yzg.blog.model;
 
+import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.util.Date;
 
 public class BmsArticle implements Serializable {
     private Integer id;
 
+    @ApiModelProperty(value = "作者id")
     private Integer userId;
 
+    @ApiModelProperty(value = "概要")
     private String outline;
 
+    @ApiModelProperty(value = "所属类别id")
     private Byte categoryId;
 
+    @ApiModelProperty(value = "标题")
     private String title;
 
+    @ApiModelProperty(value = "封面图片")
     private String cover;
 
+    @ApiModelProperty(value = "创建时间")
     private Date createdDate;
 
+    @ApiModelProperty(value = "最后修改时间")
     private Date updatedDate;
 
+    @ApiModelProperty(value = "最后评论时间")
     private Date lastCommentTime;
 
-    private Integer likesCount;
+    @ApiModelProperty(value = "点赞次数")
+    private Integer likeCount;
 
-    private Integer viewsCount;
+    @ApiModelProperty(value = "阅读次数")
+    private Integer viewCount;
 
-    private Integer commentsCount;
+    @ApiModelProperty(value = "评论数量")
+    private Integer commentCount;
 
-    private Integer weightIndex;
+    @ApiModelProperty(value = "推荐指数")
+    private Integer recommendIndex;
 
+    @ApiModelProperty(value = "状态 1正常")
     private Byte state;
 
+    @ApiModelProperty(value = "是否热门文章")
     private Boolean hot;
 
+    @ApiModelProperty(value = "热门指数")
     private Integer hotIndex;
 
+    @ApiModelProperty(value = "状态（1正常， 2已删除， 3已屏蔽）")
+    private Byte status;
+
+    @ApiModelProperty(value = "正文内容")
     private String content;
 
     private static final long serialVersionUID = 1L;
@@ -112,36 +132,36 @@ public class BmsArticle implements Serializable {
         this.lastCommentTime = lastCommentTime;
     }
 
-    public Integer getLikesCount() {
-        return likesCount;
+    public Integer getLikeCount() {
+        return likeCount;
     }
 
-    public void setLikesCount(Integer likesCount) {
-        this.likesCount = likesCount;
+    public void setLikeCount(Integer likeCount) {
+        this.likeCount = likeCount;
     }
 
-    public Integer getViewsCount() {
-        return viewsCount;
+    public Integer getViewCount() {
+        return viewCount;
     }
 
-    public void setViewsCount(Integer viewsCount) {
-        this.viewsCount = viewsCount;
+    public void setViewCount(Integer viewCount) {
+        this.viewCount = viewCount;
     }
 
-    public Integer getCommentsCount() {
-        return commentsCount;
+    public Integer getCommentCount() {
+        return commentCount;
     }
 
-    public void setCommentsCount(Integer commentsCount) {
-        this.commentsCount = commentsCount;
+    public void setCommentCount(Integer commentCount) {
+        this.commentCount = commentCount;
     }
 
-    public Integer getWeightIndex() {
-        return weightIndex;
+    public Integer getRecommendIndex() {
+        return recommendIndex;
     }
 
-    public void setWeightIndex(Integer weightIndex) {
-        this.weightIndex = weightIndex;
+    public void setRecommendIndex(Integer recommendIndex) {
+        this.recommendIndex = recommendIndex;
     }
 
     public Byte getState() {
@@ -168,6 +188,14 @@ public class BmsArticle implements Serializable {
         this.hotIndex = hotIndex;
     }
 
+    public Byte getStatus() {
+        return status;
+    }
+
+    public void setStatus(Byte status) {
+        this.status = status;
+    }
+
     public String getContent() {
         return content;
     }
@@ -191,13 +219,14 @@ public class BmsArticle implements Serializable {
         sb.append(", createdDate=").append(createdDate);
         sb.append(", updatedDate=").append(updatedDate);
         sb.append(", lastCommentTime=").append(lastCommentTime);
-        sb.append(", likesCount=").append(likesCount);
-        sb.append(", viewsCount=").append(viewsCount);
-        sb.append(", commentsCount=").append(commentsCount);
-        sb.append(", weightIndex=").append(weightIndex);
+        sb.append(", likeCount=").append(likeCount);
+        sb.append(", viewCount=").append(viewCount);
+        sb.append(", commentCount=").append(commentCount);
+        sb.append(", recommendIndex=").append(recommendIndex);
         sb.append(", state=").append(state);
         sb.append(", hot=").append(hot);
         sb.append(", hotIndex=").append(hotIndex);
+        sb.append(", status=").append(status);
         sb.append(", content=").append(content);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");

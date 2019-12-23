@@ -9,9 +9,10 @@
     <result column="background" jdbcType="VARCHAR" property="background" />
     <result column="created_date" jdbcType="TIMESTAMP" property="createdDate" />
     <result column="updated_date" jdbcType="TIMESTAMP" property="updatedDate" />
-    <result column="entryCount" jdbcType="INTEGER" property="entrycount" />
-    <result column="subcribersCount" jdbcType="INTEGER" property="subcriberscount" />
-    <result column="isCategory" jdbcType="BIT" property="iscategory" />
+    <result column="entry_count" jdbcType="INTEGER" property="entryCount" />
+    <result column="follow_count" jdbcType="INTEGER" property="followCount" />
+    <result column="is_category" jdbcType="BIT" property="isCategory" />
+    <result column="status" jdbcType="TINYINT" property="status" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -72,8 +73,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, title, alias, icon, background, created_date, updated_date, entryCount, subcribersCount, 
-    isCategory
+    id, title, alias, icon, background, created_date, updated_date, entry_count, follow_count, 
+    is_category, status
   </sql>
   <select id="selectByExample" parameterType="com.yzg.blog.model.BmsCategoryExample" resultMap="BaseResultMap">
     select
@@ -111,12 +112,12 @@
     </selectKey>
     insert into bms_category (title, alias, icon, 
       background, created_date, updated_date, 
-      entryCount, subcribersCount, isCategory
-      )
+      entry_count, follow_count, is_category, 
+      status)
     values (#{title,jdbcType=VARCHAR}, #{alias,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}, 
       #{background,jdbcType=VARCHAR}, #{createdDate,jdbcType=TIMESTAMP}, #{updatedDate,jdbcType=TIMESTAMP}, 
-      #{entrycount,jdbcType=INTEGER}, #{subcriberscount,jdbcType=INTEGER}, #{iscategory,jdbcType=BIT}
-      )
+      #{entryCount,jdbcType=INTEGER}, #{followCount,jdbcType=INTEGER}, #{isCategory,jdbcType=BIT}, 
+      #{status,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.yzg.blog.model.BmsCategory">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -142,14 +143,17 @@
       <if test="updatedDate != null">
         updated_date,
       </if>
-      <if test="entrycount != null">
-        entryCount,
+      <if test="entryCount != null">
+        entry_count,
       </if>
-      <if test="subcriberscount != null">
-        subcribersCount,
+      <if test="followCount != null">
+        follow_count,
       </if>
-      <if test="iscategory != null">
-        isCategory,
+      <if test="isCategory != null">
+        is_category,
+      </if>
+      <if test="status != null">
+        status,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -171,14 +175,17 @@
       <if test="updatedDate != null">
         #{updatedDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="entrycount != null">
-        #{entrycount,jdbcType=INTEGER},
+      <if test="entryCount != null">
+        #{entryCount,jdbcType=INTEGER},
       </if>
-      <if test="subcriberscount != null">
-        #{subcriberscount,jdbcType=INTEGER},
+      <if test="followCount != null">
+        #{followCount,jdbcType=INTEGER},
       </if>
-      <if test="iscategory != null">
-        #{iscategory,jdbcType=BIT},
+      <if test="isCategory != null">
+        #{isCategory,jdbcType=BIT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
       </if>
     </trim>
   </insert>
@@ -212,14 +219,17 @@
       <if test="record.updatedDate != null">
         updated_date = #{record.updatedDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.entrycount != null">
-        entryCount = #{record.entrycount,jdbcType=INTEGER},
+      <if test="record.entryCount != null">
+        entry_count = #{record.entryCount,jdbcType=INTEGER},
       </if>
-      <if test="record.subcriberscount != null">
-        subcribersCount = #{record.subcriberscount,jdbcType=INTEGER},
+      <if test="record.followCount != null">
+        follow_count = #{record.followCount,jdbcType=INTEGER},
       </if>
-      <if test="record.iscategory != null">
-        isCategory = #{record.iscategory,jdbcType=BIT},
+      <if test="record.isCategory != null">
+        is_category = #{record.isCategory,jdbcType=BIT},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=TINYINT},
       </if>
     </set>
     <if test="_parameter != null">
@@ -235,9 +245,10 @@
       background = #{record.background,jdbcType=VARCHAR},
       created_date = #{record.createdDate,jdbcType=TIMESTAMP},
       updated_date = #{record.updatedDate,jdbcType=TIMESTAMP},
-      entryCount = #{record.entrycount,jdbcType=INTEGER},
-      subcribersCount = #{record.subcriberscount,jdbcType=INTEGER},
-      isCategory = #{record.iscategory,jdbcType=BIT}
+      entry_count = #{record.entryCount,jdbcType=INTEGER},
+      follow_count = #{record.followCount,jdbcType=INTEGER},
+      is_category = #{record.isCategory,jdbcType=BIT},
+      status = #{record.status,jdbcType=TINYINT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -263,14 +274,17 @@
       <if test="updatedDate != null">
         updated_date = #{updatedDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="entrycount != null">
-        entryCount = #{entrycount,jdbcType=INTEGER},
+      <if test="entryCount != null">
+        entry_count = #{entryCount,jdbcType=INTEGER},
       </if>
-      <if test="subcriberscount != null">
-        subcribersCount = #{subcriberscount,jdbcType=INTEGER},
+      <if test="followCount != null">
+        follow_count = #{followCount,jdbcType=INTEGER},
       </if>
-      <if test="iscategory != null">
-        isCategory = #{iscategory,jdbcType=BIT},
+      <if test="isCategory != null">
+        is_category = #{isCategory,jdbcType=BIT},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -283,9 +297,10 @@
       background = #{background,jdbcType=VARCHAR},
       created_date = #{createdDate,jdbcType=TIMESTAMP},
       updated_date = #{updatedDate,jdbcType=TIMESTAMP},
-      entryCount = #{entrycount,jdbcType=INTEGER},
-      subcribersCount = #{subcriberscount,jdbcType=INTEGER},
-      isCategory = #{iscategory,jdbcType=BIT}
+      entry_count = #{entryCount,jdbcType=INTEGER},
+      follow_count = #{followCount,jdbcType=INTEGER},
+      is_category = #{isCategory,jdbcType=BIT},
+      status = #{status,jdbcType=TINYINT}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

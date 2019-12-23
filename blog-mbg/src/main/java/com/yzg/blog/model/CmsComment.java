@@ -1,26 +1,44 @@
 package com.yzg.blog.model;
 
+import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.util.Date;
 
 public class CmsComment implements Serializable {
     private Integer id;
 
+    @ApiModelProperty(value = "内容")
     private String content;
 
-    private Integer likescount;
+    @ApiModelProperty(value = "点赞人数")
+    private Integer likesCount;
 
-    private Integer replycount;
+    @ApiModelProperty(value = "回复数量")
+    private Integer replyCount;
 
+    @ApiModelProperty(value = "发表用户")
     private Integer userId;
 
+    @ApiModelProperty(value = "接收用户")
     private Integer respUserId;
 
+    @ApiModelProperty(value = "父评论id，为0时表示父评论")
     private Integer targetId;
 
+    @ApiModelProperty(value = "创建时间")
     private Date createdDate;
 
+    @ApiModelProperty(value = "最后更新时间")
     private Date updatedDate;
+
+    @ApiModelProperty(value = "状态 （1：正常， 2已删除， 3已屏蔽）")
+    private Byte status;
+
+    @ApiModelProperty(value = "父类型对象id")
+    private Integer parentId;
+
+    @ApiModelProperty(value = "父类型 (1:文章， 2讨论 )")
+    private Byte parentType;
 
     private static final long serialVersionUID = 1L;
 
@@ -40,20 +58,20 @@ public class CmsComment implements Serializable {
         this.content = content;
     }
 
-    public Integer getLikescount() {
-        return likescount;
+    public Integer getLikesCount() {
+        return likesCount;
     }
 
-    public void setLikescount(Integer likescount) {
-        this.likescount = likescount;
+    public void setLikesCount(Integer likesCount) {
+        this.likesCount = likesCount;
     }
 
-    public Integer getReplycount() {
-        return replycount;
+    public Integer getReplyCount() {
+        return replyCount;
     }
 
-    public void setReplycount(Integer replycount) {
-        this.replycount = replycount;
+    public void setReplyCount(Integer replyCount) {
+        this.replyCount = replyCount;
     }
 
     public Integer getUserId() {
@@ -96,6 +114,30 @@ public class CmsComment implements Serializable {
         this.updatedDate = updatedDate;
     }
 
+    public Byte getStatus() {
+        return status;
+    }
+
+    public void setStatus(Byte status) {
+        this.status = status;
+    }
+
+    public Integer getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
+    }
+
+    public Byte getParentType() {
+        return parentType;
+    }
+
+    public void setParentType(Byte parentType) {
+        this.parentType = parentType;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -104,13 +146,16 @@ public class CmsComment implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
         sb.append(", content=").append(content);
-        sb.append(", likescount=").append(likescount);
-        sb.append(", replycount=").append(replycount);
+        sb.append(", likesCount=").append(likesCount);
+        sb.append(", replyCount=").append(replyCount);
         sb.append(", userId=").append(userId);
         sb.append(", respUserId=").append(respUserId);
         sb.append(", targetId=").append(targetId);
         sb.append(", createdDate=").append(createdDate);
         sb.append(", updatedDate=").append(updatedDate);
+        sb.append(", status=").append(status);
+        sb.append(", parentId=").append(parentId);
+        sb.append(", parentType=").append(parentType);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

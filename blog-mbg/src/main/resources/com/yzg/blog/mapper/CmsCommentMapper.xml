@@ -4,13 +4,16 @@
   <resultMap id="BaseResultMap" type="com.yzg.blog.model.CmsComment">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="content" jdbcType="VARCHAR" property="content" />
-    <result column="likesCount" jdbcType="INTEGER" property="likescount" />
-    <result column="replyCount" jdbcType="INTEGER" property="replycount" />
+    <result column="likes_count" jdbcType="INTEGER" property="likesCount" />
+    <result column="reply_count" jdbcType="INTEGER" property="replyCount" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="resp_user_id" jdbcType="INTEGER" property="respUserId" />
     <result column="target_id" jdbcType="INTEGER" property="targetId" />
     <result column="created_date" jdbcType="TIMESTAMP" property="createdDate" />
     <result column="updated_date" jdbcType="TIMESTAMP" property="updatedDate" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="parent_type" jdbcType="TINYINT" property="parentType" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -71,8 +74,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, content, likesCount, replyCount, user_id, resp_user_id, target_id, created_date, 
-    updated_date
+    id, content, likes_count, reply_count, user_id, resp_user_id, target_id, created_date, 
+    updated_date, status, parent_id, parent_type
   </sql>
   <select id="selectByExample" parameterType="com.yzg.blog.model.CmsCommentExample" resultMap="BaseResultMap">
     select
@@ -108,12 +111,14 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into cms_comment (content, likesCount, replyCount, 
+    insert into cms_comment (content, likes_count, reply_count, 
       user_id, resp_user_id, target_id, 
-      created_date, updated_date)
-    values (#{content,jdbcType=VARCHAR}, #{likescount,jdbcType=INTEGER}, #{replycount,jdbcType=INTEGER}, 
+      created_date, updated_date, status, 
+      parent_id, parent_type)
+    values (#{content,jdbcType=VARCHAR}, #{likesCount,jdbcType=INTEGER}, #{replyCount,jdbcType=INTEGER}, 
       #{userId,jdbcType=INTEGER}, #{respUserId,jdbcType=INTEGER}, #{targetId,jdbcType=INTEGER}, 
-      #{createdDate,jdbcType=TIMESTAMP}, #{updatedDate,jdbcType=TIMESTAMP})
+      #{createdDate,jdbcType=TIMESTAMP}, #{updatedDate,jdbcType=TIMESTAMP}, #{status,jdbcType=TINYINT}, 
+      #{parentId,jdbcType=INTEGER}, #{parentType,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.yzg.blog.model.CmsComment">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -124,11 +129,11 @@
       <if test="content != null">
         content,
       </if>
-      <if test="likescount != null">
-        likesCount,
+      <if test="likesCount != null">
+        likes_count,
       </if>
-      <if test="replycount != null">
-        replyCount,
+      <if test="replyCount != null">
+        reply_count,
       </if>
       <if test="userId != null">
         user_id,
@@ -145,16 +150,25 @@
       <if test="updatedDate != null">
         updated_date,
       </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="parentType != null">
+        parent_type,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="content != null">
         #{content,jdbcType=VARCHAR},
       </if>
-      <if test="likescount != null">
-        #{likescount,jdbcType=INTEGER},
+      <if test="likesCount != null">
+        #{likesCount,jdbcType=INTEGER},
       </if>
-      <if test="replycount != null">
-        #{replycount,jdbcType=INTEGER},
+      <if test="replyCount != null">
+        #{replyCount,jdbcType=INTEGER},
       </if>
       <if test="userId != null">
         #{userId,jdbcType=INTEGER},
@@ -170,6 +184,15 @@
       </if>
       <if test="updatedDate != null">
         #{updatedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="parentType != null">
+        #{parentType,jdbcType=TINYINT},
       </if>
     </trim>
   </insert>
@@ -188,11 +211,11 @@
       <if test="record.content != null">
         content = #{record.content,jdbcType=VARCHAR},
       </if>
-      <if test="record.likescount != null">
-        likesCount = #{record.likescount,jdbcType=INTEGER},
+      <if test="record.likesCount != null">
+        likes_count = #{record.likesCount,jdbcType=INTEGER},
       </if>
-      <if test="record.replycount != null">
-        replyCount = #{record.replycount,jdbcType=INTEGER},
+      <if test="record.replyCount != null">
+        reply_count = #{record.replyCount,jdbcType=INTEGER},
       </if>
       <if test="record.userId != null">
         user_id = #{record.userId,jdbcType=INTEGER},
@@ -209,6 +232,15 @@
       <if test="record.updatedDate != null">
         updated_date = #{record.updatedDate,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.parentId != null">
+        parent_id = #{record.parentId,jdbcType=INTEGER},
+      </if>
+      <if test="record.parentType != null">
+        parent_type = #{record.parentType,jdbcType=TINYINT},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -218,13 +250,16 @@
     update cms_comment
     set id = #{record.id,jdbcType=INTEGER},
       content = #{record.content,jdbcType=VARCHAR},
-      likesCount = #{record.likescount,jdbcType=INTEGER},
-      replyCount = #{record.replycount,jdbcType=INTEGER},
+      likes_count = #{record.likesCount,jdbcType=INTEGER},
+      reply_count = #{record.replyCount,jdbcType=INTEGER},
       user_id = #{record.userId,jdbcType=INTEGER},
       resp_user_id = #{record.respUserId,jdbcType=INTEGER},
       target_id = #{record.targetId,jdbcType=INTEGER},
       created_date = #{record.createdDate,jdbcType=TIMESTAMP},
-      updated_date = #{record.updatedDate,jdbcType=TIMESTAMP}
+      updated_date = #{record.updatedDate,jdbcType=TIMESTAMP},
+      status = #{record.status,jdbcType=TINYINT},
+      parent_id = #{record.parentId,jdbcType=INTEGER},
+      parent_type = #{record.parentType,jdbcType=TINYINT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -235,11 +270,11 @@
       <if test="content != null">
         content = #{content,jdbcType=VARCHAR},
       </if>
-      <if test="likescount != null">
-        likesCount = #{likescount,jdbcType=INTEGER},
+      <if test="likesCount != null">
+        likes_count = #{likesCount,jdbcType=INTEGER},
       </if>
-      <if test="replycount != null">
-        replyCount = #{replycount,jdbcType=INTEGER},
+      <if test="replyCount != null">
+        reply_count = #{replyCount,jdbcType=INTEGER},
       </if>
       <if test="userId != null">
         user_id = #{userId,jdbcType=INTEGER},
@@ -256,19 +291,31 @@
       <if test="updatedDate != null">
         updated_date = #{updatedDate,jdbcType=TIMESTAMP},
       </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="parentType != null">
+        parent_type = #{parentType,jdbcType=TINYINT},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.yzg.blog.model.CmsComment">
     update cms_comment
     set content = #{content,jdbcType=VARCHAR},
-      likesCount = #{likescount,jdbcType=INTEGER},
-      replyCount = #{replycount,jdbcType=INTEGER},
+      likes_count = #{likesCount,jdbcType=INTEGER},
+      reply_count = #{replyCount,jdbcType=INTEGER},
       user_id = #{userId,jdbcType=INTEGER},
       resp_user_id = #{respUserId,jdbcType=INTEGER},
       target_id = #{targetId,jdbcType=INTEGER},
       created_date = #{createdDate,jdbcType=TIMESTAMP},
-      updated_date = #{updatedDate,jdbcType=TIMESTAMP}
+      updated_date = #{updatedDate,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=TINYINT},
+      parent_id = #{parentId,jdbcType=INTEGER},
+      parent_type = #{parentType,jdbcType=TINYINT}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

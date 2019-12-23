@@ -11,13 +11,14 @@
     <result column="created_date" jdbcType="TIMESTAMP" property="createdDate" />
     <result column="updated_date" jdbcType="TIMESTAMP" property="updatedDate" />
     <result column="last_comment_time" jdbcType="TIMESTAMP" property="lastCommentTime" />
-    <result column="likes_count" jdbcType="INTEGER" property="likesCount" />
-    <result column="views_count" jdbcType="INTEGER" property="viewsCount" />
-    <result column="comments_count" jdbcType="INTEGER" property="commentsCount" />
-    <result column="weight_index" jdbcType="INTEGER" property="weightIndex" />
+    <result column="like_count" jdbcType="INTEGER" property="likeCount" />
+    <result column="view_count" jdbcType="INTEGER" property="viewCount" />
+    <result column="comment_count" jdbcType="INTEGER" property="commentCount" />
+    <result column="recommend_index" jdbcType="INTEGER" property="recommendIndex" />
     <result column="state" jdbcType="TINYINT" property="state" />
     <result column="hot" jdbcType="BIT" property="hot" />
     <result column="hot_index" jdbcType="INTEGER" property="hotIndex" />
+    <result column="status" jdbcType="TINYINT" property="status" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.yzg.blog.model.BmsArticle">
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
@@ -82,7 +83,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, user_id, outline, category_id, title, cover, created_date, updated_date, last_comment_time, 
-    likes_count, views_count, comments_count, weight_index, state, hot, hot_index
+    like_count, view_count, comment_count, recommend_index, state, hot, hot_index, status
   </sql>
   <sql id="Blob_Column_List">
     content
@@ -141,16 +142,16 @@
     </selectKey>
     insert into bms_article (user_id, outline, category_id, 
       title, cover, created_date, 
-      updated_date, last_comment_time, likes_count, 
-      views_count, comments_count, weight_index, 
-      state, hot, hot_index, content
-      )
+      updated_date, last_comment_time, like_count, 
+      view_count, comment_count, recommend_index, 
+      state, hot, hot_index, status, 
+      content)
     values (#{userId,jdbcType=INTEGER}, #{outline,jdbcType=VARCHAR}, #{categoryId,jdbcType=TINYINT}, 
       #{title,jdbcType=VARCHAR}, #{cover,jdbcType=VARCHAR}, #{createdDate,jdbcType=TIMESTAMP}, 
-      #{updatedDate,jdbcType=TIMESTAMP}, #{lastCommentTime,jdbcType=TIMESTAMP}, #{likesCount,jdbcType=INTEGER}, 
-      #{viewsCount,jdbcType=INTEGER}, #{commentsCount,jdbcType=INTEGER}, #{weightIndex,jdbcType=INTEGER}, 
-      #{state,jdbcType=TINYINT}, #{hot,jdbcType=BIT}, #{hotIndex,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR}
-      )
+      #{updatedDate,jdbcType=TIMESTAMP}, #{lastCommentTime,jdbcType=TIMESTAMP}, #{likeCount,jdbcType=INTEGER}, 
+      #{viewCount,jdbcType=INTEGER}, #{commentCount,jdbcType=INTEGER}, #{recommendIndex,jdbcType=INTEGER}, 
+      #{state,jdbcType=TINYINT}, #{hot,jdbcType=BIT}, #{hotIndex,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, 
+      #{content,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.yzg.blog.model.BmsArticle">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -182,17 +183,17 @@
       <if test="lastCommentTime != null">
         last_comment_time,
       </if>
-      <if test="likesCount != null">
-        likes_count,
+      <if test="likeCount != null">
+        like_count,
       </if>
-      <if test="viewsCount != null">
-        views_count,
+      <if test="viewCount != null">
+        view_count,
       </if>
-      <if test="commentsCount != null">
-        comments_count,
+      <if test="commentCount != null">
+        comment_count,
       </if>
-      <if test="weightIndex != null">
-        weight_index,
+      <if test="recommendIndex != null">
+        recommend_index,
       </if>
       <if test="state != null">
         state,
@@ -202,6 +203,9 @@
       </if>
       <if test="hotIndex != null">
         hot_index,
+      </if>
+      <if test="status != null">
+        status,
       </if>
       <if test="content != null">
         content,
@@ -232,17 +236,17 @@
       <if test="lastCommentTime != null">
         #{lastCommentTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="likesCount != null">
-        #{likesCount,jdbcType=INTEGER},
+      <if test="likeCount != null">
+        #{likeCount,jdbcType=INTEGER},
       </if>
-      <if test="viewsCount != null">
-        #{viewsCount,jdbcType=INTEGER},
+      <if test="viewCount != null">
+        #{viewCount,jdbcType=INTEGER},
       </if>
-      <if test="commentsCount != null">
-        #{commentsCount,jdbcType=INTEGER},
+      <if test="commentCount != null">
+        #{commentCount,jdbcType=INTEGER},
       </if>
-      <if test="weightIndex != null">
-        #{weightIndex,jdbcType=INTEGER},
+      <if test="recommendIndex != null">
+        #{recommendIndex,jdbcType=INTEGER},
       </if>
       <if test="state != null">
         #{state,jdbcType=TINYINT},
@@ -252,6 +256,9 @@
       </if>
       <if test="hotIndex != null">
         #{hotIndex,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
       </if>
       <if test="content != null">
         #{content,jdbcType=LONGVARCHAR},
@@ -294,17 +301,17 @@
       <if test="record.lastCommentTime != null">
         last_comment_time = #{record.lastCommentTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.likesCount != null">
-        likes_count = #{record.likesCount,jdbcType=INTEGER},
+      <if test="record.likeCount != null">
+        like_count = #{record.likeCount,jdbcType=INTEGER},
       </if>
-      <if test="record.viewsCount != null">
-        views_count = #{record.viewsCount,jdbcType=INTEGER},
+      <if test="record.viewCount != null">
+        view_count = #{record.viewCount,jdbcType=INTEGER},
       </if>
-      <if test="record.commentsCount != null">
-        comments_count = #{record.commentsCount,jdbcType=INTEGER},
+      <if test="record.commentCount != null">
+        comment_count = #{record.commentCount,jdbcType=INTEGER},
       </if>
-      <if test="record.weightIndex != null">
-        weight_index = #{record.weightIndex,jdbcType=INTEGER},
+      <if test="record.recommendIndex != null">
+        recommend_index = #{record.recommendIndex,jdbcType=INTEGER},
       </if>
       <if test="record.state != null">
         state = #{record.state,jdbcType=TINYINT},
@@ -314,6 +321,9 @@
       </if>
       <if test="record.hotIndex != null">
         hot_index = #{record.hotIndex,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=TINYINT},
       </if>
       <if test="record.content != null">
         content = #{record.content,jdbcType=LONGVARCHAR},
@@ -334,13 +344,14 @@
       created_date = #{record.createdDate,jdbcType=TIMESTAMP},
       updated_date = #{record.updatedDate,jdbcType=TIMESTAMP},
       last_comment_time = #{record.lastCommentTime,jdbcType=TIMESTAMP},
-      likes_count = #{record.likesCount,jdbcType=INTEGER},
-      views_count = #{record.viewsCount,jdbcType=INTEGER},
-      comments_count = #{record.commentsCount,jdbcType=INTEGER},
-      weight_index = #{record.weightIndex,jdbcType=INTEGER},
+      like_count = #{record.likeCount,jdbcType=INTEGER},
+      view_count = #{record.viewCount,jdbcType=INTEGER},
+      comment_count = #{record.commentCount,jdbcType=INTEGER},
+      recommend_index = #{record.recommendIndex,jdbcType=INTEGER},
       state = #{record.state,jdbcType=TINYINT},
       hot = #{record.hot,jdbcType=BIT},
       hot_index = #{record.hotIndex,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=TINYINT},
       content = #{record.content,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -357,13 +368,14 @@
       created_date = #{record.createdDate,jdbcType=TIMESTAMP},
       updated_date = #{record.updatedDate,jdbcType=TIMESTAMP},
       last_comment_time = #{record.lastCommentTime,jdbcType=TIMESTAMP},
-      likes_count = #{record.likesCount,jdbcType=INTEGER},
-      views_count = #{record.viewsCount,jdbcType=INTEGER},
-      comments_count = #{record.commentsCount,jdbcType=INTEGER},
-      weight_index = #{record.weightIndex,jdbcType=INTEGER},
+      like_count = #{record.likeCount,jdbcType=INTEGER},
+      view_count = #{record.viewCount,jdbcType=INTEGER},
+      comment_count = #{record.commentCount,jdbcType=INTEGER},
+      recommend_index = #{record.recommendIndex,jdbcType=INTEGER},
       state = #{record.state,jdbcType=TINYINT},
       hot = #{record.hot,jdbcType=BIT},
-      hot_index = #{record.hotIndex,jdbcType=INTEGER}
+      hot_index = #{record.hotIndex,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=TINYINT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -395,17 +407,17 @@
       <if test="lastCommentTime != null">
         last_comment_time = #{lastCommentTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="likesCount != null">
-        likes_count = #{likesCount,jdbcType=INTEGER},
+      <if test="likeCount != null">
+        like_count = #{likeCount,jdbcType=INTEGER},
       </if>
-      <if test="viewsCount != null">
-        views_count = #{viewsCount,jdbcType=INTEGER},
+      <if test="viewCount != null">
+        view_count = #{viewCount,jdbcType=INTEGER},
       </if>
-      <if test="commentsCount != null">
-        comments_count = #{commentsCount,jdbcType=INTEGER},
+      <if test="commentCount != null">
+        comment_count = #{commentCount,jdbcType=INTEGER},
       </if>
-      <if test="weightIndex != null">
-        weight_index = #{weightIndex,jdbcType=INTEGER},
+      <if test="recommendIndex != null">
+        recommend_index = #{recommendIndex,jdbcType=INTEGER},
       </if>
       <if test="state != null">
         state = #{state,jdbcType=TINYINT},
@@ -415,6 +427,9 @@
       </if>
       <if test="hotIndex != null">
         hot_index = #{hotIndex,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
       </if>
       <if test="content != null">
         content = #{content,jdbcType=LONGVARCHAR},
@@ -432,13 +447,14 @@
       created_date = #{createdDate,jdbcType=TIMESTAMP},
       updated_date = #{updatedDate,jdbcType=TIMESTAMP},
       last_comment_time = #{lastCommentTime,jdbcType=TIMESTAMP},
-      likes_count = #{likesCount,jdbcType=INTEGER},
-      views_count = #{viewsCount,jdbcType=INTEGER},
-      comments_count = #{commentsCount,jdbcType=INTEGER},
-      weight_index = #{weightIndex,jdbcType=INTEGER},
+      like_count = #{likeCount,jdbcType=INTEGER},
+      view_count = #{viewCount,jdbcType=INTEGER},
+      comment_count = #{commentCount,jdbcType=INTEGER},
+      recommend_index = #{recommendIndex,jdbcType=INTEGER},
       state = #{state,jdbcType=TINYINT},
       hot = #{hot,jdbcType=BIT},
       hot_index = #{hotIndex,jdbcType=INTEGER},
+      status = #{status,jdbcType=TINYINT},
       content = #{content,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -452,13 +468,14 @@
       created_date = #{createdDate,jdbcType=TIMESTAMP},
       updated_date = #{updatedDate,jdbcType=TIMESTAMP},
       last_comment_time = #{lastCommentTime,jdbcType=TIMESTAMP},
-      likes_count = #{likesCount,jdbcType=INTEGER},
-      views_count = #{viewsCount,jdbcType=INTEGER},
-      comments_count = #{commentsCount,jdbcType=INTEGER},
-      weight_index = #{weightIndex,jdbcType=INTEGER},
+      like_count = #{likeCount,jdbcType=INTEGER},
+      view_count = #{viewCount,jdbcType=INTEGER},
+      comment_count = #{commentCount,jdbcType=INTEGER},
+      recommend_index = #{recommendIndex,jdbcType=INTEGER},
       state = #{state,jdbcType=TINYINT},
       hot = #{hot,jdbcType=BIT},
-      hot_index = #{hotIndex,jdbcType=INTEGER}
+      hot_index = #{hotIndex,jdbcType=INTEGER},
+      status = #{status,jdbcType=TINYINT}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

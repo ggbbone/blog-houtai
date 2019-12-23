@@ -1,21 +1,31 @@
 package com.yzg.blog.model;
 
+import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.util.Date;
 
 public class FmsPin implements Serializable {
     private Integer id;
 
+    @ApiModelProperty(value = "创建时间")
     private Date createdDate;
 
+    @ApiModelProperty(value = "最后更新时间")
     private Date updatedDate;
 
-    private Integer likescount;
+    @ApiModelProperty(value = "点赞人数")
+    private Integer likeCount;
 
-    private Integer commentscount;
+    @ApiModelProperty(value = "评论人数")
+    private Integer commentCount;
 
+    @ApiModelProperty(value = "发表用户id")
     private Integer userId;
 
+    @ApiModelProperty(value = "状态（1正常， 2已删除， 3已屏蔽， 4审核中）")
+    private Byte status;
+
+    @ApiModelProperty(value = "内容")
     private String content;
 
     private static final long serialVersionUID = 1L;
@@ -44,20 +54,20 @@ public class FmsPin implements Serializable {
         this.updatedDate = updatedDate;
     }
 
-    public Integer getLikescount() {
-        return likescount;
+    public Integer getLikeCount() {
+        return likeCount;
     }
 
-    public void setLikescount(Integer likescount) {
-        this.likescount = likescount;
+    public void setLikeCount(Integer likeCount) {
+        this.likeCount = likeCount;
     }
 
-    public Integer getCommentscount() {
-        return commentscount;
+    public Integer getCommentCount() {
+        return commentCount;
     }
 
-    public void setCommentscount(Integer commentscount) {
-        this.commentscount = commentscount;
+    public void setCommentCount(Integer commentCount) {
+        this.commentCount = commentCount;
     }
 
     public Integer getUserId() {
@@ -66,6 +76,14 @@ public class FmsPin implements Serializable {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public Byte getStatus() {
+        return status;
+    }
+
+    public void setStatus(Byte status) {
+        this.status = status;
     }
 
     public String getContent() {
@@ -85,9 +103,10 @@ public class FmsPin implements Serializable {
         sb.append(", id=").append(id);
         sb.append(", createdDate=").append(createdDate);
         sb.append(", updatedDate=").append(updatedDate);
-        sb.append(", likescount=").append(likescount);
-        sb.append(", commentscount=").append(commentscount);
+        sb.append(", likeCount=").append(likeCount);
+        sb.append(", commentCount=").append(commentCount);
         sb.append(", userId=").append(userId);
+        sb.append(", status=").append(status);
         sb.append(", content=").append(content);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");

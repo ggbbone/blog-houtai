@@ -1,28 +1,39 @@
 package com.yzg.blog.model;
 
+import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.util.Date;
 
 public class BmsCategory implements Serializable {
     private Integer id;
 
+    @ApiModelProperty(value = "名称")
     private String title;
 
+    @ApiModelProperty(value = "拼音或英文")
     private String alias;
 
+    @ApiModelProperty(value = "图标图片地址")
     private String icon;
 
+    @ApiModelProperty(value = "背景图片地址")
     private String background;
 
     private Date createdDate;
 
     private Date updatedDate;
 
-    private Integer entrycount;
+    @ApiModelProperty(value = "该分类下的文章数量")
+    private Integer entryCount;
 
-    private Integer subcriberscount;
+    @ApiModelProperty(value = "关注人数")
+    private Integer followCount;
 
-    private Boolean iscategory;
+    @ApiModelProperty(value = "是否是分类（1是， 0否）")
+    private Boolean isCategory;
+
+    @ApiModelProperty(value = "状态（1正常， 2已删除）")
+    private Byte status;
 
     private static final long serialVersionUID = 1L;
 
@@ -82,28 +93,36 @@ public class BmsCategory implements Serializable {
         this.updatedDate = updatedDate;
     }
 
-    public Integer getEntrycount() {
-        return entrycount;
+    public Integer getEntryCount() {
+        return entryCount;
     }
 
-    public void setEntrycount(Integer entrycount) {
-        this.entrycount = entrycount;
+    public void setEntryCount(Integer entryCount) {
+        this.entryCount = entryCount;
     }
 
-    public Integer getSubcriberscount() {
-        return subcriberscount;
+    public Integer getFollowCount() {
+        return followCount;
     }
 
-    public void setSubcriberscount(Integer subcriberscount) {
-        this.subcriberscount = subcriberscount;
+    public void setFollowCount(Integer followCount) {
+        this.followCount = followCount;
     }
 
-    public Boolean getIscategory() {
-        return iscategory;
+    public Boolean getIsCategory() {
+        return isCategory;
     }
 
-    public void setIscategory(Boolean iscategory) {
-        this.iscategory = iscategory;
+    public void setIsCategory(Boolean isCategory) {
+        this.isCategory = isCategory;
+    }
+
+    public Byte getStatus() {
+        return status;
+    }
+
+    public void setStatus(Byte status) {
+        this.status = status;
     }
 
     @Override
@@ -119,9 +138,10 @@ public class BmsCategory implements Serializable {
         sb.append(", background=").append(background);
         sb.append(", createdDate=").append(createdDate);
         sb.append(", updatedDate=").append(updatedDate);
-        sb.append(", entrycount=").append(entrycount);
-        sb.append(", subcriberscount=").append(subcriberscount);
-        sb.append(", iscategory=").append(iscategory);
+        sb.append(", entryCount=").append(entryCount);
+        sb.append(", followCount=").append(followCount);
+        sb.append(", isCategory=").append(isCategory);
+        sb.append(", status=").append(status);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
