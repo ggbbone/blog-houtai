@@ -10,10 +10,30 @@ import java.util.List;
  * Created by macro on 2019/4/19.
  */
 public class CommonPage<T> {
+    /**
+     * 当前页码
+     */
     private Integer pageNum;
+    /**
+     * 每页大小
+     */
     private Integer pageSize;
+
+    /**
+     * 是否有下一页
+     */
+    private Boolean hasNext;
+    /**
+     * 总页数
+     */
     private Integer totalPage;
+    /**
+     * 总条数
+     */
     private Long total;
+    /**
+     * 数据集合
+     */
     private List<T> list;
 
     /**
@@ -25,6 +45,7 @@ public class CommonPage<T> {
         result.setTotalPage(pageInfo.getPages());
         result.setPageNum(pageInfo.getPageNum());
         result.setPageSize(pageInfo.getPageSize());
+        result.setHasNext(pageInfo.isHasNextPage());
         result.setTotal(pageInfo.getTotal());
         result.setList(pageInfo.getList());
         return result;
@@ -67,6 +88,14 @@ public class CommonPage<T> {
         this.totalPage = totalPage;
     }
 
+    public Long getTotal() {
+        return total;
+    }
+
+    public void setTotal(Long total) {
+        this.total = total;
+    }
+
     public List<T> getList() {
         return list;
     }
@@ -75,11 +104,11 @@ public class CommonPage<T> {
         this.list = list;
     }
 
-    public Long getTotal() {
-        return total;
+    public Boolean getHasNext() {
+        return hasNext;
     }
 
-    public void setTotal(Long total) {
-        this.total = total;
+    public void setHasNext(Boolean hasNext) {
+        this.hasNext = hasNext;
     }
 }
