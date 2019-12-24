@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.yzg.blog.mapper.BmsArticleMapper;
 import com.yzg.blog.model.BmsArticle;
 import com.yzg.blog.model.BmsArticleExample;
+import com.yzg.blog.portal.dto.BmsArticleListParams;
 import com.yzg.blog.portal.dto.BmsArticleUpdateParams;
 import com.yzg.blog.portal.service.BmsArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +21,26 @@ public class BmsArticleServiceImpl implements BmsArticleService {
     BmsArticleMapper articleMapper;
 
     @Override
-    public List<BmsArticle> list(int pageNum, int pageSize) {
+    public List<BmsArticle> list(int pageNum, int pageSize, BmsArticleListParams params) {
         if (pageSize > 20) {//一次最多查询20条数据
             pageSize = 20;
         }
+        BmsArticleExample example = new BmsArticleExample();
+        BmsArticleExample.Criteria criteria = example.createCriteria();
+        //设置排序方式
+        example.setOrderByClause(params.getOrderBy());
+        //设置额外查询条件
+        if (params.getUserId() != null) {
+            criteria.andUserIdEqualTo(params.getUserId());
+        }
+        if (params.getCategoryId() != null) {
+            criteria.andCategoryIdEqualTo(params.getCategoryId());
+        }
+        if (params.getHot()) {
+            criteria.andHotEqualTo(true);
+        }
         PageHelper.startPage(pageNum, pageSize);
-        return articleMapper.selectByExample(new BmsArticleExample());
+        return articleMapper.selectByExample(example);
     }
 
     @Override
@@ -35,11 +50,17 @@ public class BmsArticleServiceImpl implements BmsArticleService {
 
     @Override
     public void delete(int id) {
-
+        BmsArticleExample example = new BmsArticleExample();
+        example.createCriteria()
+                .andIdEqualTo(id)
+                .andUserIdEqualTo(1);//当前登录用户id
+        BmsArticle article = new BmsArticle();
+        article.setStatus((byte) 2);//修改文章状态为2（1正常， 2已删除， 3已屏蔽）"
+        articleMapper.updateByExampleSelective(article, example);
     }
 
     @Override
     public void update(BmsArticleUpdateParams params) {
-        System.out.println("update" + params);
+
     }
 }

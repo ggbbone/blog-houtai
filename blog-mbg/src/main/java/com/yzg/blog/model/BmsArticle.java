@@ -14,7 +14,7 @@ public class BmsArticle implements Serializable {
     private String outline;
 
     @ApiModelProperty(value = "所属类别id")
-    private Byte categoryId;
+    private Integer categoryId;
 
     @ApiModelProperty(value = "标题")
     private String title;
@@ -42,9 +42,6 @@ public class BmsArticle implements Serializable {
 
     @ApiModelProperty(value = "推荐指数")
     private Integer recommendIndex;
-
-    @ApiModelProperty(value = "状态 1正常")
-    private Byte state;
 
     @ApiModelProperty(value = "是否热门文章")
     private Boolean hot;
@@ -84,11 +81,11 @@ public class BmsArticle implements Serializable {
         this.outline = outline;
     }
 
-    public Byte getCategoryId() {
+    public Integer getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(Byte categoryId) {
+    public void setCategoryId(Integer categoryId) {
         this.categoryId = categoryId;
     }
 
@@ -164,14 +161,6 @@ public class BmsArticle implements Serializable {
         this.recommendIndex = recommendIndex;
     }
 
-    public Byte getState() {
-        return state;
-    }
-
-    public void setState(Byte state) {
-        this.state = state;
-    }
-
     public Boolean getHot() {
         return hot;
     }
@@ -223,7 +212,6 @@ public class BmsArticle implements Serializable {
         sb.append(", viewCount=").append(viewCount);
         sb.append(", commentCount=").append(commentCount);
         sb.append(", recommendIndex=").append(recommendIndex);
-        sb.append(", state=").append(state);
         sb.append(", hot=").append(hot);
         sb.append(", hotIndex=").append(hotIndex);
         sb.append(", status=").append(status);

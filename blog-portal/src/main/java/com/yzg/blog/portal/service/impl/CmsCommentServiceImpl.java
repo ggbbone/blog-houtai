@@ -4,7 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.yzg.blog.mapper.CmsCommentMapper;
 import com.yzg.blog.model.CmsComment;
 import com.yzg.blog.model.CmsCommentExample;
-import com.yzg.blog.portal.dto.CmsCommentAddParams;
+import com.yzg.blog.portal.dto.CmsCommentCreateParams;
 import com.yzg.blog.portal.dto.CmsCommentListParams;
 import com.yzg.blog.portal.service.CmsCommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,16 +22,16 @@ public class CmsCommentServiceImpl implements CmsCommentService {
     CmsCommentMapper commentMapper;
 
     @Override
-    public int add(CmsCommentAddParams params) {
+    public int add(CmsCommentCreateParams params) {
         CmsComment comment = new CmsComment();
         comment.setContent(params.getContent());
         comment.setTargetId(params.getTargetId());
         comment.setRespUserId(params.getRespUserId());
         comment.setParentType(params.getType());
         comment.setParentId(params.getParentId());
-        comment.setUserId(110);
         comment.setCreatedDate(new Date());
         comment.setUpdatedDate(new Date());
+        comment.setUserId(1);//当前登录用户id
         return commentMapper.insertSelective(comment);
     }
 
@@ -42,38 +42,32 @@ public class CmsCommentServiceImpl implements CmsCommentService {
         if (pageSize > 20) {//最多查询20条数据
             pageSize = 20;
         }
-        if (params.getParentId() != null) {
-            criteria.andParentIdEqualTo(params.getParentId());
-        }
-        if (params.getParentType() != null) {
-            criteria.andParentTypeEqualTo(params.getParentType());
-        }
-        if (params.getOrderBy() != null) {
-            example.setOrderByClause(params.getOrderBy());
-        }
-        criteria.andTargetIdEqualTo(params.getTargetId());
-        criteria.andStatusEqualTo((byte) 1);//查询状态为1（正常）的评论/回复
+        criteria.andParentIdEqualTo(params.getParentId())
+                .andParentTypeEqualTo(params.getParentType())
+                .andTargetIdEqualTo(params.getTargetId())
+                .andStatusEqualTo((byte) 1);//查询状态为1（正常）的评论/回复
+        example.setOrderByClause(params.getOrderBy());
         PageHelper.startPage(pageNum, pageSize);
         return commentMapper.selectByExample(example);
     }
 
     @Override
     public int update(Integer id, String content) {
-        //验证权限
-
         CmsComment comment = new CmsComment();
         comment.setContent(content);
-        comment.setId(id);
-        return commentMapper.updateByPrimaryKeySelective(comment);
+        CmsCommentExample example = new CmsCommentExample();
+        example.createCriteria().andIdEqualTo(id).andUserIdEqualTo(1);//当前登录用户id
+        return commentMapper.updateByExampleSelective(comment, example);
     }
 
     @Override
     public int delete(Integer id) {
-        //验证权限
-
         CmsComment comment = new CmsComment();
-        comment.setStatus((byte) 2);//设置status为 2：已删除
-        comment.setId(id);
-        return commentMapper.updateByPrimaryKeySelective(comment);
+        comment.setStatus((byte) 2);//设置status为 (2：已删除)
+        CmsCommentExample example = new CmsCommentExample();
+        example.createCriteria()
+                .andIdEqualTo(id)
+                .andUserIdEqualTo(1);//这当前登录用户id
+        return commentMapper.updateByExampleSelective(comment, example);
     }
 }

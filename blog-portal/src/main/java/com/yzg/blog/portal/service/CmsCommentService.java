@@ -1,7 +1,7 @@
 package com.yzg.blog.portal.service;
 
 import com.yzg.blog.model.CmsComment;
-import com.yzg.blog.portal.dto.CmsCommentAddParams;
+import com.yzg.blog.portal.dto.CmsCommentCreateParams;
 import com.yzg.blog.portal.dto.CmsCommentListParams;
 
 import java.util.List;
@@ -16,29 +16,29 @@ public interface CmsCommentService {
      * 添加评论
      * @param params
      */
-    int add(CmsCommentAddParams params);
+    int add(CmsCommentCreateParams params);
 
     /**
      * 分页查询评论
      * @param pageNum 页码
      * @param pageSize 页大小
      * @param comment 其他条件
-     * @return
+     * @return 查询结果集
      */
     List<CmsComment> list(Integer pageNum, Integer pageSize, CmsCommentListParams comment);
 
     /**
      * 更新评论内容
-     * @param id
-     * @param content
-     * @return
+     * @param id 评论id
+     * @param content 内容
+     * @return 更新成功的数量
      */
     int update(Integer id, String content);
 
     /**
      * 删除评论
-     * @param id
-     * @return
+     * @param id 评论id
+     * @return 删除成功的数量
      */
     int delete(Integer id);
 }

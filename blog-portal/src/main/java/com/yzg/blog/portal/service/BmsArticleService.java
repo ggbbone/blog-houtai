@@ -1,6 +1,7 @@
 package com.yzg.blog.portal.service;
 
 import com.yzg.blog.model.BmsArticle;
+import com.yzg.blog.portal.dto.BmsArticleListParams;
 import com.yzg.blog.portal.dto.BmsArticleUpdateParams;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public interface BmsArticleService {
      * @param pageSize 每页条数
      * @return List<BmsArticle>
      */
-    List<BmsArticle> list(int pageNum, int pageSize);
+    List<BmsArticle> list(int pageNum, int pageSize, BmsArticleListParams params);
 
     /**
      * 查询单个文章详细信息

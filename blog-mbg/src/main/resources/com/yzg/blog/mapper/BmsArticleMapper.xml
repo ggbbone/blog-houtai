@@ -5,7 +5,7 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="outline" jdbcType="VARCHAR" property="outline" />
-    <result column="category_id" jdbcType="TINYINT" property="categoryId" />
+    <result column="category_id" jdbcType="INTEGER" property="categoryId" />
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="cover" jdbcType="VARCHAR" property="cover" />
     <result column="created_date" jdbcType="TIMESTAMP" property="createdDate" />
@@ -15,7 +15,6 @@
     <result column="view_count" jdbcType="INTEGER" property="viewCount" />
     <result column="comment_count" jdbcType="INTEGER" property="commentCount" />
     <result column="recommend_index" jdbcType="INTEGER" property="recommendIndex" />
-    <result column="state" jdbcType="TINYINT" property="state" />
     <result column="hot" jdbcType="BIT" property="hot" />
     <result column="hot_index" jdbcType="INTEGER" property="hotIndex" />
     <result column="status" jdbcType="TINYINT" property="status" />
@@ -83,7 +82,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, user_id, outline, category_id, title, cover, created_date, updated_date, last_comment_time, 
-    like_count, view_count, comment_count, recommend_index, state, hot, hot_index, status
+    like_count, view_count, comment_count, recommend_index, hot, hot_index, status
   </sql>
   <sql id="Blob_Column_List">
     content
@@ -144,13 +143,13 @@
       title, cover, created_date, 
       updated_date, last_comment_time, like_count, 
       view_count, comment_count, recommend_index, 
-      state, hot, hot_index, status, 
+      hot, hot_index, status, 
       content)
-    values (#{userId,jdbcType=INTEGER}, #{outline,jdbcType=VARCHAR}, #{categoryId,jdbcType=TINYINT}, 
+    values (#{userId,jdbcType=INTEGER}, #{outline,jdbcType=VARCHAR}, #{categoryId,jdbcType=INTEGER}, 
       #{title,jdbcType=VARCHAR}, #{cover,jdbcType=VARCHAR}, #{createdDate,jdbcType=TIMESTAMP}, 
       #{updatedDate,jdbcType=TIMESTAMP}, #{lastCommentTime,jdbcType=TIMESTAMP}, #{likeCount,jdbcType=INTEGER}, 
       #{viewCount,jdbcType=INTEGER}, #{commentCount,jdbcType=INTEGER}, #{recommendIndex,jdbcType=INTEGER}, 
-      #{state,jdbcType=TINYINT}, #{hot,jdbcType=BIT}, #{hotIndex,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, 
+      #{hot,jdbcType=BIT}, #{hotIndex,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, 
       #{content,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.yzg.blog.model.BmsArticle">
@@ -195,9 +194,6 @@
       <if test="recommendIndex != null">
         recommend_index,
       </if>
-      <if test="state != null">
-        state,
-      </if>
       <if test="hot != null">
         hot,
       </if>
@@ -219,7 +215,7 @@
         #{outline,jdbcType=VARCHAR},
       </if>
       <if test="categoryId != null">
-        #{categoryId,jdbcType=TINYINT},
+        #{categoryId,jdbcType=INTEGER},
       </if>
       <if test="title != null">
         #{title,jdbcType=VARCHAR},
@@ -247,9 +243,6 @@
       </if>
       <if test="recommendIndex != null">
         #{recommendIndex,jdbcType=INTEGER},
-      </if>
-      <if test="state != null">
-        #{state,jdbcType=TINYINT},
       </if>
       <if test="hot != null">
         #{hot,jdbcType=BIT},
@@ -284,7 +277,7 @@
         outline = #{record.outline,jdbcType=VARCHAR},
       </if>
       <if test="record.categoryId != null">
-        category_id = #{record.categoryId,jdbcType=TINYINT},
+        category_id = #{record.categoryId,jdbcType=INTEGER},
       </if>
       <if test="record.title != null">
         title = #{record.title,jdbcType=VARCHAR},
@@ -313,9 +306,6 @@
       <if test="record.recommendIndex != null">
         recommend_index = #{record.recommendIndex,jdbcType=INTEGER},
       </if>
-      <if test="record.state != null">
-        state = #{record.state,jdbcType=TINYINT},
-      </if>
       <if test="record.hot != null">
         hot = #{record.hot,jdbcType=BIT},
       </if>
@@ -338,7 +328,7 @@
     set id = #{record.id,jdbcType=INTEGER},
       user_id = #{record.userId,jdbcType=INTEGER},
       outline = #{record.outline,jdbcType=VARCHAR},
-      category_id = #{record.categoryId,jdbcType=TINYINT},
+      category_id = #{record.categoryId,jdbcType=INTEGER},
       title = #{record.title,jdbcType=VARCHAR},
       cover = #{record.cover,jdbcType=VARCHAR},
       created_date = #{record.createdDate,jdbcType=TIMESTAMP},
@@ -348,7 +338,6 @@
       view_count = #{record.viewCount,jdbcType=INTEGER},
       comment_count = #{record.commentCount,jdbcType=INTEGER},
       recommend_index = #{record.recommendIndex,jdbcType=INTEGER},
-      state = #{record.state,jdbcType=TINYINT},
       hot = #{record.hot,jdbcType=BIT},
       hot_index = #{record.hotIndex,jdbcType=INTEGER},
       status = #{record.status,jdbcType=TINYINT},
@@ -362,7 +351,7 @@
     set id = #{record.id,jdbcType=INTEGER},
       user_id = #{record.userId,jdbcType=INTEGER},
       outline = #{record.outline,jdbcType=VARCHAR},
-      category_id = #{record.categoryId,jdbcType=TINYINT},
+      category_id = #{record.categoryId,jdbcType=INTEGER},
       title = #{record.title,jdbcType=VARCHAR},
       cover = #{record.cover,jdbcType=VARCHAR},
       created_date = #{record.createdDate,jdbcType=TIMESTAMP},
@@ -372,7 +361,6 @@
       view_count = #{record.viewCount,jdbcType=INTEGER},
       comment_count = #{record.commentCount,jdbcType=INTEGER},
       recommend_index = #{record.recommendIndex,jdbcType=INTEGER},
-      state = #{record.state,jdbcType=TINYINT},
       hot = #{record.hot,jdbcType=BIT},
       hot_index = #{record.hotIndex,jdbcType=INTEGER},
       status = #{record.status,jdbcType=TINYINT}
@@ -390,7 +378,7 @@
         outline = #{outline,jdbcType=VARCHAR},
       </if>
       <if test="categoryId != null">
-        category_id = #{categoryId,jdbcType=TINYINT},
+        category_id = #{categoryId,jdbcType=INTEGER},
       </if>
       <if test="title != null">
         title = #{title,jdbcType=VARCHAR},
@@ -419,9 +407,6 @@
       <if test="recommendIndex != null">
         recommend_index = #{recommendIndex,jdbcType=INTEGER},
       </if>
-      <if test="state != null">
-        state = #{state,jdbcType=TINYINT},
-      </if>
       <if test="hot != null">
         hot = #{hot,jdbcType=BIT},
       </if>
@@ -441,7 +426,7 @@
     update bms_article
     set user_id = #{userId,jdbcType=INTEGER},
       outline = #{outline,jdbcType=VARCHAR},
-      category_id = #{categoryId,jdbcType=TINYINT},
+      category_id = #{categoryId,jdbcType=INTEGER},
       title = #{title,jdbcType=VARCHAR},
       cover = #{cover,jdbcType=VARCHAR},
       created_date = #{createdDate,jdbcType=TIMESTAMP},
@@ -451,7 +436,6 @@
       view_count = #{viewCount,jdbcType=INTEGER},
       comment_count = #{commentCount,jdbcType=INTEGER},
       recommend_index = #{recommendIndex,jdbcType=INTEGER},
-      state = #{state,jdbcType=TINYINT},
       hot = #{hot,jdbcType=BIT},
       hot_index = #{hotIndex,jdbcType=INTEGER},
       status = #{status,jdbcType=TINYINT},
@@ -462,7 +446,7 @@
     update bms_article
     set user_id = #{userId,jdbcType=INTEGER},
       outline = #{outline,jdbcType=VARCHAR},
-      category_id = #{categoryId,jdbcType=TINYINT},
+      category_id = #{categoryId,jdbcType=INTEGER},
       title = #{title,jdbcType=VARCHAR},
       cover = #{cover,jdbcType=VARCHAR},
       created_date = #{createdDate,jdbcType=TIMESTAMP},
@@ -472,7 +456,6 @@
       view_count = #{viewCount,jdbcType=INTEGER},
       comment_count = #{commentCount,jdbcType=INTEGER},
       recommend_index = #{recommendIndex,jdbcType=INTEGER},
-      state = #{state,jdbcType=TINYINT},
       hot = #{hot,jdbcType=BIT},
       hot_index = #{hotIndex,jdbcType=INTEGER},
       status = #{status,jdbcType=TINYINT}

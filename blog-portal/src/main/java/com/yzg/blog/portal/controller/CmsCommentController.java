@@ -3,7 +3,7 @@ package com.yzg.blog.portal.controller;
 import com.yzg.blog.common.api.CommonPage;
 import com.yzg.blog.common.api.CommonResult;
 import com.yzg.blog.model.CmsComment;
-import com.yzg.blog.portal.dto.CmsCommentAddParams;
+import com.yzg.blog.portal.dto.CmsCommentCreateParams;
 import com.yzg.blog.portal.dto.CmsCommentListParams;
 import com.yzg.blog.portal.service.CmsCommentService;
 import io.swagger.annotations.Api;
@@ -24,11 +24,18 @@ import java.util.List;
 @Validated
 @RestController
 @RequestMapping(value = "/comment")
-@Api(tags = "CmsCommentController", description = "评论模块评论管理")
+@Api(tags = "评论模块评论管理")
 public class CmsCommentController {
     @Autowired
     private CmsCommentService commentService;
 
+    /**
+     * 分页查询评论/回复
+     * @param pageNum 页码
+     * @param pageSize 每页大小
+     * @param params 查询参数
+     * @return
+     */
     @ApiOperation("分页查询评论/回复")
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public CommonResult<CommonPage> list(@RequestParam(defaultValue = "1") Integer pageNum,
@@ -45,7 +52,7 @@ public class CmsCommentController {
      */
     @ApiOperation("添加评论/回复")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public CommonResult add(@Valid @RequestBody CmsCommentAddParams params) {
+    public CommonResult add(@Valid @RequestBody CmsCommentCreateParams params) {
         int result = commentService.add(params);
         return CommonResult.success(result);
     }

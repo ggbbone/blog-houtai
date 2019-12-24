@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
  *
  * 评论模块发表评论参数
  */
-public class CmsCommentAddParams {
+public class CmsCommentCreateParams {
     @ApiModelProperty("评论内容")
     @NotEmpty(message = "评论的内容不能为空")
     @Length(min = 6, message = "评论的内容过短")
