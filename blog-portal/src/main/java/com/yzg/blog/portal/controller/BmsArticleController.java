@@ -3,6 +3,7 @@ package com.yzg.blog.portal.controller;
 import com.yzg.blog.common.api.CommonPage;
 import com.yzg.blog.common.api.CommonResult;
 import com.yzg.blog.model.BmsArticle;
+import com.yzg.blog.portal.annotation.LoginToken;
 import com.yzg.blog.portal.dto.BmsArticleListParams;
 import com.yzg.blog.portal.dto.BmsArticleUpdateParams;
 import com.yzg.blog.portal.service.BmsArticleService;
@@ -45,6 +46,7 @@ public class BmsArticleController {
 
     }
 
+    @LoginToken
     @ApiOperation("修改文章信息")
     @RequestMapping(value = "/update",method = RequestMethod.POST)
     public CommonResult update(@Valid @RequestBody BmsArticleUpdateParams params) {
@@ -52,6 +54,7 @@ public class BmsArticleController {
         return CommonResult.success(null);
     }
 
+    @LoginToken
     @ApiOperation("删除文章")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
     public CommonResult delete(@PathVariable int id) {

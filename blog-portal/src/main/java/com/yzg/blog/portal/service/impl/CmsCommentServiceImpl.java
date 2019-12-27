@@ -56,7 +56,9 @@ public class CmsCommentServiceImpl implements CmsCommentService {
         CmsComment comment = new CmsComment();
         comment.setContent(content);
         CmsCommentExample example = new CmsCommentExample();
-        example.createCriteria().andIdEqualTo(id).andUserIdEqualTo(1);//当前登录用户id
+        example.createCriteria()
+                .andIdEqualTo(id)
+                .andUserIdEqualTo(1);//当前登录用户id
         return commentMapper.updateByExampleSelective(comment, example);
     }
 
@@ -67,7 +69,7 @@ public class CmsCommentServiceImpl implements CmsCommentService {
         CmsCommentExample example = new CmsCommentExample();
         example.createCriteria()
                 .andIdEqualTo(id)
-                .andUserIdEqualTo(1);//这当前登录用户id
+                .andUserIdEqualTo(1);//当前登录用户id
         return commentMapper.updateByExampleSelective(comment, example);
     }
 }
