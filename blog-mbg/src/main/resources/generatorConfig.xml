@@ -38,6 +38,7 @@
                              targetProject="blog-mbg\src\main\java"/>
         <!--生成全部表tableName设为%-->
         <table tableName="%">
+<!--            insert对象返回对象主键-->
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
         </table>
     </context>

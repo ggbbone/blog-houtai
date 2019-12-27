@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yzg.blog.mapper.UmsUserInfoMapper">
-  <resultMap id="BaseResultMap" type="com.yzg.blog.model.UmsUserInfo">
+<mapper namespace="com.yzg.blog.mapper.UmsActiveityFeedMapper">
+  <resultMap id="BaseResultMap" type="com.yzg.blog.model.UmsActiveityFeed">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="username" jdbcType="VARCHAR" property="username" />
-    <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="email" jdbcType="VARCHAR" property="email" />
-    <result column="status" jdbcType="TINYINT" property="status" />
-    <result column="salt" jdbcType="CHAR" property="salt" />
+    <result column="actor_id" jdbcType="INTEGER" property="actorId" />
+    <result column="action" jdbcType="TINYINT" property="action" />
+    <result column="target_id" jdbcType="INTEGER" property="targetId" />
     <result column="created_date" jdbcType="TIMESTAMP" property="createdDate" />
+    <result column="status" jdbcType="BIT" property="status" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -69,15 +68,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, username, password, email, status, salt, created_date
+    id, actor_id, action, target_id, created_date, status
   </sql>
-  <select id="selectByExample" parameterType="com.yzg.blog.model.UmsUserInfoExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.yzg.blog.model.UmsActiveityFeedExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from ums_user_info
+    from ums_activeity_feed
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -88,105 +87,94 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from ums_user_info
+    from ums_activeity_feed
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from ums_user_info
+    delete from ums_activeity_feed
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.yzg.blog.model.UmsUserInfoExample">
-    delete from ums_user_info
+  <delete id="deleteByExample" parameterType="com.yzg.blog.model.UmsActiveityFeedExample">
+    delete from ums_activeity_feed
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.yzg.blog.model.UmsUserInfo">
+  <insert id="insert" parameterType="com.yzg.blog.model.UmsActiveityFeed">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into ums_user_info (username, password, email, 
-      status, salt, created_date
-      )
-    values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
-      #{status,jdbcType=TINYINT}, #{salt,jdbcType=CHAR}, #{createdDate,jdbcType=TIMESTAMP}
-      )
+    insert into ums_activeity_feed (actor_id, action, target_id, 
+      created_date, status)
+    values (#{actorId,jdbcType=INTEGER}, #{action,jdbcType=TINYINT}, #{targetId,jdbcType=INTEGER}, 
+      #{createdDate,jdbcType=TIMESTAMP}, #{status,jdbcType=BIT})
   </insert>
-  <insert id="insertSelective" parameterType="com.yzg.blog.model.UmsUserInfo">
+  <insert id="insertSelective" parameterType="com.yzg.blog.model.UmsActiveityFeed">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into ums_user_info
+    insert into ums_activeity_feed
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="username != null">
-        username,
+      <if test="actorId != null">
+        actor_id,
       </if>
-      <if test="password != null">
-        password,
+      <if test="action != null">
+        action,
       </if>
-      <if test="email != null">
-        email,
-      </if>
-      <if test="status != null">
-        status,
-      </if>
-      <if test="salt != null">
-        salt,
+      <if test="targetId != null">
+        target_id,
       </if>
       <if test="createdDate != null">
         created_date,
       </if>
+      <if test="status != null">
+        status,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="username != null">
-        #{username,jdbcType=VARCHAR},
+      <if test="actorId != null">
+        #{actorId,jdbcType=INTEGER},
       </if>
-      <if test="password != null">
-        #{password,jdbcType=VARCHAR},
+      <if test="action != null">
+        #{action,jdbcType=TINYINT},
       </if>
-      <if test="email != null">
-        #{email,jdbcType=VARCHAR},
-      </if>
-      <if test="status != null">
-        #{status,jdbcType=TINYINT},
-      </if>
-      <if test="salt != null">
-        #{salt,jdbcType=CHAR},
+      <if test="targetId != null">
+        #{targetId,jdbcType=INTEGER},
       </if>
       <if test="createdDate != null">
         #{createdDate,jdbcType=TIMESTAMP},
       </if>
+      <if test="status != null">
+        #{status,jdbcType=BIT},
+      </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.yzg.blog.model.UmsUserInfoExample" resultType="java.lang.Long">
-    select count(*) from ums_user_info
+  <select id="countByExample" parameterType="com.yzg.blog.model.UmsActiveityFeedExample" resultType="java.lang.Long">
+    select count(*) from ums_activeity_feed
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update ums_user_info
+    update ums_activeity_feed
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.username != null">
-        username = #{record.username,jdbcType=VARCHAR},
+      <if test="record.actorId != null">
+        actor_id = #{record.actorId,jdbcType=INTEGER},
       </if>
-      <if test="record.password != null">
-        password = #{record.password,jdbcType=VARCHAR},
+      <if test="record.action != null">
+        action = #{record.action,jdbcType=TINYINT},
       </if>
-      <if test="record.email != null">
-        email = #{record.email,jdbcType=VARCHAR},
-      </if>
-      <if test="record.status != null">
-        status = #{record.status,jdbcType=TINYINT},
-      </if>
-      <if test="record.salt != null">
-        salt = #{record.salt,jdbcType=CHAR},
+      <if test="record.targetId != null">
+        target_id = #{record.targetId,jdbcType=INTEGER},
       </if>
       <if test="record.createdDate != null">
         created_date = #{record.createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=BIT},
       </if>
     </set>
     <if test="_parameter != null">
@@ -194,50 +182,45 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update ums_user_info
+    update ums_activeity_feed
     set id = #{record.id,jdbcType=INTEGER},
-      username = #{record.username,jdbcType=VARCHAR},
-      password = #{record.password,jdbcType=VARCHAR},
-      email = #{record.email,jdbcType=VARCHAR},
-      status = #{record.status,jdbcType=TINYINT},
-      salt = #{record.salt,jdbcType=CHAR},
-      created_date = #{record.createdDate,jdbcType=TIMESTAMP}
+      actor_id = #{record.actorId,jdbcType=INTEGER},
+      action = #{record.action,jdbcType=TINYINT},
+      target_id = #{record.targetId,jdbcType=INTEGER},
+      created_date = #{record.createdDate,jdbcType=TIMESTAMP},
+      status = #{record.status,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.yzg.blog.model.UmsUserInfo">
-    update ums_user_info
+  <update id="updateByPrimaryKeySelective" parameterType="com.yzg.blog.model.UmsActiveityFeed">
+    update ums_activeity_feed
     <set>
-      <if test="username != null">
-        username = #{username,jdbcType=VARCHAR},
+      <if test="actorId != null">
+        actor_id = #{actorId,jdbcType=INTEGER},
       </if>
-      <if test="password != null">
-        password = #{password,jdbcType=VARCHAR},
+      <if test="action != null">
+        action = #{action,jdbcType=TINYINT},
       </if>
-      <if test="email != null">
-        email = #{email,jdbcType=VARCHAR},
-      </if>
-      <if test="status != null">
-        status = #{status,jdbcType=TINYINT},
-      </if>
-      <if test="salt != null">
-        salt = #{salt,jdbcType=CHAR},
+      <if test="targetId != null">
+        target_id = #{targetId,jdbcType=INTEGER},
       </if>
       <if test="createdDate != null">
         created_date = #{createdDate,jdbcType=TIMESTAMP},
       </if>
+      <if test="status != null">
+        status = #{status,jdbcType=BIT},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.yzg.blog.model.UmsUserInfo">
-    update ums_user_info
-    set username = #{username,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
-      email = #{email,jdbcType=VARCHAR},
-      status = #{status,jdbcType=TINYINT},
-      salt = #{salt,jdbcType=CHAR},
-      created_date = #{createdDate,jdbcType=TIMESTAMP}
+  <update id="updateByPrimaryKey" parameterType="com.yzg.blog.model.UmsActiveityFeed">
+    update ums_activeity_feed
+    set actor_id = #{actorId,jdbcType=INTEGER},
+      action = #{action,jdbcType=TINYINT},
+      target_id = #{targetId,jdbcType=INTEGER},
+      created_date = #{createdDate,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
