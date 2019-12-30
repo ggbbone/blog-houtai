@@ -7,31 +7,33 @@ import com.yzg.blog.model.UmsUserInfoExample;
 import com.yzg.blog.model.UmsUserLoginLog;
 import com.yzg.blog.portal.dto.UmsLoginParams;
 import com.yzg.blog.portal.dto.UmsRegisterParams;
+import com.yzg.blog.portal.exception.ValidateFailedException;
 import com.yzg.blog.portal.service.UmsUserService;
 import com.yzg.blog.portal.utils.IpUtils;
-import com.yzg.blog.portal.utils.RedisKeysUtils;
 import com.yzg.blog.portal.utils.TokenUtils;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by yzg on 2019/12/24
  */
 @Service
+@CacheConfig(cacheNames = {"CACHE::USER"})
 public class UmsUserServiceImpl implements UmsUserService {
     @Autowired
     private UmsUserInfoMapper userInfoMapper;
     @Autowired
     private UmsUserLoginLogMapper userLoginLogMapper;
     @Autowired
-    private RedisTemplate redisTemplate;
+    private RabbitTemplate rabbitTemplate;
 
 
     @Override
@@ -40,7 +42,7 @@ public class UmsUserServiceImpl implements UmsUserService {
     }
 
     @Override
-    public String login(UmsLoginParams params, HttpServletRequest request) {
+    public String login(UmsLoginParams params, HttpServletRequest request) throws Exception {
         UmsUserInfo user;
         //通过用户名登录
         user = getUserByUsername(params.getUsername());
@@ -49,12 +51,12 @@ public class UmsUserServiceImpl implements UmsUserService {
             user = getUserByEmail(params.getUsername());
         }
         if (user == null){
-            throw new RuntimeException("用户名/邮箱不存在");
+            throw new ValidateFailedException("用户名/邮箱不存在");
         }
         //md5加密密码
         String password = DigestUtils.md5DigestAsHex((params.getPassword() + user.getSalt()).getBytes());
         if (!user.getPassword().equals(password)) {
-            throw new RuntimeException("密码不正确");
+            throw new ValidateFailedException("密码不正确");
         }
         //返回token
         String token = TokenUtils.getToken(user);
@@ -63,39 +65,32 @@ public class UmsUserServiceImpl implements UmsUserService {
         loginLog.setUserId(user.getId());
         loginLog.setLoginDate(new Date());
         loginLog.setToken(token);
-        loginLog.setIp(IpUtils.getIpAddr(request));
+        loginLog.setIp(IpUtils.getIpAddr(request));//获取访问ip地址
         loginLog.setType((byte) 1);//设置登录方式（1：pc）
-        userLoginLogMapper.insertSelective(loginLog);
-
+        //添加到消息队列
+        rabbitTemplate.convertAndSend("login.queue", loginLog);
         return token;
     }
 
+    /**
+     * 根据id查询用户，有缓存
+     * @param id 用户id
+     * @return 用户数据
+     */
     @Override
+    @Cacheable(key = "#id")
     public UmsUserInfo getUserById(int id) {
-        UmsUserInfo userInfo;
-        //从redis缓存中查询用户信息
-        String key = RedisKeysUtils.getCacheUsers(id);
-        userInfo = (UmsUserInfo) redisTemplate.opsForValue().get(key);
-
-        if (userInfo == null) {
-            //缓存不存在，从数据库中查询并将结果缓存
-            userInfo = userInfoMapper.selectByPrimaryKey(id);
-            if (userInfo != null) {
-                redisTemplate.opsForValue().set(key, userInfo, 1800, TimeUnit.SECONDS);
-            }
-        }
-
-        return userInfo;
+        return userInfoMapper.selectByPrimaryKey(id);
     }
 
     @Override
-    public String register(UmsRegisterParams params) {
+    public String register(UmsRegisterParams params) throws Exception {
         //注册验证
         if (getUserByUsername(params.getUsername()) != null) {
-            throw new RuntimeException("用户名已存在");
+            throw new ValidateFailedException("用户名已存在");
         }
         if (getUserByEmail(params.getEmail()) != null) {
-            throw new RuntimeException("邮箱已被注册");
+            throw new ValidateFailedException("邮箱已被注册");
         }
         UmsUserInfo userInfo = new UmsUserInfo();
         String salt = RandomStringUtils.random(5);//生成随机字符串盐

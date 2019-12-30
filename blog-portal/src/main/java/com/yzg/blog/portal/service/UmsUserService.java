@@ -23,7 +23,7 @@ public interface UmsUserService {
      * @param params
      * @return token
      */
-    String login(UmsLoginParams params, HttpServletRequest request);
+    String login(UmsLoginParams params, HttpServletRequest request) throws Exception;
 
     /**
      * 根据id获取用户信息
@@ -37,7 +37,7 @@ public interface UmsUserService {
      * @param params
      * @return
      */
-    String register(UmsRegisterParams params);
+    String register(UmsRegisterParams params) throws Exception;
 
     UmsUserInfo getUserByUsername(String username);
 

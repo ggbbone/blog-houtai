@@ -7,7 +7,7 @@ package com.yzg.blog.portal.utils;
  */
 public class RedisKeysUtils {
     //分隔符
-    private static String SPLIT = ":";
+    private static String SPLIT = "::";
 
     //点赞用户
     private static String BIZ_LIKE = "LIKE";
@@ -20,9 +20,6 @@ public class RedisKeysUtils {
 
     //他关注的的人
     private static String BIZ_FOLLOWEE = "FOLLOWEE";
-
-    //用户数据缓存
-    private static String BIZ_CACHE_USERS = "CACHE_USERS";
 
     //token黑名单
     private static String BIZ_TOKEN_FILTER = "TOKEN_FILTER";
@@ -68,14 +65,6 @@ public class RedisKeysUtils {
      */
     public static String getChangeLikeKey() {
         return BIZ_CHANG_LIKE;
-    }
-
-    /**
-     * 用户信息缓存
-     * @return
-     */
-    public static String getCacheUsers(int userId) {
-        return BIZ_CACHE_USERS + SPLIT + userId;
     }
 
 }

@@ -82,6 +82,16 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- Spring Cache -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
+        </dependency>
+        <!--rabbitMQ-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
         <!--MyBatis分页插件starter-->
         <dependency>
             <groupId>com.github.pagehelper</groupId>
@@ -92,13 +102,13 @@
 
     <dependencyManagement>
         <dependencies>
-<!--            blog通用模块-->
+            <!--blog通用模块-->
             <dependency>
                 <groupId>com.yzg.blog</groupId>
                 <artifactId>blog-common</artifactId>
                 <version>${blog-common.version}</version>
             </dependency>
-<!--            blog mybatis自动生成dao模块-->
+            <!--blog mybatis自动生成dao模块-->
             <dependency>
                 <groupId>com.yzg.blog</groupId>
                 <artifactId>blog-mbg</artifactId>

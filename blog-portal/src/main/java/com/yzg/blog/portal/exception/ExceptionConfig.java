@@ -43,7 +43,7 @@ public class ExceptionConfig {
      * @param e
      * @return
      */
-    @ExceptionHandler(value = {MethodArgumentNotValidException.class})
+    @ExceptionHandler(value = MethodArgumentNotValidException.class)
     @ResponseBody
     public CommonResult methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e) {
         ArrayList<Violation> errors = new ArrayList<>();
@@ -91,7 +91,7 @@ public class ExceptionConfig {
     }
 
     /**
-     * 401错误（权限不足）
+     * 403错误（权限不足）
      * @param e
      * @return
      */
@@ -99,6 +99,17 @@ public class ExceptionConfig {
     @ResponseBody
     public CommonResult forbiddenExceptionHandle(ForbiddenException e) {
         return CommonResult.forbidden(e.getMessage());
+    }
+
+    /**
+     * 404错误（参数异常）
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(value = ValidateFailedException.class)
+    @ResponseBody
+    public CommonResult validateFailedExceptionHandle(ValidateFailedException e) {
+        return CommonResult.validateFailed(e.getMessage());
     }
 
 

@@ -8,6 +8,9 @@ import com.yzg.blog.portal.dto.BmsArticleListParams;
 import com.yzg.blog.portal.dto.BmsArticleUpdateParams;
 import com.yzg.blog.portal.service.BmsArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +19,7 @@ import java.util.List;
  * Created by yzg on 2019/12/19
  */
 @Service
+@CacheConfig(cacheNames = {"CACHE::ARTICLE"})
 public class BmsArticleServiceImpl implements BmsArticleService {
     @Autowired
     BmsArticleMapper articleMapper;
@@ -44,11 +48,13 @@ public class BmsArticleServiceImpl implements BmsArticleService {
     }
 
     @Override
+    @Cacheable(key = "#id")
     public BmsArticle getById(int id) {
         return articleMapper.selectByPrimaryKey(id);
     }
 
     @Override
+    @CacheEvict(key = "#id")
     public void delete(int id) {
         BmsArticleExample example = new BmsArticleExample();
         example.createCriteria()
@@ -60,6 +66,7 @@ public class BmsArticleServiceImpl implements BmsArticleService {
     }
 
     @Override
+    @CacheEvict(key = "#params.id")
     public void update(BmsArticleUpdateParams params) {
 
     }
