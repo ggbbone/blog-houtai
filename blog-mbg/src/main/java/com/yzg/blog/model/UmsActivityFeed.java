@@ -4,7 +4,7 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.util.Date;
 
-public class UmsActiveityFeed implements Serializable {
+public class UmsActivityFeed implements Serializable {
     private Integer id;
 
     @ApiModelProperty(value = "发起用户id")

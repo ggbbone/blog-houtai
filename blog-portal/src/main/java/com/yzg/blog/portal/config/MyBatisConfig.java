@@ -7,6 +7,6 @@ import org.springframework.context.annotation.Configuration;
  * MyBatis配置
  */
 @Configuration
-@MapperScan({"com.yzg.blog.mapper", "com.yzg.blog.portal.mapper"})
+@MapperScan({"com.yzg.blog.mapper", "com.yzg.blog.portal.dao"})
 public class MyBatisConfig {
 }

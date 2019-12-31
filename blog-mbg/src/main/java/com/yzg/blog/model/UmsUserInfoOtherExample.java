@@ -425,126 +425,6 @@ public class UmsUserInfoOtherExample {
             return (Criteria) this;
         }
 
-        public Criteria andCreatedDateIsNull() {
-            addCriterion("created_date is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedDateIsNotNull() {
-            addCriterion("created_date is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedDateEqualTo(Date value) {
-            addCriterion("created_date =", value, "createdDate");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedDateNotEqualTo(Date value) {
-            addCriterion("created_date <>", value, "createdDate");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedDateGreaterThan(Date value) {
-            addCriterion("created_date >", value, "createdDate");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedDateGreaterThanOrEqualTo(Date value) {
-            addCriterion("created_date >=", value, "createdDate");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedDateLessThan(Date value) {
-            addCriterion("created_date <", value, "createdDate");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedDateLessThanOrEqualTo(Date value) {
-            addCriterion("created_date <=", value, "createdDate");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedDateIn(List<Date> values) {
-            addCriterion("created_date in", values, "createdDate");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedDateNotIn(List<Date> values) {
-            addCriterion("created_date not in", values, "createdDate");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedDateBetween(Date value1, Date value2) {
-            addCriterion("created_date between", value1, value2, "createdDate");
-            return (Criteria) this;
-        }
-
-        public Criteria andCreatedDateNotBetween(Date value1, Date value2) {
-            addCriterion("created_date not between", value1, value2, "createdDate");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedDateIsNull() {
-            addCriterion("updated_date is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedDateIsNotNull() {
-            addCriterion("updated_date is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedDateEqualTo(Date value) {
-            addCriterion("updated_date =", value, "updatedDate");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedDateNotEqualTo(Date value) {
-            addCriterion("updated_date <>", value, "updatedDate");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedDateGreaterThan(Date value) {
-            addCriterion("updated_date >", value, "updatedDate");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedDateGreaterThanOrEqualTo(Date value) {
-            addCriterion("updated_date >=", value, "updatedDate");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedDateLessThan(Date value) {
-            addCriterion("updated_date <", value, "updatedDate");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedDateLessThanOrEqualTo(Date value) {
-            addCriterion("updated_date <=", value, "updatedDate");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedDateIn(List<Date> values) {
-            addCriterion("updated_date in", values, "updatedDate");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedDateNotIn(List<Date> values) {
-            addCriterion("updated_date not in", values, "updatedDate");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedDateBetween(Date value1, Date value2) {
-            addCriterion("updated_date between", value1, value2, "updatedDate");
-            return (Criteria) this;
-        }
-
-        public Criteria andUpdatedDateNotBetween(Date value1, Date value2) {
-            addCriterion("updated_date not between", value1, value2, "updatedDate");
-            return (Criteria) this;
-        }
-
         public Criteria andFolloweeCountIsNull() {
             addCriterion("followee_count is null");
             return (Criteria) this;
@@ -665,6 +545,126 @@ public class UmsUserInfoOtherExample {
             return (Criteria) this;
         }
 
+        public Criteria andCreatedDateIsNull() {
+            addCriterion("created_date is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedDateIsNotNull() {
+            addCriterion("created_date is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedDateEqualTo(Date value) {
+            addCriterion("created_date =", value, "createdDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedDateNotEqualTo(Date value) {
+            addCriterion("created_date <>", value, "createdDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedDateGreaterThan(Date value) {
+            addCriterion("created_date >", value, "createdDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedDateGreaterThanOrEqualTo(Date value) {
+            addCriterion("created_date >=", value, "createdDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedDateLessThan(Date value) {
+            addCriterion("created_date <", value, "createdDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedDateLessThanOrEqualTo(Date value) {
+            addCriterion("created_date <=", value, "createdDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedDateIn(List<Date> values) {
+            addCriterion("created_date in", values, "createdDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedDateNotIn(List<Date> values) {
+            addCriterion("created_date not in", values, "createdDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedDateBetween(Date value1, Date value2) {
+            addCriterion("created_date between", value1, value2, "createdDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedDateNotBetween(Date value1, Date value2) {
+            addCriterion("created_date not between", value1, value2, "createdDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedDateIsNull() {
+            addCriterion("updated_date is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedDateIsNotNull() {
+            addCriterion("updated_date is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedDateEqualTo(Date value) {
+            addCriterion("updated_date =", value, "updatedDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedDateNotEqualTo(Date value) {
+            addCriterion("updated_date <>", value, "updatedDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedDateGreaterThan(Date value) {
+            addCriterion("updated_date >", value, "updatedDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedDateGreaterThanOrEqualTo(Date value) {
+            addCriterion("updated_date >=", value, "updatedDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedDateLessThan(Date value) {
+            addCriterion("updated_date <", value, "updatedDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedDateLessThanOrEqualTo(Date value) {
+            addCriterion("updated_date <=", value, "updatedDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedDateIn(List<Date> values) {
+            addCriterion("updated_date in", values, "updatedDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedDateNotIn(List<Date> values) {
+            addCriterion("updated_date not in", values, "updatedDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedDateBetween(Date value1, Date value2) {
+            addCriterion("updated_date between", value1, value2, "updatedDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedDateNotBetween(Date value1, Date value2) {
+            addCriterion("updated_date not between", value1, value2, "updatedDate");
+            return (Criteria) this;
+        }
+
         public Criteria andOutlineIsNull() {
             addCriterion("outline is null");
             return (Criteria) this;
@@ -732,6 +732,76 @@ public class UmsUserInfoOtherExample {
 
         public Criteria andOutlineNotBetween(String value1, String value2) {
             addCriterion("outline not between", value1, value2, "outline");
+            return (Criteria) this;
+        }
+
+        public Criteria andNickIsNull() {
+            addCriterion("nick is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNickIsNotNull() {
+            addCriterion("nick is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNickEqualTo(String value) {
+            addCriterion("nick =", value, "nick");
+            return (Criteria) this;
+        }
+
+        public Criteria andNickNotEqualTo(String value) {
+            addCriterion("nick <>", value, "nick");
+            return (Criteria) this;
+        }
+
+        public Criteria andNickGreaterThan(String value) {
+            addCriterion("nick >", value, "nick");
+            return (Criteria) this;
+        }
+
+        public Criteria andNickGreaterThanOrEqualTo(String value) {
+            addCriterion("nick >=", value, "nick");
+            return (Criteria) this;
+        }
+
+        public Criteria andNickLessThan(String value) {
+            addCriterion("nick <", value, "nick");
+            return (Criteria) this;
+        }
+
+        public Criteria andNickLessThanOrEqualTo(String value) {
+            addCriterion("nick <=", value, "nick");
+            return (Criteria) this;
+        }
+
+        public Criteria andNickLike(String value) {
+            addCriterion("nick like", value, "nick");
+            return (Criteria) this;
+        }
+
+        public Criteria andNickNotLike(String value) {
+            addCriterion("nick not like", value, "nick");
+            return (Criteria) this;
+        }
+
+        public Criteria andNickIn(List<String> values) {
+            addCriterion("nick in", values, "nick");
+            return (Criteria) this;
+        }
+
+        public Criteria andNickNotIn(List<String> values) {
+            addCriterion("nick not in", values, "nick");
+            return (Criteria) this;
+        }
+
+        public Criteria andNickBetween(String value1, String value2) {
+            addCriterion("nick between", value1, value2, "nick");
+            return (Criteria) this;
+        }
+
+        public Criteria andNickNotBetween(String value1, String value2) {
+            addCriterion("nick not between", value1, value2, "nick");
             return (Criteria) this;
         }
     }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yzg.blog.mapper.UmsActiveityFeedMapper">
-  <resultMap id="BaseResultMap" type="com.yzg.blog.model.UmsActiveityFeed">
+<mapper namespace="com.yzg.blog.mapper.UmsActivityFeedMapper">
+  <resultMap id="BaseResultMap" type="com.yzg.blog.model.UmsActivityFeed">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="actor_id" jdbcType="INTEGER" property="actorId" />
     <result column="action" jdbcType="TINYINT" property="action" />
@@ -70,13 +70,13 @@
   <sql id="Base_Column_List">
     id, actor_id, action, target_id, created_date, status
   </sql>
-  <select id="selectByExample" parameterType="com.yzg.blog.model.UmsActiveityFeedExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.yzg.blog.model.UmsActivityFeedExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from ums_activeity_feed
+    from ums_activity_feed
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -87,33 +87,33 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from ums_activeity_feed
+    from ums_activity_feed
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from ums_activeity_feed
+    delete from ums_activity_feed
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.yzg.blog.model.UmsActiveityFeedExample">
-    delete from ums_activeity_feed
+  <delete id="deleteByExample" parameterType="com.yzg.blog.model.UmsActivityFeedExample">
+    delete from ums_activity_feed
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.yzg.blog.model.UmsActiveityFeed">
+  <insert id="insert" parameterType="com.yzg.blog.model.UmsActivityFeed">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into ums_activeity_feed (actor_id, action, target_id, 
+    insert into ums_activity_feed (actor_id, action, target_id, 
       created_date, status)
     values (#{actorId,jdbcType=INTEGER}, #{action,jdbcType=TINYINT}, #{targetId,jdbcType=INTEGER}, 
       #{createdDate,jdbcType=TIMESTAMP}, #{status,jdbcType=BIT})
   </insert>
-  <insert id="insertSelective" parameterType="com.yzg.blog.model.UmsActiveityFeed">
+  <insert id="insertSelective" parameterType="com.yzg.blog.model.UmsActivityFeed">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into ums_activeity_feed
+    insert into ums_activity_feed
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="actorId != null">
         actor_id,
@@ -149,14 +149,14 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.yzg.blog.model.UmsActiveityFeedExample" resultType="java.lang.Long">
-    select count(*) from ums_activeity_feed
+  <select id="countByExample" parameterType="com.yzg.blog.model.UmsActivityFeedExample" resultType="java.lang.Long">
+    select count(*) from ums_activity_feed
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update ums_activeity_feed
+    update ums_activity_feed
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
@@ -182,7 +182,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update ums_activeity_feed
+    update ums_activity_feed
     set id = #{record.id,jdbcType=INTEGER},
       actor_id = #{record.actorId,jdbcType=INTEGER},
       action = #{record.action,jdbcType=TINYINT},
@@ -193,8 +193,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.yzg.blog.model.UmsActiveityFeed">
-    update ums_activeity_feed
+  <update id="updateByPrimaryKeySelective" parameterType="com.yzg.blog.model.UmsActivityFeed">
+    update ums_activity_feed
     <set>
       <if test="actorId != null">
         actor_id = #{actorId,jdbcType=INTEGER},
@@ -214,8 +214,8 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.yzg.blog.model.UmsActiveityFeed">
-    update ums_activeity_feed
+  <update id="updateByPrimaryKey" parameterType="com.yzg.blog.model.UmsActivityFeed">
+    update ums_activity_feed
     set actor_id = #{actorId,jdbcType=INTEGER},
       action = #{action,jdbcType=TINYINT},
       target_id = #{targetId,jdbcType=INTEGER},

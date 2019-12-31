@@ -7,11 +7,12 @@
     <result column="blog_address" jdbcType="VARCHAR" property="blogAddress" />
     <result column="collected_entries_count" jdbcType="INTEGER" property="collectedEntriesCount" />
     <result column="collection_count" jdbcType="INTEGER" property="collectionCount" />
-    <result column="created_date" jdbcType="TIMESTAMP" property="createdDate" />
-    <result column="updated_date" jdbcType="TIMESTAMP" property="updatedDate" />
     <result column="followee_count" jdbcType="INTEGER" property="followeeCount" />
     <result column="follower_count" jdbcType="INTEGER" property="followerCount" />
+    <result column="created_date" jdbcType="TIMESTAMP" property="createdDate" />
+    <result column="updated_date" jdbcType="TIMESTAMP" property="updatedDate" />
     <result column="outline" jdbcType="VARCHAR" property="outline" />
+    <result column="nick" jdbcType="VARCHAR" property="nick" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -72,8 +73,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, avatar, blog_address, collected_entries_count, collection_count, created_date, 
-    updated_date, followee_count, follower_count, outline
+    id, avatar, blog_address, collected_entries_count, collection_count, followee_count, 
+    follower_count, created_date, updated_date, outline, nick
   </sql>
   <select id="selectByExample" parameterType="com.yzg.blog.model.UmsUserInfoOtherExample" resultMap="BaseResultMap">
     select
@@ -110,13 +111,13 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into ums_user_info_other (avatar, blog_address, collected_entries_count, 
-      collection_count, created_date, updated_date, 
-      followee_count, follower_count, outline
-      )
+      collection_count, followee_count, follower_count, 
+      created_date, updated_date, outline, 
+      nick)
     values (#{avatar,jdbcType=VARCHAR}, #{blogAddress,jdbcType=VARCHAR}, #{collectedEntriesCount,jdbcType=INTEGER}, 
-      #{collectionCount,jdbcType=INTEGER}, #{createdDate,jdbcType=TIMESTAMP}, #{updatedDate,jdbcType=TIMESTAMP}, 
-      #{followeeCount,jdbcType=INTEGER}, #{followerCount,jdbcType=INTEGER}, #{outline,jdbcType=VARCHAR}
-      )
+      #{collectionCount,jdbcType=INTEGER}, #{followeeCount,jdbcType=INTEGER}, #{followerCount,jdbcType=INTEGER}, 
+      #{createdDate,jdbcType=TIMESTAMP}, #{updatedDate,jdbcType=TIMESTAMP}, #{outline,jdbcType=VARCHAR}, 
+      #{nick,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.yzg.blog.model.UmsUserInfoOther">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -136,20 +137,23 @@
       <if test="collectionCount != null">
         collection_count,
       </if>
-      <if test="createdDate != null">
-        created_date,
-      </if>
-      <if test="updatedDate != null">
-        updated_date,
-      </if>
       <if test="followeeCount != null">
         followee_count,
       </if>
       <if test="followerCount != null">
         follower_count,
       </if>
+      <if test="createdDate != null">
+        created_date,
+      </if>
+      <if test="updatedDate != null">
+        updated_date,
+      </if>
       <if test="outline != null">
         outline,
+      </if>
+      <if test="nick != null">
+        nick,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -165,20 +169,23 @@
       <if test="collectionCount != null">
         #{collectionCount,jdbcType=INTEGER},
       </if>
-      <if test="createdDate != null">
-        #{createdDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updatedDate != null">
-        #{updatedDate,jdbcType=TIMESTAMP},
-      </if>
       <if test="followeeCount != null">
         #{followeeCount,jdbcType=INTEGER},
       </if>
       <if test="followerCount != null">
         #{followerCount,jdbcType=INTEGER},
       </if>
+      <if test="createdDate != null">
+        #{createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedDate != null">
+        #{updatedDate,jdbcType=TIMESTAMP},
+      </if>
       <if test="outline != null">
         #{outline,jdbcType=VARCHAR},
+      </if>
+      <if test="nick != null">
+        #{nick,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -206,20 +213,23 @@
       <if test="record.collectionCount != null">
         collection_count = #{record.collectionCount,jdbcType=INTEGER},
       </if>
-      <if test="record.createdDate != null">
-        created_date = #{record.createdDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.updatedDate != null">
-        updated_date = #{record.updatedDate,jdbcType=TIMESTAMP},
-      </if>
       <if test="record.followeeCount != null">
         followee_count = #{record.followeeCount,jdbcType=INTEGER},
       </if>
       <if test="record.followerCount != null">
         follower_count = #{record.followerCount,jdbcType=INTEGER},
       </if>
+      <if test="record.createdDate != null">
+        created_date = #{record.createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatedDate != null">
+        updated_date = #{record.updatedDate,jdbcType=TIMESTAMP},
+      </if>
       <if test="record.outline != null">
         outline = #{record.outline,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nick != null">
+        nick = #{record.nick,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -233,11 +243,12 @@
       blog_address = #{record.blogAddress,jdbcType=VARCHAR},
       collected_entries_count = #{record.collectedEntriesCount,jdbcType=INTEGER},
       collection_count = #{record.collectionCount,jdbcType=INTEGER},
-      created_date = #{record.createdDate,jdbcType=TIMESTAMP},
-      updated_date = #{record.updatedDate,jdbcType=TIMESTAMP},
       followee_count = #{record.followeeCount,jdbcType=INTEGER},
       follower_count = #{record.followerCount,jdbcType=INTEGER},
-      outline = #{record.outline,jdbcType=VARCHAR}
+      created_date = #{record.createdDate,jdbcType=TIMESTAMP},
+      updated_date = #{record.updatedDate,jdbcType=TIMESTAMP},
+      outline = #{record.outline,jdbcType=VARCHAR},
+      nick = #{record.nick,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -257,20 +268,23 @@
       <if test="collectionCount != null">
         collection_count = #{collectionCount,jdbcType=INTEGER},
       </if>
-      <if test="createdDate != null">
-        created_date = #{createdDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updatedDate != null">
-        updated_date = #{updatedDate,jdbcType=TIMESTAMP},
-      </if>
       <if test="followeeCount != null">
         followee_count = #{followeeCount,jdbcType=INTEGER},
       </if>
       <if test="followerCount != null">
         follower_count = #{followerCount,jdbcType=INTEGER},
       </if>
+      <if test="createdDate != null">
+        created_date = #{createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedDate != null">
+        updated_date = #{updatedDate,jdbcType=TIMESTAMP},
+      </if>
       <if test="outline != null">
         outline = #{outline,jdbcType=VARCHAR},
+      </if>
+      <if test="nick != null">
+        nick = #{nick,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -281,11 +295,12 @@
       blog_address = #{blogAddress,jdbcType=VARCHAR},
       collected_entries_count = #{collectedEntriesCount,jdbcType=INTEGER},
       collection_count = #{collectionCount,jdbcType=INTEGER},
-      created_date = #{createdDate,jdbcType=TIMESTAMP},
-      updated_date = #{updatedDate,jdbcType=TIMESTAMP},
       followee_count = #{followeeCount,jdbcType=INTEGER},
       follower_count = #{followerCount,jdbcType=INTEGER},
-      outline = #{outline,jdbcType=VARCHAR}
+      created_date = #{createdDate,jdbcType=TIMESTAMP},
+      updated_date = #{updatedDate,jdbcType=TIMESTAMP},
+      outline = #{outline,jdbcType=VARCHAR},
+      nick = #{nick,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

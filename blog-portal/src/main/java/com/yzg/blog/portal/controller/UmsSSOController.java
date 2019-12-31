@@ -28,21 +28,10 @@ public class UmsSSOController {
     private UmsUserService userService;
 
     /**
-     * 登录获取验证码
-     * @param name 邮箱/用户名
-     * @return
-     */
-    @ApiOperation("获取验证码")
-    @RequestMapping(value = "/login/code", method = RequestMethod.GET)
-    public CommonResult getLoginCode(@RequestParam String name) {
-        return CommonResult.success(userService.getLoginCode(name));
-    }
-
-    /**
      * 用户登录
      * @param params
      * @param request
-     * @return
+     * @return token
      */
     @ApiOperation("用户登录")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -53,7 +42,7 @@ public class UmsSSOController {
     /**
      * 用户注册
      * @param params
-     * @return
+     * @return token
      */
     @ApiOperation("用户注册")
     @RequestMapping(value = "/register", method = RequestMethod.POST)

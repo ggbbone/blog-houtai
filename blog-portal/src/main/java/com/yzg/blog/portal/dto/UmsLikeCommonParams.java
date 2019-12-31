@@ -18,12 +18,32 @@ public class UmsLikeCommonParams {
     @NotNull
     private Integer targetId;
 
+    //actorId和like用于消息队列解析
+    private Integer actorId;
+    private Boolean like;
+
     @Override
     public String toString() {
         return "UmsLikeCommonParams{" +
                 "type='" + type + '\'' +
                 ", targetId=" + targetId +
                 '}';
+    }
+
+    public Integer getActorId() {
+        return actorId;
+    }
+
+    public void setActorId(Integer actorId) {
+        this.actorId = actorId;
+    }
+
+    public Boolean getLike() {
+        return like;
+    }
+
+    public void setLike(Boolean like) {
+        this.like = like;
     }
 
     public Byte getType() {

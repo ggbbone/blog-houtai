@@ -35,7 +35,7 @@ public class UmsLikeController {
     @LoginToken
     @ApiOperation("点赞")
     @RequestMapping(value = "", method = RequestMethod.PUT)
-    public CommonResult like(@Valid UmsLikeCommonParams params) {
+    public CommonResult like(@Valid UmsLikeCommonParams params) throws Exception {
         return CommonResult.success(likeService.like(params));
     }
 
@@ -47,7 +47,7 @@ public class UmsLikeController {
     @LoginToken
     @ApiOperation("取消点赞")
     @RequestMapping(value = "", method = RequestMethod.DELETE)
-    public CommonResult unlike(@Valid UmsLikeCommonParams params) {
+    public CommonResult unlike(@Valid UmsLikeCommonParams params) throws Exception {
         return CommonResult.success(likeService.unlike(params));
     }
 
