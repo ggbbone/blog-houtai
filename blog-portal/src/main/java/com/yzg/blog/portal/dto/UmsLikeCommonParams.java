@@ -3,6 +3,7 @@ package com.yzg.blog.portal.dto;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 
 /**
  * Created by yzg on 2019/12/25
@@ -18,15 +19,21 @@ public class UmsLikeCommonParams {
     @NotNull
     private Integer targetId;
 
-    //actorId和like用于消息队列解析
+    //actorId和like仅用于消息队列解析
+    @ApiModelProperty(hidden = true)
+    @Null
     private Integer actorId;
+    @ApiModelProperty(hidden = true)
+    @Null
     private Boolean like;
 
     @Override
     public String toString() {
         return "UmsLikeCommonParams{" +
-                "type='" + type + '\'' +
+                "type=" + type +
                 ", targetId=" + targetId +
+                ", actorId=" + actorId +
+                ", like=" + like +
                 '}';
     }
 

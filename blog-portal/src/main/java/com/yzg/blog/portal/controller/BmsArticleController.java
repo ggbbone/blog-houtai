@@ -50,15 +50,20 @@ public class BmsArticleController {
     @ApiOperation("修改文章信息")
     @RequestMapping(value = "/update",method = RequestMethod.POST)
     public CommonResult update(@Valid @RequestBody BmsArticleUpdateParams params) {
-        bmsArticleService.update(params);
-        return CommonResult.success(null);
+        return CommonResult.success(bmsArticleService.update(params));
     }
 
     @LoginToken
     @ApiOperation("删除文章")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
     public CommonResult delete(@PathVariable int id) {
-        bmsArticleService.delete(id);
-        return CommonResult.success(null);
+        return CommonResult.success(bmsArticleService.delete(id));
+    }
+
+    @LoginToken
+    @ApiOperation("发表文章")
+    @RequestMapping(value = "/create",method = RequestMethod.POST)
+    public CommonResult add(@Valid @RequestBody BmsArticleUpdateParams params) {
+        return CommonResult.success(bmsArticleService.add(params));
     }
 }

@@ -30,11 +30,17 @@ public interface BmsArticleService {
      * 删除单个文章
      * @param id 文章id
      */
-    void delete(int id);
+    int delete(int id);
 
     /**
      * 更新文章
      * @param params 更新内容
      */
-    void update(BmsArticleUpdateParams params);
+    int update(BmsArticleUpdateParams params);
+
+    /**
+     * 发表文章
+     * @param params 文章内容
+     */
+    int add(BmsArticleUpdateParams params);
 }

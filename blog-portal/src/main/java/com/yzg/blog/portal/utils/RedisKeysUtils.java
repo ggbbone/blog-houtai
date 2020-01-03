@@ -12,8 +12,8 @@ public class RedisKeysUtils {
     //点赞用户
     private static String BIZ_LIKE = "LIKE";
 
-    //点赞修改队列
-    private static String BIZ_CHANG_LIKE = "CHANG_LIKE";
+    //点赞待同步队列
+    private static String BIZ_CHANG_LIKE = "SYNC_LIKE";
 
     //关注他的人
     private static String BIZ_FOLLOWER = "FOLLOWER";

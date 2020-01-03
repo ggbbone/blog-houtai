@@ -12,7 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * web相关配置
  */
 @Configuration
-public class WebMvcConfig implements WebMvcConfigurer {
+public class WebMVCConfig implements WebMvcConfigurer {
 
     @Bean
     public AuthenticationInterceptor authenticationInterceptor() {

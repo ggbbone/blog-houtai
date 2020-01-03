@@ -5,7 +5,11 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class UmsUserInfoOther implements Serializable {
-    private Integer id;
+    @ApiModelProperty(value = "用户id")
+    private Integer userId;
+
+    @ApiModelProperty(value = "昵称")
+    private String nick;
 
     @ApiModelProperty(value = "头像地址")
     private String avatar;
@@ -32,17 +36,22 @@ public class UmsUserInfoOther implements Serializable {
     @ApiModelProperty(value = "个人简介")
     private String outline;
 
-    @ApiModelProperty(value = "昵称")
-    private String nick;
-
     private static final long serialVersionUID = 1L;
 
-    public Integer getId() {
-        return id;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public String getNick() {
+        return nick;
+    }
+
+    public void setNick(String nick) {
+        this.nick = nick;
     }
 
     public String getAvatar() {
@@ -117,21 +126,14 @@ public class UmsUserInfoOther implements Serializable {
         this.outline = outline;
     }
 
-    public String getNick() {
-        return nick;
-    }
-
-    public void setNick(String nick) {
-        this.nick = nick;
-    }
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
+        sb.append(", userId=").append(userId);
+        sb.append(", nick=").append(nick);
         sb.append(", avatar=").append(avatar);
         sb.append(", blogAddress=").append(blogAddress);
         sb.append(", collectedEntriesCount=").append(collectedEntriesCount);
@@ -141,7 +143,6 @@ public class UmsUserInfoOther implements Serializable {
         sb.append(", createdDate=").append(createdDate);
         sb.append(", updatedDate=").append(updatedDate);
         sb.append(", outline=").append(outline);
-        sb.append(", nick=").append(nick);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

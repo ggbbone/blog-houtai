@@ -22,9 +22,6 @@ public class UmsLikeServiceImpl implements UmsLikeService {
 
     @Override
     public Long like(UmsLikeCommonParams params) throws Exception {
-        if (hasLike(params.getTargetId(), params.getType())) {
-            throw new ValidateFailedException("不能重复点赞");
-        }
         //获取redis key
         String key = RedisKeysUtils.getLikeKey(params.getType(), params.getTargetId());
         //点赞用户写入redis

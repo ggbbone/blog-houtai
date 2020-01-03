@@ -2,7 +2,7 @@ package com.yzg.blog.portal.exception;
 
 import com.yzg.blog.common.api.CommonResult;
 import com.yzg.blog.portal.model.Violation;
-import org.springframework.jdbc.BadSqlGrammarException;
+import org.springframework.dao.DataAccessException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -69,17 +69,6 @@ public class ExceptionConfig {
     }
 
     /**
-     * sql执行异常
-     * @param e
-     * @return
-     */
-    @ExceptionHandler(value = BadSqlGrammarException.class)
-    @ResponseBody
-    public CommonResult SQLSyntaxErrorExceptionHandle(BadSqlGrammarException e) {
-        return CommonResult.validateFailed("参数异常");
-    }
-
-    /**
      * 401错误（token无效）
      * @param e
      * @return
@@ -112,15 +101,9 @@ public class ExceptionConfig {
         return CommonResult.validateFailed(e.getMessage());
     }
 
-
-    /**
-     * 其他异常
-     * @param e
-     * @return
-     */
-//    @ExceptionHandler(value = RuntimeException.class)
-//    @ResponseBody
-//    public CommonResult exceptionHandler(RuntimeException e) {
-//        return CommonResult.failed(e.getMessage());
-//    }
+    @ExceptionHandler(value = DataAccessException.class)
+    @ResponseBody
+    public CommonResult  DataAccessExceptionHandle(DataAccessException e) {
+        return CommonResult.validateFailed(e.getMessage());
+    }
 }

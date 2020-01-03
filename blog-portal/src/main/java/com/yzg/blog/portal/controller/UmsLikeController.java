@@ -22,7 +22,7 @@ import javax.validation.Valid;
 @Validated
 @RestController
 @RequestMapping(value = "/user/like")
-@Api(tags = "论模块点赞功能")
+@Api(tags = "用户模块点赞功能")
 public class UmsLikeController {
     @Autowired
     private UmsLikeService likeService;
@@ -51,16 +51,4 @@ public class UmsLikeController {
         return CommonResult.success(likeService.unlike(params));
     }
 
-    /**
-     * 查询是否点赞
-     * @param params
-     * @return
-     */
-    @LoginToken
-    @ApiOperation("查询是否点赞")
-    @RequestMapping(value = "", method = RequestMethod.GET)
-    public CommonResult hasLike(@Valid UmsLikeCommonParams params) {
-        return CommonResult.success(
-                likeService.hasLike(params.getTargetId(), params.getType()));
-    }
 }

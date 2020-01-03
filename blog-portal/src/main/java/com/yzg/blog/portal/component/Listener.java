@@ -1,9 +1,10 @@
 package com.yzg.blog.portal.component;
 
 import com.yzg.blog.mapper.UmsUserLoginLogMapper;
+import com.yzg.blog.model.BmsArticle;
 import com.yzg.blog.model.UmsActivityFeed;
 import com.yzg.blog.model.UmsUserLoginLog;
-import com.yzg.blog.portal.dao.UmsActivityMapper;
+import com.yzg.blog.portal.dao.UmsActivityFeedDao;
 import com.yzg.blog.portal.dto.UmsLikeCommonParams;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.Queue;
@@ -24,7 +25,7 @@ public class Listener {
     @Autowired
     private UmsUserLoginLogMapper userLoginLogMapper;
     @Autowired
-    private UmsActivityMapper activityFeedMapper;
+    private UmsActivityFeedDao activityFeedMapper;
 
     /**
      * 用户登录消息队列处理
@@ -37,7 +38,7 @@ public class Listener {
     }
 
     /**
-     * 用户点赞消息队列处理
+     * 用户 点赞/取消点赞 消息队列处理
      * @param
      */
     @RabbitListener(queuesToDeclare = @Queue("like.queue"))
@@ -52,4 +53,13 @@ public class Listener {
         activityFeedMapper.insertOrUpdate(activityFeed);
     }
 
+    /**
+     * 用户发表文章消息队列处理
+     * @param article 文章
+     */
+    @RabbitListener(queuesToDeclare = @Queue("add.article.queue"))
+    public void addArticleMq(BmsArticle article) {
+        log.info("用户发表文章：" + article.getId() + " time:" + article.getCreatedDate());
+
+    }
 }

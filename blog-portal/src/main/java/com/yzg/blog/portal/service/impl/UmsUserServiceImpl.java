@@ -1,9 +1,10 @@
 package com.yzg.blog.portal.service.impl;
 
 import com.yzg.blog.mapper.UmsUserInfoMapper;
-import com.yzg.blog.mapper.UmsUserLoginLogMapper;
+import com.yzg.blog.mapper.UmsUserInfoOtherMapper;
 import com.yzg.blog.model.UmsUserInfo;
 import com.yzg.blog.model.UmsUserInfoExample;
+import com.yzg.blog.model.UmsUserInfoOther;
 import com.yzg.blog.model.UmsUserLoginLog;
 import com.yzg.blog.portal.dto.UmsLoginParams;
 import com.yzg.blog.portal.dto.UmsRegisterParams;
@@ -17,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,8 +32,10 @@ import java.util.Date;
 public class UmsUserServiceImpl implements UmsUserService {
     @Autowired
     private UmsUserInfoMapper userInfoMapper;
+
     @Autowired
-    private UmsUserLoginLogMapper userLoginLogMapper;
+    private UmsUserInfoOtherMapper userInfoOtherMapper;
+
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
@@ -84,6 +88,7 @@ public class UmsUserServiceImpl implements UmsUserService {
     }
 
     @Override
+    @Transactional
     public String register(UmsRegisterParams params) throws Exception {
         //注册验证
         if (getUserByUsername(params.getUsername()) != null) {
@@ -102,6 +107,15 @@ public class UmsUserServiceImpl implements UmsUserService {
         userInfo.setStatus((byte) 1);
         userInfo.setCreatedDate(new Date());
         userInfoMapper.insertSelective(userInfo);
+
+        //生成用户详细信息
+        UmsUserInfoOther other = new UmsUserInfoOther();
+        other.setUserId(userInfo.getId());
+        other.setNick(userInfo.getUsername());
+        other.setCreatedDate(new Date());
+        other.setUpdatedDate(new Date());
+        userInfoOtherMapper.insertSelective(other);
+        //返回登录token
         return TokenUtils.getToken(userInfo);
     }
 
@@ -138,4 +152,5 @@ public class UmsUserServiceImpl implements UmsUserService {
             return userInfoMapper.selectByExample(example).get(0);
         }
     }
+
 }
