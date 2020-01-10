@@ -41,4 +41,5 @@ public class BmsArticleUpdateParams {
     @ApiModelProperty("绑定标签id集合")
     private List<Integer> tagsId;
 
+
 }

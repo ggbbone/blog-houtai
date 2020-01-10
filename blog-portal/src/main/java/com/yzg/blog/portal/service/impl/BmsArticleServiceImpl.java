@@ -91,6 +91,7 @@ public class BmsArticleServiceImpl implements BmsArticleService {
 
     @Override
     @CacheEvict(key = "#articleId")
+    @Transactional
     public int delete(int articleId) {
         BmsArticleExample example = new BmsArticleExample();
         example.createCriteria()
@@ -98,13 +99,23 @@ public class BmsArticleServiceImpl implements BmsArticleService {
                 .andUserIdEqualTo(CurrentUser.get().getId());//当前登录用户id
         BmsArticle article = new BmsArticle();
         article.setStatus((byte) 2);//修改文章状态为2（1正常， 2已删除， 3已屏蔽）"
-        return articleMapper.updateByExampleSelective(article, example);
+        int i = articleMapper.updateByExampleSelective(article, example);
+        if (i > 0) {
+            //获取文章标签和分类
+
+            //修改标签和分类的文章数量
+
+        }
+        return i;
     }
 
     @Override
     @CacheEvict(key = "#params.id")
     @Transactional
     public int update(BmsArticleUpdateParams params) {
+        //查询更改前的文章
+        BmsArticle oldArticle = articleMapper.selectByPrimaryKey(params.getId());
+
         BmsArticleExample example = new BmsArticleExample();
         example.createCriteria()
                 .andUserIdEqualTo(CurrentUser.get().getId())
@@ -116,10 +127,19 @@ public class BmsArticleServiceImpl implements BmsArticleService {
         article.setContent(params.getContent());
         article.setUpdatedDate(new Date());
         article.setCover(params.getCover());
+        //更新文章
         int i = articleMapper.updateByExampleSelective(article, example);
-        //更新文章成功时更新标签数据
+        //更新文章成功
         if (i > 0) {
-            categoryService.updateArticleTags(article.getId(), params.getTagsId());
+            //先删除原来的标签
+            categoryService.deleteArticleTags(params.getId());
+            //添加新标签
+            categoryService.insertArticleTags(params.getId(), params.getTagsId());
+            if (!oldArticle.getCategoryId().equals(params.getCategory_id())) {
+                //更改分类下的文章数量
+                categoryService.updateCategoryEntryCount(oldArticle.getCategoryId(), -1);
+                categoryService.updateCategoryEntryCount(params.getCategory_id(), 1);
+            }
         }
         return i;
     }
@@ -145,9 +165,12 @@ public class BmsArticleServiceImpl implements BmsArticleService {
         article.setLastCommentTime(now);
         //插入文章数据
         int i = articleMapper.insertSelective(article);
-        //文章插入成功后插入标签数据
+        //文章插入成功
         if (i > 0) {
+            //插入标签数据
             categoryService.insertArticleTags(article.getId(), params.getTagsId());
+            //分类下的文章数量 + 1
+            categoryService.updateCategoryEntryCount(params.getCategory_id(), 1);
         }
         //添加到消息队列
         //rabbitTemplate.convertAndSend("add.article.queue", article);

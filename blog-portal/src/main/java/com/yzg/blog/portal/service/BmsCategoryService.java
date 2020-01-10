@@ -9,11 +9,36 @@ import java.util.List;
  */
 public interface BmsCategoryService {
 
-    void updateArticleTags(int articleId, List<Integer> tags);
-
+    /**
+     * 添加文章标签
+     * @param articleId 文章id
+     * @param tags 标签集合
+     */
     void insertArticleTags(int articleId, List<Integer> tags);
 
+    /**
+     * 删除文章标签
+     * @param articleId 文章id
+     */
+    void deleteArticleTags(int articleId);
+
+    /**
+     * 获取文章的标签信息
+     * @param articleId 文章id
+     */
     List<BmsArticleTag> selectArticleTags(int articleId);
 
+    /**
+     * 获取文章分类信息
+     * @param categoryId 分类id
+     * @return
+     */
     BmsArticleTag selectArticleCategory(int categoryId);
+
+    /**
+     * 修改标签的文章数量
+     * @param ids 标签id
+     * @param count 修改数量
+     */
+    void updateCategoryEntryCount(Integer ids, int count);
 }

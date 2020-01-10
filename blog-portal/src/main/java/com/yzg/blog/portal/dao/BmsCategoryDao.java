@@ -1,10 +1,7 @@
 package com.yzg.blog.portal.dao;
 
 import com.yzg.blog.portal.model.BmsArticleTag;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.dao.DataAccessException;
 
 import java.util.List;
@@ -38,7 +35,7 @@ public interface BmsCategoryDao {
      * 删除文章的所有标签
      * @param articleId 文章id
      */
-    @Delete("delete bms_article_tags where article_id = #{articleId}")
+    @Delete("delete from bms_article_tags where article_id = #{articleId}")
     void deleteTags(Integer articleId);
 
     /**
@@ -52,4 +49,51 @@ public interface BmsCategoryDao {
             "and c.id = t.category_id \n" +
             "and c.`status` = 1")
     List<BmsArticleTag> selectArticleTagsByArticleId(@Param(value = "id")Integer id);
+
+
+    /**
+     * 批量增加标签下的文章数量
+     * @param tags 标签
+     * @param count 增加的数量
+     */
+    @Update({
+            "<script>",
+            "UPDATE bms_category SET entry_count = entry_count +#{count} " +
+             "WHERE id in " +
+            "(",
+            "<foreach collection='tags' item='tag' index='index' separator=','>",
+            "#{tag}",
+            "</foreach>" +
+            ")",
+            "</script>"
+    })
+    void addCategoryEntryCount(@Param(value = "tags") List<Integer> tags, int count);
+
+    /**
+     * 批量增加标签下的文章数量
+     * @param tags 标签
+     * @param count 增加的数量
+     */
+    @Update({
+            "<script>",
+            "UPDATE bms_category SET entry_count = entry_count -#{count} " +
+            "WHERE id in " +
+            "(",
+            "<foreach collection='tags' item='tag' index='index' separator=','>",
+            "#{tag}",
+            "</foreach>" +
+                    ")",
+            "</script>"
+    })
+    void lessCategoryEntryCount(@Param(value = "tags") List<Integer> tags, int count);
+
+    /**
+     * 获取文章的标签的id集合
+     * @param articleId 文章id
+     * @return
+     */
+    @Select("SELECT category_id FROM\n" +
+            "bms_article_tags\n" +
+            "WHERE article_id = #{articleId}")
+    List<Integer> getTagsIdByArticleId(int articleId);
 }

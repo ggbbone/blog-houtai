@@ -1,6 +1,5 @@
 package com.yzg.blog.portal.controller;
 
-import com.yzg.blog.common.api.CommonPage;
 import com.yzg.blog.common.api.CommonResult;
 import com.yzg.blog.portal.annotation.Role;
 import com.yzg.blog.portal.dto.BmsArticleCreateParams;
@@ -40,12 +39,12 @@ public class BmsArticleController {
 
     @ApiOperation("分页查询所有文章")
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public CommonResult<CommonPage> list(
+    public CommonResult list(
             @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
             @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
             @Valid BmsArticleListParams params) {
         List<BmsArticleInfo> list = bmsArticleService.list(pageNum, pageSize, params);
-        return CommonResult.success(CommonPage.restPage(list));
+        return CommonResult.success(list);
     }
 
     @ApiOperation("根据文章id查询文章详细信息")
