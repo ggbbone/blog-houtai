@@ -13,7 +13,13 @@ public class RedisKeysUtils {
     private static String BIZ_LIKE = "LIKE";
 
     //点赞待同步队列
-    private static String BIZ_CHANG_LIKE = "SYNC_LIKE";
+    private static String BIZ_SYNC_LIKE = "SYNC_LIKE";
+
+    //文章浏览次数待同步队列
+    private static String BIZ_SYNC_ARTICLE_VIEW_COUNT = "SYNC_ARTICLE_VIEW_COUNT";
+
+    //文章浏览次数
+    private static String BIZ_ARTICLE_VIEW_COUNT = "ARTICLE_VIEW_COUNT";
 
     //关注他的人
     private static String BIZ_FOLLOWER = "FOLLOWER";
@@ -64,7 +70,15 @@ public class RedisKeysUtils {
      * @return
      */
     public static String getChangeLikeKey() {
-        return BIZ_CHANG_LIKE;
+        return BIZ_SYNC_LIKE;
+    }
+
+    public static String getSyncArticleViewCount() {
+        return BIZ_SYNC_ARTICLE_VIEW_COUNT;
+    }
+
+    public static String getArticleViewCountKey(int articleId) {
+        return BIZ_ARTICLE_VIEW_COUNT + SPLIT + articleId;
     }
 
 }

@@ -15,6 +15,8 @@ import java.util.List;
 
 /**
  * Created by yzg on 2020/1/3
+ *
+ * 用户草稿service
  */
 @Service
 public class BmsArticleDraftServiceImpl implements BmsArticleDraftService {

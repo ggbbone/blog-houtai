@@ -1,6 +1,8 @@
 server:
   port: 8081
-
+logging:
+  level:
+    com.yzg.blog.portal.dao : info
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/blog?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
@@ -37,7 +39,7 @@ spring:
 
   cache:
     redis:
-      time-to-live: 7d #缓存有效期7天
+      time-to-live: 3d #全局缓存有效期3天
 
 mybatis:
   mapper-locations:

@@ -2,7 +2,7 @@ package com.yzg.blog.portal.controller;
 
 import com.yzg.blog.common.api.CommonPage;
 import com.yzg.blog.common.api.CommonResult;
-import com.yzg.blog.portal.annotation.LoginToken;
+import com.yzg.blog.portal.annotation.Role;
 import com.yzg.blog.portal.dto.BmsArticleDraftAddParams;
 import com.yzg.blog.portal.service.BmsArticleDraftService;
 import io.swagger.annotations.Api;
@@ -24,7 +24,7 @@ public class BmsArticleDraftController {
     @Autowired
     BmsArticleDraftService articleDraftService;
 
-    @LoginToken
+    @Role
     @ApiOperation("获取草稿列表")
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public CommonResult<CommonPage> list(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
@@ -32,21 +32,21 @@ public class BmsArticleDraftController {
         return CommonResult.success(CommonPage.restPage(articleDraftService.list(pageNum, pageSize)));
     }
 
-    @LoginToken
+    @Role
     @ApiOperation("创建草稿")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public CommonResult add(@Valid @RequestBody BmsArticleDraftAddParams params) {
         return CommonResult.success(articleDraftService.insert(params));
     }
 
-    @LoginToken
+    @Role
     @ApiOperation("更新草稿")
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public CommonResult update(@Valid @RequestBody BmsArticleDraftAddParams params) {
         return CommonResult.success(articleDraftService.update(params));
     }
 
-    @LoginToken
+    @Role
     @ApiOperation("删除草稿")
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public CommonResult delete(@RequestBody Integer id) {

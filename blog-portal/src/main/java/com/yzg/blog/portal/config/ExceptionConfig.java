@@ -1,6 +1,9 @@
-package com.yzg.blog.portal.exception;
+package com.yzg.blog.portal.config;
 
 import com.yzg.blog.common.api.CommonResult;
+import com.yzg.blog.portal.exception.ForbiddenException;
+import com.yzg.blog.portal.exception.UnauthorizedException;
+import com.yzg.blog.portal.exception.ValidateFailedException;
 import com.yzg.blog.portal.model.Violation;
 import org.springframework.dao.DataAccessException;
 import org.springframework.validation.BindException;
@@ -101,6 +104,11 @@ public class ExceptionConfig {
         return CommonResult.validateFailed(e.getMessage());
     }
 
+    /**
+     * sql错误
+     * @param e
+     * @return
+     */
     @ExceptionHandler(value = DataAccessException.class)
     @ResponseBody
     public CommonResult  DataAccessExceptionHandle(DataAccessException e) {

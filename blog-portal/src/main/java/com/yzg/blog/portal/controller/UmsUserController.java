@@ -1,7 +1,7 @@
 package com.yzg.blog.portal.controller;
 
 import com.yzg.blog.common.api.CommonResult;
-import com.yzg.blog.portal.annotation.LoginToken;
+import com.yzg.blog.portal.annotation.Role;
 import com.yzg.blog.portal.service.UmsUserInfoService;
 import com.yzg.blog.portal.utils.CurrentUser;
 import io.swagger.annotations.Api;
@@ -26,7 +26,7 @@ public class UmsUserController {
      * 获取当前登录用户信息
      * @return
      */
-    @LoginToken
+    @Role
     @ApiOperation("获取当前登录用户详细信息")
     @RequestMapping(value = "/current", method = RequestMethod.GET)
     public CommonResult getCurrentUserInfo() {

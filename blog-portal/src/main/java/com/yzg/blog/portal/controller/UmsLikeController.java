@@ -1,7 +1,7 @@
 package com.yzg.blog.portal.controller;
 
 import com.yzg.blog.common.api.CommonResult;
-import com.yzg.blog.portal.annotation.LoginToken;
+import com.yzg.blog.portal.annotation.Role;
 import com.yzg.blog.portal.dto.UmsLikeCommonParams;
 import com.yzg.blog.portal.service.UmsLikeService;
 import io.swagger.annotations.Api;
@@ -32,7 +32,7 @@ public class UmsLikeController {
      * @param params
      * @return
      */
-    @LoginToken
+    @Role
     @ApiOperation("点赞")
     @RequestMapping(value = "", method = RequestMethod.PUT)
     public CommonResult like(@Valid UmsLikeCommonParams params) throws Exception {
@@ -44,7 +44,7 @@ public class UmsLikeController {
      * @param params
      * @return
      */
-    @LoginToken
+    @Role
     @ApiOperation("取消点赞")
     @RequestMapping(value = "", method = RequestMethod.DELETE)
     public CommonResult unlike(@Valid UmsLikeCommonParams params) throws Exception {

@@ -1,8 +1,9 @@
 package com.yzg.blog.portal.service;
 
-import com.yzg.blog.model.BmsArticle;
+import com.yzg.blog.portal.dto.BmsArticleCreateParams;
 import com.yzg.blog.portal.dto.BmsArticleListParams;
 import com.yzg.blog.portal.dto.BmsArticleUpdateParams;
+import com.yzg.blog.portal.model.BmsArticleInfo;
 
 import java.util.List;
 
@@ -17,14 +18,22 @@ public interface BmsArticleService {
      * @param pageSize 每页条数
      * @return List<BmsArticle>
      */
-    List<BmsArticle> list(int pageNum, int pageSize, BmsArticleListParams params);
+    List<BmsArticleInfo> list(int pageNum, int pageSize, BmsArticleListParams params);
+
+
+    /**
+     * 增加文章浏览次数
+     * @param articleId 文章id
+     * @param count 次数
+     */
+    void addArticleViewCount(int articleId, int count);
 
     /**
      * 查询单个文章详细信息
      * @param id 文章id
      * @return BmsArticle
      */
-    BmsArticle getById(int id);
+    BmsArticleInfo getById(int id);
 
     /**
      * 删除单个文章
@@ -42,5 +51,7 @@ public interface BmsArticleService {
      * 发表文章
      * @param params 文章内容
      */
-    int add(BmsArticleUpdateParams params);
+    int add(BmsArticleCreateParams params);
+
+
 }

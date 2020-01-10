@@ -10,6 +10,11 @@ import java.net.UnknownHostException;
  * ip地址操作工具类
  */
 public class IpUtils {
+    /**
+     * 从request中获取ip地址
+     * @param request
+     * @return
+     */
     public static String getIpAddr(HttpServletRequest request) {
         String ipAddress = null;
         try {

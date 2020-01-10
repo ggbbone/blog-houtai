@@ -5,34 +5,45 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class UmsUserInfo implements Serializable {
-    private Integer id;
+    @ApiModelProperty(value = "用户id")
+    private Integer userId;
 
     @ApiModelProperty(value = "用户名")
     private String username;
 
-    @ApiModelProperty(value = "密码")
-    private String password;
+    @ApiModelProperty(value = "头像地址")
+    private String avatar;
 
-    @ApiModelProperty(value = "绑定邮箱")
-    private String email;
+    @ApiModelProperty(value = "个人主页")
+    private String blogAddress;
 
-    @ApiModelProperty(value = "状态（1正常， 2已销户， 3封禁）")
-    private Byte status;
+    @ApiModelProperty(value = "关注的收藏集数量")
+    private Integer collectedEntriesCount;
 
-    @ApiModelProperty(value = "密码加密盐")
-    private String salt;
+    @ApiModelProperty(value = "创建的收藏集数量")
+    private Integer collectionCount;
 
-    @ApiModelProperty(value = "注册时间")
+    @ApiModelProperty(value = "他关注的人数")
+    private Integer followeeCount;
+
+    @ApiModelProperty(value = "关注他的人数")
+    private Integer followerCount;
+
     private Date createdDate;
+
+    private Date updatedDate;
+
+    @ApiModelProperty(value = "个人简介")
+    private String outline;
 
     private static final long serialVersionUID = 1L;
 
-    public Integer getId() {
-        return id;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public String getUsername() {
@@ -43,36 +54,52 @@ public class UmsUserInfo implements Serializable {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
+    public String getAvatar() {
+        return avatar;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
-    public String getEmail() {
-        return email;
+    public String getBlogAddress() {
+        return blogAddress;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setBlogAddress(String blogAddress) {
+        this.blogAddress = blogAddress;
     }
 
-    public Byte getStatus() {
-        return status;
+    public Integer getCollectedEntriesCount() {
+        return collectedEntriesCount;
     }
 
-    public void setStatus(Byte status) {
-        this.status = status;
+    public void setCollectedEntriesCount(Integer collectedEntriesCount) {
+        this.collectedEntriesCount = collectedEntriesCount;
     }
 
-    public String getSalt() {
-        return salt;
+    public Integer getCollectionCount() {
+        return collectionCount;
     }
 
-    public void setSalt(String salt) {
-        this.salt = salt;
+    public void setCollectionCount(Integer collectionCount) {
+        this.collectionCount = collectionCount;
+    }
+
+    public Integer getFolloweeCount() {
+        return followeeCount;
+    }
+
+    public void setFolloweeCount(Integer followeeCount) {
+        this.followeeCount = followeeCount;
+    }
+
+    public Integer getFollowerCount() {
+        return followerCount;
+    }
+
+    public void setFollowerCount(Integer followerCount) {
+        this.followerCount = followerCount;
     }
 
     public Date getCreatedDate() {
@@ -83,19 +110,39 @@ public class UmsUserInfo implements Serializable {
         this.createdDate = createdDate;
     }
 
+    public Date getUpdatedDate() {
+        return updatedDate;
+    }
+
+    public void setUpdatedDate(Date updatedDate) {
+        this.updatedDate = updatedDate;
+    }
+
+    public String getOutline() {
+        return outline;
+    }
+
+    public void setOutline(String outline) {
+        this.outline = outline;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
+        sb.append(", userId=").append(userId);
         sb.append(", username=").append(username);
-        sb.append(", password=").append(password);
-        sb.append(", email=").append(email);
-        sb.append(", status=").append(status);
-        sb.append(", salt=").append(salt);
+        sb.append(", avatar=").append(avatar);
+        sb.append(", blogAddress=").append(blogAddress);
+        sb.append(", collectedEntriesCount=").append(collectedEntriesCount);
+        sb.append(", collectionCount=").append(collectionCount);
+        sb.append(", followeeCount=").append(followeeCount);
+        sb.append(", followerCount=").append(followerCount);
         sb.append(", createdDate=").append(createdDate);
+        sb.append(", updatedDate=").append(updatedDate);
+        sb.append(", outline=").append(outline);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

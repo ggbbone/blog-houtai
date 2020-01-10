@@ -3,7 +3,7 @@ package com.yzg.blog.portal.controller;
 import com.yzg.blog.common.api.CommonPage;
 import com.yzg.blog.common.api.CommonResult;
 import com.yzg.blog.model.CmsComment;
-import com.yzg.blog.portal.annotation.LoginToken;
+import com.yzg.blog.portal.annotation.Role;
 import com.yzg.blog.portal.dto.CmsCommentCreateParams;
 import com.yzg.blog.portal.dto.CmsCommentListParams;
 import com.yzg.blog.portal.service.CmsCommentService;
@@ -51,7 +51,7 @@ public class CmsCommentController {
      * @param params
      * @return
      */
-    @LoginToken
+    @Role
     @ApiOperation("添加评论/回复")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public CommonResult add(@Valid @RequestBody CmsCommentCreateParams params) {
@@ -65,7 +65,7 @@ public class CmsCommentController {
      * @param content 评论内容
      * @return
      */
-    @LoginToken
+    @Role
     @ApiOperation("修改评论/回复的内容")
     @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
     public CommonResult update(@PathVariable Integer id, @NotEmpty @RequestParam String content) {
@@ -78,7 +78,7 @@ public class CmsCommentController {
      * @param id 评论/回复id
      * @return
      */
-    @LoginToken
+    @Role
     @ApiOperation("删除评论/回复")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
     public CommonResult delete(@PathVariable Integer id) {

@@ -59,7 +59,7 @@ public class Listener {
      */
     @RabbitListener(queuesToDeclare = @Queue("add.article.queue"))
     public void addArticleMq(BmsArticle article) {
-        log.info("用户发表文章：" + article.getId() + " time:" + article.getCreatedDate());
+        log.info("用户发表文章：" + article);
 
     }
 }

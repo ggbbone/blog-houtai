@@ -2,7 +2,7 @@ package com.yzg.blog.portal.utils;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.yzg.blog.model.UmsUserInfo;
+import com.yzg.blog.model.UmsUser;
 
 import java.util.Date;
 
@@ -19,7 +19,7 @@ public class TokenUtils {
      * @param user
      * @return
      */
-    public static String getToken(UmsUserInfo user) {
+    public static String getToken(UmsUser user) {
         return JWT.create()
                 .withExpiresAt(new Date(System.currentTimeMillis() + 7 *24 * 3600 * 1000))//设置过期时间7天
                 .withAudience(String.valueOf(user.getId()))

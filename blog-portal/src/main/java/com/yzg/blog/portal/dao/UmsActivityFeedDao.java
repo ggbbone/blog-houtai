@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Insert;
 /**
  * Created by yzg on 2019/12/31
  *
- * 用户动态Dao
+ * 自定义用户动态Dao
  */
 public interface UmsActivityFeedDao {
 
