@@ -1,11 +1,11 @@
-package com.yzg.blog.portal.component;
+package com.yzg.blog.portal.common.component;
 
 import com.yzg.blog.mapper.UmsUserLoginLogMapper;
 import com.yzg.blog.model.BmsArticle;
 import com.yzg.blog.model.UmsActivityFeed;
 import com.yzg.blog.model.UmsUserLoginLog;
 import com.yzg.blog.portal.dao.UmsActivityFeedDao;
-import com.yzg.blog.portal.dto.UmsLikeCommonParams;
+import com.yzg.blog.portal.controller.dto.UmsLikeCommonParams;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.Queue;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;

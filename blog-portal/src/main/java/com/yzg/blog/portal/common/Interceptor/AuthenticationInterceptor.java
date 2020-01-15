@@ -1,4 +1,4 @@
-package com.yzg.blog.portal.Interceptor;
+package com.yzg.blog.portal.common.Interceptor;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
@@ -6,8 +6,8 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.yzg.blog.model.UmsUser;
-import com.yzg.blog.portal.annotation.Role;
-import com.yzg.blog.portal.exception.UnauthorizedException;
+import com.yzg.blog.portal.common.annotation.Role;
+import com.yzg.blog.portal.common.exception.UnauthorizedException;
 import com.yzg.blog.portal.service.UmsUserService;
 import com.yzg.blog.portal.utils.CurrentUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,7 +67,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
             } catch (JWTVerificationException e) {
                 throw new UnauthorizedException("token is field:" + e.getMessage());
             }
-            //当前用户存入ThreadLocal
+            //用户信息存入ThreadLocal
             CurrentUser.set(user);
             return true;
 

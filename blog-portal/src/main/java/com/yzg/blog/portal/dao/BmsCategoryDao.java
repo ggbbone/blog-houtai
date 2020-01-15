@@ -13,7 +13,7 @@ import java.util.List;
  */
 public interface BmsCategoryDao {
 
-    @Select("select title, id from bms_category where id = #{id}")
+    @Select("select title, id from bms_category where id = #{id} and `status` = 1")
     BmsArticleTag getById(int id);
 
     /**
@@ -32,14 +32,14 @@ public interface BmsCategoryDao {
     void insertTags(@Param(value = "tags") List<Integer> tags, Integer articleId) throws DataAccessException;
 
     /**
-     * 删除文章的所有标签
+     * 删除 文章的 所有标签
      * @param articleId 文章id
      */
     @Delete("delete from bms_article_tags where article_id = #{articleId}")
     void deleteTags(Integer articleId);
 
     /**
-     * 查询文章的标签
+     * 查询 文章的 所有标签
      * @param id 文章id
      * @return 标签集合
      */
@@ -70,7 +70,7 @@ public interface BmsCategoryDao {
     void addCategoryEntryCount(@Param(value = "tags") List<Integer> tags, int count);
 
     /**
-     * 批量增加标签下的文章数量
+     * 批量减少标签下的文章数量
      * @param tags 标签
      * @param count 增加的数量
      */

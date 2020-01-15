@@ -1,10 +1,6 @@
-package com.yzg.blog.portal.config;
+package com.yzg.blog.portal.common.exception;
 
 import com.yzg.blog.common.api.CommonResult;
-import com.yzg.blog.portal.exception.ForbiddenException;
-import com.yzg.blog.portal.exception.UnauthorizedException;
-import com.yzg.blog.portal.exception.ValidateFailedException;
-import com.yzg.blog.portal.model.Violation;
 import org.springframework.dao.DataAccessException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
@@ -24,7 +20,7 @@ import java.util.ArrayList;
  */
 
 @ControllerAdvice
-public class ExceptionConfig {
+public class DefaultExceptionHandler {
 
     /**
      * 处理参数校验异常

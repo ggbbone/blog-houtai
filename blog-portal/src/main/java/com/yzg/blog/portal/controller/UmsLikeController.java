@@ -1,8 +1,8 @@
 package com.yzg.blog.portal.controller;
 
 import com.yzg.blog.common.api.CommonResult;
-import com.yzg.blog.portal.annotation.Role;
-import com.yzg.blog.portal.dto.UmsLikeCommonParams;
+import com.yzg.blog.portal.common.annotation.Role;
+import com.yzg.blog.portal.controller.dto.UmsLikeCommonParams;
 import com.yzg.blog.portal.service.UmsLikeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

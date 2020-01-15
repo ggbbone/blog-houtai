@@ -1,7 +1,7 @@
 package com.yzg.blog.portal.service.impl;
 
-import com.yzg.blog.portal.dto.UmsLikeCommonParams;
-import com.yzg.blog.portal.exception.ValidateFailedException;
+import com.yzg.blog.portal.controller.dto.UmsLikeCommonParams;
+import com.yzg.blog.portal.common.exception.ValidateFailedException;
 import com.yzg.blog.portal.service.UmsLikeService;
 import com.yzg.blog.portal.utils.CurrentUser;
 import com.yzg.blog.portal.utils.RedisKeysUtils;

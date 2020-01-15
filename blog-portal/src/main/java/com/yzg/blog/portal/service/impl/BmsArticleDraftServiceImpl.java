@@ -4,7 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.yzg.blog.mapper.BmsArticleDraftMapper;
 import com.yzg.blog.model.BmsArticleDraft;
 import com.yzg.blog.model.BmsArticleDraftExample;
-import com.yzg.blog.portal.dto.BmsArticleDraftAddParams;
+import com.yzg.blog.portal.controller.dto.BmsArticleDraftAddParams;
 import com.yzg.blog.portal.service.BmsArticleDraftService;
 import com.yzg.blog.portal.utils.CurrentUser;
 import org.springframework.beans.factory.annotation.Autowired;

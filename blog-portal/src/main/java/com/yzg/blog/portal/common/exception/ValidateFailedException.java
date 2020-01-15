@@ -1,4 +1,4 @@
-package com.yzg.blog.portal.exception;
+package com.yzg.blog.portal.common.exception;
 
 /**
  * Created by yzg on 2019/12/30

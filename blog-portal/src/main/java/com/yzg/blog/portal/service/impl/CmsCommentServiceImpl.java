@@ -4,9 +4,11 @@ import com.github.pagehelper.PageHelper;
 import com.yzg.blog.mapper.CmsCommentMapper;
 import com.yzg.blog.model.CmsComment;
 import com.yzg.blog.model.CmsCommentExample;
-import com.yzg.blog.portal.dto.CmsCommentCreateParams;
-import com.yzg.blog.portal.dto.CmsCommentListParams;
+import com.yzg.blog.portal.dao.CmsCommentDao;
+import com.yzg.blog.portal.controller.dto.CmsCommentCreateParams;
+import com.yzg.blog.portal.controller.dto.CmsCommentListParams;
 import com.yzg.blog.portal.service.CmsCommentService;
+import com.yzg.blog.portal.utils.CurrentUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,8 @@ import java.util.List;
 public class CmsCommentServiceImpl implements CmsCommentService {
     @Autowired
     CmsCommentMapper commentMapper;
+    @Autowired
+    CmsCommentDao CommentDao;
 
     @Override
     public int add(CmsCommentCreateParams params) {
@@ -27,12 +31,21 @@ public class CmsCommentServiceImpl implements CmsCommentService {
         comment.setContent(params.getContent());
         comment.setTargetId(params.getTargetId());
         comment.setRespUserId(params.getRespUserId());
-        comment.setParentType(params.getType());
+        comment.setParentType(params.getParentType());
         comment.setParentId(params.getParentId());
         comment.setCreatedDate(new Date());
         comment.setUpdatedDate(new Date());
-        comment.setUserId(1);//当前登录用户id
-        return commentMapper.insertSelective(comment);
+        comment.setUserId(CurrentUser.get().getId());
+        //插入评论
+        int result = commentMapper.insertSelective(comment);
+        //评论添加成功后
+        if (result > 0) {
+            //如果是回复，目标评论的回复数量 + 1
+            if (params.getTargetId() != 0) {
+                CommentDao.addReplyCount(params.getTargetId(), 1);
+            }
+        }
+        return result;
     }
 
     @Override
@@ -58,7 +71,7 @@ public class CmsCommentServiceImpl implements CmsCommentService {
         CmsCommentExample example = new CmsCommentExample();
         example.createCriteria()
                 .andIdEqualTo(id)
-                .andUserIdEqualTo(1);//当前登录用户id
+                .andUserIdEqualTo(CurrentUser.get().getId());//当前登录用户id
         return commentMapper.updateByExampleSelective(comment, example);
     }
 
@@ -69,7 +82,7 @@ public class CmsCommentServiceImpl implements CmsCommentService {
         CmsCommentExample example = new CmsCommentExample();
         example.createCriteria()
                 .andIdEqualTo(id)
-                .andUserIdEqualTo(1);//当前登录用户id
+                .andUserIdEqualTo(CurrentUser.get().getId());//当前登录用户id
         return commentMapper.updateByExampleSelective(comment, example);
     }
 }

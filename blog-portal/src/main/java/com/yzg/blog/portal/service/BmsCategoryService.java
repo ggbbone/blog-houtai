@@ -29,11 +29,11 @@ public interface BmsCategoryService {
     List<BmsArticleTag> selectArticleTags(int articleId);
 
     /**
-     * 获取文章分类信息
-     * @param categoryId 分类id
+     * 获取 分类/标签 信息
+     * @param categoryId 分类/标签 id
      * @return
      */
-    BmsArticleTag selectArticleCategory(int categoryId);
+    BmsArticleTag select(int categoryId);
 
     /**
      * 修改标签的文章数量
@@ -41,4 +41,18 @@ public interface BmsCategoryService {
      * @param count 修改数量
      */
     void updateCategoryEntryCount(Integer ids, int count);
+
+    /**
+     * 批量修改标签的文章数量
+     * @param ids 标签id集合
+     * @param count 修改数量
+     */
+    void updateCategoryEntryCount(List<Integer> ids, int count);
+
+    /**
+     * 获取文章的所有标签ids
+     * @param articleId 文章id
+     * @return 标签的id集合
+     */
+    List<Integer> getTagIdsByArticleId(int articleId);
 }

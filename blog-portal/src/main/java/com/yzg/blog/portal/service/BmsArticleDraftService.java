@@ -1,7 +1,7 @@
 package com.yzg.blog.portal.service;
 
 import com.yzg.blog.model.BmsArticleDraft;
-import com.yzg.blog.portal.dto.BmsArticleDraftAddParams;
+import com.yzg.blog.portal.controller.dto.BmsArticleDraftAddParams;
 
 import java.util.List;
 

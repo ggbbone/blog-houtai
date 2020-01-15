@@ -1,4 +1,4 @@
-package com.yzg.blog.portal.dto;
+package com.yzg.blog.portal.controller.dto;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;

@@ -1,8 +1,8 @@
 package com.yzg.blog.portal.service;
 
 import com.yzg.blog.model.UmsUser;
-import com.yzg.blog.portal.dto.UmsLoginParams;
-import com.yzg.blog.portal.dto.UmsRegisterParams;
+import com.yzg.blog.portal.controller.dto.UmsLoginParams;
+import com.yzg.blog.portal.controller.dto.UmsRegisterParams;
 
 import javax.servlet.http.HttpServletRequest;
 

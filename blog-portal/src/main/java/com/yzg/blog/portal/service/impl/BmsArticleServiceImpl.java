@@ -5,10 +5,11 @@ import com.yzg.blog.mapper.BmsArticleMapper;
 import com.yzg.blog.model.BmsArticle;
 import com.yzg.blog.model.BmsArticleExample;
 import com.yzg.blog.portal.dao.BmsArticleInfoDao;
-import com.yzg.blog.portal.dto.BmsArticleCreateParams;
-import com.yzg.blog.portal.dto.BmsArticleListParams;
-import com.yzg.blog.portal.dto.BmsArticleUpdateParams;
+import com.yzg.blog.portal.controller.dto.BmsArticleCreateParams;
+import com.yzg.blog.portal.controller.dto.BmsArticleListParams;
+import com.yzg.blog.portal.controller.dto.BmsArticleUpdateParams;
 import com.yzg.blog.portal.model.BmsArticleInfo;
+import com.yzg.blog.portal.model.BmsArticleStatus;
 import com.yzg.blog.portal.service.BmsArticleService;
 import com.yzg.blog.portal.service.BmsCategoryService;
 import com.yzg.blog.portal.service.UmsLikeService;
@@ -25,6 +26,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -64,11 +66,11 @@ public class BmsArticleServiceImpl implements BmsArticleService {
             //作者信息
             a.setUser(userInfoService.getUserInfoById(a.getUserId()));
             //分类信息
-            a.setCategory(categoryService.selectArticleCategory(a.getCategoryId()));
+            a.setCategory(categoryService.select(a.getCategoryId()));
             //标签信息
             a.setTags(categoryService.selectArticleTags(a.getId()));
-            //当前登录用户是否点赞
             if (CurrentUser.get() != null) {
+                //当前登录用户是否对这篇文章点赞
                 a.setHasLike(likeService.hasLike(a.getId(), (byte) 1));
             }
         }
@@ -93,31 +95,47 @@ public class BmsArticleServiceImpl implements BmsArticleService {
     @CacheEvict(key = "#articleId")
     @Transactional
     public int delete(int articleId) {
+        int result = 0;
+
         BmsArticleExample example = new BmsArticleExample();
         example.createCriteria()
+                .andStatusEqualTo(BmsArticleStatus.NORMAL.getCode())//只有正常状态的文章可以删除
                 .andIdEqualTo(articleId)
-                .andUserIdEqualTo(CurrentUser.get().getId());//当前登录用户id
-        BmsArticle article = new BmsArticle();
-        article.setStatus((byte) 2);//修改文章状态为2（1正常， 2已删除， 3已屏蔽）"
-        int i = articleMapper.updateByExampleSelective(article, example);
-        if (i > 0) {
-            //获取文章标签和分类
+                .andUserIdEqualTo(CurrentUser.get().getId());//当前登录用户
 
-            //修改标签和分类的文章数量
+        //查询要删除的文章
+        List<BmsArticle> articles = articleMapper.selectByExample(example);
 
+        if (articles != null && articles.size() > 0) {
+            BmsArticle article = new BmsArticle();
+            article.setStatus(BmsArticleStatus.DELETE.getCode());//设置状态为 已删除
+            result = articleMapper.updateByExampleSelective(article, example);
+            //删除成功
+            if (result > 0) {
+                article = articles.get(0);
+                //获取文章标签和分类的ids
+                List<Integer> tagIds = categoryService.getTagIdsByArticleId(article.getId());
+                ArrayList<Integer> categories = new ArrayList<>(tagIds);
+                categories.add(article.getCategoryId());
+                //修改标签和分类的文章数量
+                categoryService.updateCategoryEntryCount(categories, -1);
+            }
         }
-        return i;
+
+        return result;
     }
 
     @Override
     @CacheEvict(key = "#params.id")
     @Transactional
     public int update(BmsArticleUpdateParams params) {
+        int result = 0;
         //查询更改前的文章
         BmsArticle oldArticle = articleMapper.selectByPrimaryKey(params.getId());
 
         BmsArticleExample example = new BmsArticleExample();
         example.createCriteria()
+                .andStatusNotEqualTo(BmsArticleStatus.DELETE.getCode())//状态为 已删除 的文章不能更新
                 .andUserIdEqualTo(CurrentUser.get().getId())
                 .andIdEqualTo(params.getId());
 
@@ -125,12 +143,12 @@ public class BmsArticleServiceImpl implements BmsArticleService {
         article.setTitle(params.getTitle());
         article.setCategoryId(params.getCategory_id());
         article.setContent(params.getContent());
-        article.setUpdatedDate(new Date());
+        article.setUpdatedDate(new Date());//设置更新时间
         article.setCover(params.getCover());
         //更新文章
-        int i = articleMapper.updateByExampleSelective(article, example);
+        result = articleMapper.updateByExampleSelective(article, example);
         //更新文章成功
-        if (i > 0) {
+        if (result > 0) {
             //先删除原来的标签
             categoryService.deleteArticleTags(params.getId());
             //添加新标签
@@ -141,7 +159,7 @@ public class BmsArticleServiceImpl implements BmsArticleService {
                 categoryService.updateCategoryEntryCount(params.getCategory_id(), 1);
             }
         }
-        return i;
+        return result;
     }
 
     /**
@@ -164,9 +182,9 @@ public class BmsArticleServiceImpl implements BmsArticleService {
         article.setUpdatedDate(now);
         article.setLastCommentTime(now);
         //插入文章数据
-        int i = articleMapper.insertSelective(article);
+        int result = articleMapper.insertSelective(article);
         //文章插入成功
-        if (i > 0) {
+        if (result > 0) {
             //插入标签数据
             categoryService.insertArticleTags(article.getId(), params.getTagsId());
             //分类下的文章数量 + 1
@@ -174,7 +192,7 @@ public class BmsArticleServiceImpl implements BmsArticleService {
         }
         //添加到消息队列
         //rabbitTemplate.convertAndSend("add.article.queue", article);
-        return i;
+        return result;
     }
 
 

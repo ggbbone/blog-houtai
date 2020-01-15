@@ -1,8 +1,8 @@
 package com.yzg.blog.portal.controller;
 
 import com.yzg.blog.common.api.CommonResult;
-import com.yzg.blog.portal.dto.UmsLoginParams;
-import com.yzg.blog.portal.dto.UmsRegisterParams;
+import com.yzg.blog.portal.controller.dto.UmsLoginParams;
+import com.yzg.blog.portal.controller.dto.UmsRegisterParams;
 import com.yzg.blog.portal.service.UmsUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

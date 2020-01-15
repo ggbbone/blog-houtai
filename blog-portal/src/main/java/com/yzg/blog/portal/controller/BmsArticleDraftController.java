@@ -2,8 +2,8 @@ package com.yzg.blog.portal.controller;
 
 import com.yzg.blog.common.api.CommonPage;
 import com.yzg.blog.common.api.CommonResult;
-import com.yzg.blog.portal.annotation.Role;
-import com.yzg.blog.portal.dto.BmsArticleDraftAddParams;
+import com.yzg.blog.portal.common.annotation.Role;
+import com.yzg.blog.portal.controller.dto.BmsArticleDraftAddParams;
 import com.yzg.blog.portal.service.BmsArticleDraftService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

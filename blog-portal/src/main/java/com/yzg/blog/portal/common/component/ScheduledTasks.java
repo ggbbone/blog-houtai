@@ -1,4 +1,4 @@
-package com.yzg.blog.portal.component;
+package com.yzg.blog.portal.common.component;
 
 import com.yzg.blog.portal.dao.BmsArticleInfoDao;
 import com.yzg.blog.portal.service.BmsArticleService;

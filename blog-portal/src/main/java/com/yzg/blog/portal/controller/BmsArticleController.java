@@ -1,10 +1,10 @@
 package com.yzg.blog.portal.controller;
 
 import com.yzg.blog.common.api.CommonResult;
-import com.yzg.blog.portal.annotation.Role;
-import com.yzg.blog.portal.dto.BmsArticleCreateParams;
-import com.yzg.blog.portal.dto.BmsArticleListParams;
-import com.yzg.blog.portal.dto.BmsArticleUpdateParams;
+import com.yzg.blog.portal.common.annotation.Role;
+import com.yzg.blog.portal.controller.dto.BmsArticleCreateParams;
+import com.yzg.blog.portal.controller.dto.BmsArticleListParams;
+import com.yzg.blog.portal.controller.dto.BmsArticleUpdateParams;
 import com.yzg.blog.portal.model.BmsArticleInfo;
 import com.yzg.blog.portal.service.BmsArticleService;
 import com.yzg.blog.portal.service.BmsCategoryService;
@@ -34,8 +34,6 @@ public class BmsArticleController {
     UmsUserInfoService userInfoService;
     @Autowired
     UmsLikeService likeService;
-
-
 
     @ApiOperation("分页查询所有文章")
     @RequestMapping(value = "/list", method = RequestMethod.GET)

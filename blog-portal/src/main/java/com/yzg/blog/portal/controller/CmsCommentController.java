@@ -3,9 +3,9 @@ package com.yzg.blog.portal.controller;
 import com.yzg.blog.common.api.CommonPage;
 import com.yzg.blog.common.api.CommonResult;
 import com.yzg.blog.model.CmsComment;
-import com.yzg.blog.portal.annotation.Role;
-import com.yzg.blog.portal.dto.CmsCommentCreateParams;
-import com.yzg.blog.portal.dto.CmsCommentListParams;
+import com.yzg.blog.portal.common.annotation.Role;
+import com.yzg.blog.portal.controller.dto.CmsCommentCreateParams;
+import com.yzg.blog.portal.controller.dto.CmsCommentListParams;
 import com.yzg.blog.portal.service.CmsCommentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -31,7 +31,7 @@ public class CmsCommentController {
     private CmsCommentService commentService;
 
     /**
-     * 分页查询评论/回复
+     * 分页查询 评论/回复
      * @param pageNum 页码
      * @param pageSize 每页大小
      * @param params 查询参数
@@ -47,7 +47,7 @@ public class CmsCommentController {
     }
 
     /**
-     * 添加评论
+     * 添加 评论
      * @param params
      * @return
      */
@@ -60,7 +60,7 @@ public class CmsCommentController {
     }
 
     /**
-     * 修改评论内容
+     * 修改 评论内容
      * @param id 评论id
      * @param content 评论内容
      * @return
@@ -74,7 +74,7 @@ public class CmsCommentController {
     }
 
     /**
-     * 删除评论回复
+     * 删除 评论/回复
      * @param id 评论/回复id
      * @return
      */

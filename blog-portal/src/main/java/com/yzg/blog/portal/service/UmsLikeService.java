@@ -1,6 +1,6 @@
 package com.yzg.blog.portal.service;
 
-import com.yzg.blog.portal.dto.UmsLikeCommonParams;
+import com.yzg.blog.portal.controller.dto.UmsLikeCommonParams;
 
 /**
  * Created by yzg on 2019/12/25

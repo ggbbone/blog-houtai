@@ -1,8 +1,8 @@
 package com.yzg.blog.portal.service;
 
 import com.yzg.blog.model.CmsComment;
-import com.yzg.blog.portal.dto.CmsCommentCreateParams;
-import com.yzg.blog.portal.dto.CmsCommentListParams;
+import com.yzg.blog.portal.controller.dto.CmsCommentCreateParams;
+import com.yzg.blog.portal.controller.dto.CmsCommentListParams;
 
 import java.util.List;
 

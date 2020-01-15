@@ -1,8 +1,8 @@
 package com.yzg.blog.portal.service;
 
-import com.yzg.blog.portal.dto.BmsArticleCreateParams;
-import com.yzg.blog.portal.dto.BmsArticleListParams;
-import com.yzg.blog.portal.dto.BmsArticleUpdateParams;
+import com.yzg.blog.portal.controller.dto.BmsArticleCreateParams;
+import com.yzg.blog.portal.controller.dto.BmsArticleListParams;
+import com.yzg.blog.portal.controller.dto.BmsArticleUpdateParams;
 import com.yzg.blog.portal.model.BmsArticleInfo;
 
 import java.util.List;

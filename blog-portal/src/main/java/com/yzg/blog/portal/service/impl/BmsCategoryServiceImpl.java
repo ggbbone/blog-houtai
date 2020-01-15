@@ -45,7 +45,7 @@ public class BmsCategoryServiceImpl implements BmsCategoryService {
     @Transactional
     @CacheEvict(cacheNames = {"C_ARTICLE_TAGS"}, key = "#articleId")
     public void deleteArticleTags(int articleId) {
-        //获取文章的所有标签
+        //获取文章的所有标签ids
         List<Integer> tags = categoryDao.getTagsIdByArticleId(articleId);
         if (tags != null && tags.size() > 0) {
             //删除文章的所有标签
@@ -64,7 +64,7 @@ public class BmsCategoryServiceImpl implements BmsCategoryService {
 
     @Cacheable(key = "#categoryId")
     @Override
-    public BmsArticleTag selectArticleCategory(int categoryId) {
+    public BmsArticleTag select(int categoryId) {
         return categoryDao.getById(categoryId);
     }
 
@@ -78,5 +78,22 @@ public class BmsCategoryServiceImpl implements BmsCategoryService {
         } else {
             categoryDao.lessCategoryEntryCount(ids, -count);
         }
+    }
+
+    @Override
+    @Transactional
+    public void updateCategoryEntryCount(List<Integer> ids, int count) {
+        if (ids != null && ids.size() > 0) {
+            if (count >= 0) {
+                categoryDao.addCategoryEntryCount(ids, count);
+            } else {
+                categoryDao.lessCategoryEntryCount(ids, -count);
+            }
+        }
+    }
+
+    @Override
+    public List<Integer> getTagIdsByArticleId(int articleId) {
+        return categoryDao.getTagsIdByArticleId(articleId);
     }
 }

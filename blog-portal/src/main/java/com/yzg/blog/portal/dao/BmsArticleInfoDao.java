@@ -1,6 +1,6 @@
 package com.yzg.blog.portal.dao;
 
-import com.yzg.blog.portal.dto.BmsArticleListParams;
+import com.yzg.blog.portal.controller.dto.BmsArticleListParams;
 import com.yzg.blog.portal.model.BmsArticleInfo;
 import org.apache.ibatis.annotations.*;
 
@@ -53,7 +53,7 @@ public interface BmsArticleInfoDao {
     List<BmsArticleInfo> list(@Param("params") BmsArticleListParams params);
 
 
-    @Select("SELECT id, user_id AS userId, outline, category_id AS categoryId, " +
+    @Select("SELECT id, user_id AS userId, content, category_id AS categoryId, " +
             "title, cover, created_date as createdDate, " +
             "updated_date AS updateDate, last_comment_time AS lastCommentTime, \n" +
             "like_count AS likeCount, view_count AS viewCount, comment_count AS commentCount, " +
