@@ -1,7 +1,7 @@
 package com.yzg.blog.portal.dao;
 
-import com.yzg.blog.portal.controller.dto.BmsArticleListParams;
-import com.yzg.blog.portal.model.BmsArticleInfo;
+import com.yzg.blog.portal.controller.dto.ArticleListDTO;
+import com.yzg.blog.portal.model.ArticleInfo;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -50,7 +50,7 @@ public interface BmsArticleInfoDao {
             "</otherwise>" +
             "</choose>" +
             "</script> ")
-    List<BmsArticleInfo> list(@Param("params") BmsArticleListParams params);
+    List<ArticleInfo> list(@Param("params") ArticleListDTO params);
 
 
     @Select("SELECT id, user_id AS userId, content, category_id AS categoryId, " +
@@ -67,7 +67,7 @@ public interface BmsArticleInfoDao {
             @Result(property = "category", column = "categoryId",
                     one = @One(select = "com.yzg.blog.portal.dao.BmsCategoryDao.getById"))
     })
-    BmsArticleInfo getById(Integer id);
+    ArticleInfo getById(Integer id);
 
 
     /**

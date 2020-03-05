@@ -101,13 +101,14 @@ public class DefaultExceptionHandler {
     }
 
     /**
-     * sql错误
+     * 其他错误
      * @param e
      * @return
      */
-    @ExceptionHandler(value = DataAccessException.class)
-    @ResponseBody
-    public CommonResult  DataAccessExceptionHandle(DataAccessException e) {
-        return CommonResult.validateFailed(e.getMessage());
-    }
+//    @ExceptionHandler(value = Exception.class)
+//    @ResponseBody
+//    public CommonResult  allException(Exception e) {
+//        return CommonResult.failed(e.getMessage());
+//    }
+
 }

@@ -8,7 +8,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.yzg.blog.model.UmsUser;
 import com.yzg.blog.portal.common.annotation.Role;
 import com.yzg.blog.portal.common.exception.UnauthorizedException;
-import com.yzg.blog.portal.service.UmsUserService;
+import com.yzg.blog.portal.service.UserService;
 import com.yzg.blog.portal.utils.CurrentUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
@@ -26,7 +26,7 @@ import java.lang.reflect.Method;
  */
 public class AuthenticationInterceptor implements HandlerInterceptor {
     @Autowired
-    private UmsUserService userService;
+    private UserService userService;
 
     @Override
     public boolean preHandle(HttpServletRequest request,

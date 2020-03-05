@@ -2,9 +2,8 @@ package com.yzg.blog.mapper;
 
 import com.yzg.blog.model.BmsArticleDraft;
 import com.yzg.blog.model.BmsArticleDraftExample;
-import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface BmsArticleDraftMapper {
     long countByExample(BmsArticleDraftExample example);

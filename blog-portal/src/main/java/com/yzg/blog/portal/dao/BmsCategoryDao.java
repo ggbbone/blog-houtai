@@ -1,6 +1,6 @@
 package com.yzg.blog.portal.dao;
 
-import com.yzg.blog.portal.model.BmsArticleTag;
+import com.yzg.blog.portal.model.ArticleTag;
 import org.apache.ibatis.annotations.*;
 import org.springframework.dao.DataAccessException;
 
@@ -14,7 +14,7 @@ import java.util.List;
 public interface BmsCategoryDao {
 
     @Select("select title, id from bms_category where id = #{id} and `status` = 1")
-    BmsArticleTag getById(int id);
+    ArticleTag getById(int id);
 
     /**
      * 批量插入文章和标签数据
@@ -48,7 +48,7 @@ public interface BmsCategoryDao {
             "on t.article_id = #{id} \n" +
             "and c.id = t.category_id \n" +
             "and c.`status` = 1")
-    List<BmsArticleTag> selectArticleTagsByArticleId(@Param(value = "id")Integer id);
+    List<ArticleTag> selectArticleTagsByArticleId(@Param(value = "id")Integer id);
 
 
     /**

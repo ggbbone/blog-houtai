@@ -1,7 +1,7 @@
 package com.yzg.blog.portal.common.component;
 
 import com.yzg.blog.portal.dao.BmsArticleInfoDao;
-import com.yzg.blog.portal.service.BmsArticleService;
+import com.yzg.blog.portal.service.ArticleService;
 import com.yzg.blog.portal.utils.RedisKeysUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class ScheduledTasks {
     @Autowired
     BmsArticleInfoDao articleInfoDao;
     @Autowired
-    BmsArticleService articleService;
+    ArticleService articleService;
 
     /**
      * 从redis同步文章浏览次数到数据库

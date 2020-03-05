@@ -22,7 +22,7 @@ public class CmsComment implements Serializable {
     @ApiModelProperty(value = "接收用户")
     private Integer respUserId;
 
-    @ApiModelProperty(value = "父评论id，为0时表示父评论")
+    @ApiModelProperty(value = "父评论id，为0时表示没有父评论")
     private Integer targetId;
 
     @ApiModelProperty(value = "创建时间")
@@ -34,10 +34,10 @@ public class CmsComment implements Serializable {
     @ApiModelProperty(value = "状态 （1：正常， 2已删除， 3已屏蔽）")
     private Byte status;
 
-    @ApiModelProperty(value = "父类型对象id")
+    @ApiModelProperty(value = "评论目标id")
     private Integer parentId;
 
-    @ApiModelProperty(value = "父类型 (1:文章， 2讨论 )")
+    @ApiModelProperty(value = "评论类型 (1:文章， 2讨论 )")
     private Byte parentType;
 
     private static final long serialVersionUID = 1L;

@@ -2,10 +2,8 @@ package com.yzg.blog.portal.common.component;
 
 import com.yzg.blog.mapper.UmsUserLoginLogMapper;
 import com.yzg.blog.model.BmsArticle;
-import com.yzg.blog.model.UmsActivityFeed;
 import com.yzg.blog.model.UmsUserLoginLog;
-import com.yzg.blog.portal.dao.UmsActivityFeedDao;
-import com.yzg.blog.portal.controller.dto.UmsLikeCommonParams;
+import com.yzg.blog.portal.controller.dto.LikeCommonDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.Queue;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -24,8 +22,7 @@ import java.util.Date;
 public class Listener {
     @Autowired
     private UmsUserLoginLogMapper userLoginLogMapper;
-    @Autowired
-    private UmsActivityFeedDao activityFeedMapper;
+
 
     /**
      * 用户登录消息队列处理
@@ -42,15 +39,9 @@ public class Listener {
      * @param
      */
     @RabbitListener(queuesToDeclare = @Queue("like.queue"))
-    public void likeMq(UmsLikeCommonParams params) throws Exception {
+    public void likeMq(LikeCommonDTO params) throws Exception {
         log.info("用户点赞：" + params);
-        UmsActivityFeed activityFeed = new UmsActivityFeed();
-        activityFeed.setActorId(params.getActorId());
-        activityFeed.setTargetId(params.getTargetId());
-        activityFeed.setAction((byte) 1);
-        activityFeed.setCreatedDate(new Date());
-        activityFeed.setStatus(params.getLike());
-        activityFeedMapper.insertOrUpdate(activityFeed);
+
     }
 
     /**
