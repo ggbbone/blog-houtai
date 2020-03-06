@@ -10,7 +10,7 @@ import org.springframework.amqp.support.converter.MessageConverter;
  *
  * 消息队列配置
  */
-@Configuration
+//@Configuration
 public class AmqpConfig {
     //使用Jackson序列化
     @Bean

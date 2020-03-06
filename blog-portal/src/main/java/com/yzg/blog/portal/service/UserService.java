@@ -40,4 +40,6 @@ public interface UserService {
      * @return
      */
     UmsUser getUserByEmail(String email);
+
+    int checkRegister(String email, String code);
 }

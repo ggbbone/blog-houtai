@@ -1,16 +1,16 @@
 package com.yzg.blog.portal.controller;
 
 import com.yzg.blog.common.api.CommonResult;
-import com.yzg.blog.portal.common.annotation.Role;
-import com.yzg.blog.portal.controller.dto.LikeCommonDTO;
+import com.yzg.blog.portal.common.annotation.LoginRole;
+import com.yzg.blog.portal.controller.dto.LikeDTO;
 import com.yzg.blog.portal.service.LikeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -23,6 +23,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping(value = "/user/like")
 @Api(tags = "用户模块点赞功能")
+@Slf4j
 public class LikeController {
     @Autowired
     private LikeService likeService;
@@ -32,10 +33,11 @@ public class LikeController {
      * @param params
      * @return
      */
-    @Role
+    @LoginRole
     @ApiOperation("点赞")
-    @RequestMapping(value = "", method = RequestMethod.PUT)
-    public CommonResult like(@Valid LikeCommonDTO params) throws Exception {
+    @PutMapping("")
+    public CommonResult like(@Valid LikeDTO params) throws Exception {
+        log.info("LikeController.like:" + params.toString());
         return CommonResult.success(likeService.like(params));
     }
 
@@ -44,10 +46,11 @@ public class LikeController {
      * @param params
      * @return
      */
-    @Role
+    @LoginRole
     @ApiOperation("取消点赞")
-    @RequestMapping(value = "", method = RequestMethod.DELETE)
-    public CommonResult unlike(@Valid LikeCommonDTO params) throws Exception {
+    @Delete("")
+    public CommonResult unlike(@Valid LikeDTO params) throws Exception {
+        log.info("LikeController.unlike:" + params.toString());
         return CommonResult.success(likeService.unlike(params));
     }
 

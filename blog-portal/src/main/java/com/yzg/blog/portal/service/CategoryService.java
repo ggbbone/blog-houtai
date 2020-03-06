@@ -1,7 +1,9 @@
 package com.yzg.blog.portal.service;
 
 import com.yzg.blog.model.BmsCategory;
+import com.yzg.blog.portal.common.exception.ValidateFailedException;
 import com.yzg.blog.portal.controller.dto.CategoryCreateDTO;
+import com.yzg.blog.portal.controller.dto.CategoryUpdateDTO;
 import com.yzg.blog.portal.model.ArticleTag;
 
 import java.util.List;
@@ -65,4 +67,10 @@ public interface CategoryService {
     BmsCategory getCategoryById(Integer id);
 
     BmsCategory getTagById(Integer tagId);
+
+    List<BmsCategory> list(int pageNum, int pageSize, boolean isCategory);
+
+    int delete(Integer id) throws ValidateFailedException;
+
+    int update(CategoryUpdateDTO categoryUpdateDTO) throws ValidateFailedException;
 }

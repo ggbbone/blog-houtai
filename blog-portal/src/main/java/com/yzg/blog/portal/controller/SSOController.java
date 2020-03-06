@@ -50,4 +50,14 @@ public class SSOController {
         return CommonResult.success(userService.register(params));
     }
 
+    /**
+     * 用户注册校验
+     * @return token
+     */
+    @ApiOperation("用户注册校验")
+    @RequestMapping(value = "/check/register/{email}", method = RequestMethod.POST)
+    public CommonResult checkRegister(@PathVariable String email, @RequestParam String code) throws Exception {
+        return CommonResult.success(userService.checkRegister(email, code));
+    }
+
 }

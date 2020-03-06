@@ -1,8 +1,11 @@
 package com.yzg.blog.portal.service.impl;
 
 import com.yzg.blog.mapper.UmsUserInfoMapper;
+import com.yzg.blog.mapper.UmsUserMapper;
+import com.yzg.blog.model.UmsUser;
 import com.yzg.blog.model.UmsUserInfo;
 import com.yzg.blog.model.UmsUserInfoExample;
+import com.yzg.blog.portal.model.UserStatus;
 import com.yzg.blog.portal.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
@@ -21,18 +24,17 @@ import java.util.List;
 public class UserInfoServiceImpl implements UserInfoService {
     @Autowired
     UmsUserInfoMapper userInfoMapper;
+    @Autowired
+    UmsUserMapper userMapper;
 
     @Override
     @Cacheable(key = "#id")
     public UmsUserInfo getUserInfoById(Integer id) {
-        UmsUserInfo userInfo = new UmsUserInfo();
-        UmsUserInfoExample example = new UmsUserInfoExample();
-        example.createCriteria().andUserIdEqualTo(id);
-        List<UmsUserInfo> userInfos = userInfoMapper.selectByExample(example);
-        if (userInfos != null && userInfos.size() > 0) {
-            userInfo = userInfos.get(0);
+        UmsUser user = userMapper.selectByPrimaryKey(id);
+        if (user == null || user.getStatus() != UserStatus.NORMAL.getCode()) {
+            return null;
         }
-        return userInfo;
+        return userInfoMapper.selectByPrimaryKey(id);
     }
 
     @Override

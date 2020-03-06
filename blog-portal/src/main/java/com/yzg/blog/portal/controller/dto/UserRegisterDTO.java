@@ -5,13 +5,14 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import java.io.Serializable;
 
 /**
  * Created by yzg on 2019/12/27
  *
  * 用户注册请求参数
  */
-public class UserRegisterDTO {
+public class UserRegisterDTO implements Serializable {
     @ApiModelProperty("用户名")
     @Length(min = 4, max = 18, message = "用户名长度为4到18个字符")
     @NotEmpty
@@ -27,17 +28,12 @@ public class UserRegisterDTO {
     @NotEmpty
     private String password;
 
-    @ApiModelProperty("登录验证码")
-    @NotEmpty
-    private String code;
-
     @Override
     public String toString() {
         return "UmsRegisterParams{" +
                 "username='" + username + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", code='" + code + '\'' +
                 '}';
     }
 
@@ -65,11 +61,4 @@ public class UserRegisterDTO {
         this.password = password;
     }
 
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
 }

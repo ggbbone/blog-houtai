@@ -46,7 +46,7 @@ public interface ArticleService {
      * 更新文章
      * @param params 更新内容
      */
-    int update(ArticleUpdateDTO params);
+    int update(ArticleUpdateDTO params) throws ValidateFailedException;
 
     /**
      * 发表文章

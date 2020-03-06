@@ -7,6 +7,7 @@ import com.yzg.blog.model.CmsCommentExample;
 import com.yzg.blog.portal.dao.CmsCommentDao;
 import com.yzg.blog.portal.controller.dto.CommentCreateDTO;
 import com.yzg.blog.portal.controller.dto.CommentListDTO;
+import com.yzg.blog.portal.model.CommentStatus;
 import com.yzg.blog.portal.service.CommentService;
 import com.yzg.blog.portal.utils.CurrentUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,13 +53,13 @@ public class CommentServiceImpl implements CommentService {
     public List<CmsComment> list(Integer pageNum, Integer pageSize, CommentListDTO params) {
         CmsCommentExample example = new CmsCommentExample();
         CmsCommentExample.Criteria criteria = example.createCriteria();
-        if (pageSize > 20) {//最多查询20条数据
-            pageSize = 20;
+        if (pageSize > 50) {//最多查询50条数据
+            pageSize = 50;
         }
         criteria.andParentIdEqualTo(params.getParentId())
                 .andParentTypeEqualTo(params.getParentType())
                 .andTargetIdEqualTo(params.getTargetId())
-                .andStatusEqualTo((byte) 1);//查询状态为1（正常）的评论/回复
+                .andStatusEqualTo(CommentStatus.NORMAL.getCode());//查询状态为1（正常）的评论/回复
         example.setOrderByClause(params.getOrderBy());
         PageHelper.startPage(pageNum, pageSize);
         return commentMapper.selectByExample(example);
@@ -71,6 +72,7 @@ public class CommentServiceImpl implements CommentService {
         CmsCommentExample example = new CmsCommentExample();
         example.createCriteria()
                 .andIdEqualTo(id)
+                .andStatusEqualTo(CommentStatus.NORMAL.getCode())
                 .andUserIdEqualTo(CurrentUser.get().getId());//当前登录用户id
         return commentMapper.updateByExampleSelective(comment, example);
     }
@@ -78,7 +80,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public int delete(Integer id) {
         CmsComment comment = new CmsComment();
-        comment.setStatus((byte) 2);//设置status为 (2：已删除)
+        comment.setStatus(CommentStatus.DELETE.getCode());
         CmsCommentExample example = new CmsCommentExample();
         example.createCriteria()
                 .andIdEqualTo(id)

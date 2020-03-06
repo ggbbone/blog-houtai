@@ -6,10 +6,11 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.yzg.blog.model.UmsUser;
-import com.yzg.blog.portal.common.annotation.Role;
+import com.yzg.blog.portal.common.annotation.LoginRole;
 import com.yzg.blog.portal.common.exception.UnauthorizedException;
 import com.yzg.blog.portal.service.UserService;
 import com.yzg.blog.portal.utils.CurrentUser;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -24,6 +25,7 @@ import java.lang.reflect.Method;
  * <p>
  * 用于验证用户token的拦截器
  */
+@Slf4j
 public class AuthenticationInterceptor implements HandlerInterceptor {
     @Autowired
     private UserService userService;
@@ -40,9 +42,9 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
         }
         Method method = ((HandlerMethod) object).getMethod();
         //检查需要用户权限的注解
-        if (method.isAnnotationPresent(Role.class)) {
+        if (method.isAnnotationPresent(LoginRole.class)) {
             //获取注解中需要的角色
-            Role loginToken = method.getAnnotation(Role.class);
+            LoginRole loginToken = method.getAnnotation(LoginRole.class);
             String role = loginToken.value();
             // 执行认证
             if (token == null) {
@@ -67,6 +69,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
             } catch (JWTVerificationException e) {
                 throw new UnauthorizedException("token is field:" + e.getMessage());
             }
+            log.info("用户访问：" + user.toString());
             //用户信息存入ThreadLocal
             CurrentUser.set(user);
             return true;

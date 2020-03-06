@@ -9,10 +9,12 @@ import com.yzg.blog.model.UmsUserLoginLog;
 import com.yzg.blog.portal.controller.dto.UserLoginDTO;
 import com.yzg.blog.portal.controller.dto.UserRegisterDTO;
 import com.yzg.blog.portal.common.exception.ValidateFailedException;
+import com.yzg.blog.portal.model.UserStatus;
 import com.yzg.blog.portal.service.UserInfoService;
 import com.yzg.blog.portal.service.UserService;
 import com.yzg.blog.portal.utils.IpUtils;
 import com.yzg.blog.portal.utils.TokenUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,7 @@ import java.util.Date;
  */
 @Service
 @CacheConfig(cacheNames = {"C_USER"})
+@Slf4j
 public class UserServiceImpl implements UserService {
     @Autowired
     private UmsUserMapper userMapper;
@@ -72,6 +75,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public String register(UserRegisterDTO params) throws Exception {
+        log.info("UserServiceImpl.register:" + params);
         //注册验证
         if (userInfoService.getUserInfoByUsername(params.getUsername()) != null) {
             throw new ValidateFailedException("用户名已存在");
@@ -79,25 +83,30 @@ public class UserServiceImpl implements UserService {
         if (getUserByEmail(params.getEmail()) != null) {
             throw new ValidateFailedException("邮箱已被注册");
         }
+        rabbitTemplate.convertAndSend("register.queue", params);
+        return null;
+    }
+    private String reg(UserRegisterDTO params) {
         UmsUser user = new UmsUser();
         String salt = RandomStringUtils.random(5);//生成随机字符串盐
         user.setSalt(salt);
         //加密密码
         user.setPassword(DigestUtils.md5DigestAsHex((params.getPassword() + salt).getBytes()));
         user.setEmail(params.getEmail());
-        user.setStatus((byte) 1);
+        user.setStatus(UserStatus.NORMAL.getCode());
         user.setCreatedDate(new Date());
-        userMapper.insertSelective(user);
-
-        //生成用户详细信息
-        UmsUserInfo userInfo = new UmsUserInfo();
-        userInfo.setUserId(user.getId());
-        userInfo.setUsername(params.getUsername());
-        userInfo.setCreatedDate(new Date());
-        userInfo.setUpdatedDate(new Date());
-        userInfoMapper.insertSelective(userInfo);
-        //返回登录token
-        return TokenUtils.getToken(user);
+        if (userMapper.insertSelective(user) > 0) {
+            //生成用户详细信息
+            UmsUserInfo userInfo = new UmsUserInfo();
+            userInfo.setUserId(user.getId());
+            userInfo.setUsername(params.getUsername());
+            userInfo.setCreatedDate(new Date());
+            userInfo.setUpdatedDate(new Date());
+            userInfoMapper.insertSelective(userInfo);
+            //返回登录token
+            return TokenUtils.getToken(user);
+        }
+        return null;
     }
 
     @Override
@@ -115,6 +124,12 @@ public class UserServiceImpl implements UserService {
         } else {
             return userMapper.selectByExample(example).get(0);
         }
+    }
+
+    @Override
+    public int checkRegister(String email, String code) {
+
+        return 0;
     }
 
 }

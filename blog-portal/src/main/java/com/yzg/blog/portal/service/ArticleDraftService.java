@@ -1,7 +1,8 @@
 package com.yzg.blog.portal.service;
 
 import com.yzg.blog.model.BmsArticleDraft;
-import com.yzg.blog.portal.controller.dto.ArticleDraftAddDTO;
+import com.yzg.blog.portal.controller.dto.ArticleDraftCreateDTO;
+import com.yzg.blog.portal.controller.dto.ArticleDraftUpdateDTO;
 
 import java.util.List;
 
@@ -16,11 +17,13 @@ public interface ArticleDraftService {
      * @param params
      * @return 生成的草稿id
      */
-    Integer insert(ArticleDraftAddDTO params);
+    Integer insert(ArticleDraftCreateDTO params);
 
-    int update(ArticleDraftAddDTO params);
+    int update(ArticleDraftUpdateDTO params);
 
     int delete(Integer id);
 
     List<BmsArticleDraft> list(int pageNum, int pageSize);
+
+    BmsArticleDraft getById(int draftId);
 }

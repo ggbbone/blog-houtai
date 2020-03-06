@@ -3,18 +3,18 @@ package com.yzg.blog.portal.model;
 /**
  * Created by yzg on 2020/1/13
  */
-public enum ArticleStatus {
-    NORMAL((byte) 1, "正常"),
+public enum LikeType {
+    ARTICLE((byte) 1, "文章"),
 
-    LOADING((byte) 2, "审核中"),
+    COMMENT((byte) 2, "评论"),
 
-    DELETE((byte)0, "已删除");
+    PIN((byte)3, "讨论");
 
     private byte code;
     private String desc;
 
 
-    ArticleStatus(byte code, String desc) {
+    LikeType(byte code, String desc) {
         this.code = code;
         this.desc = desc;
     }

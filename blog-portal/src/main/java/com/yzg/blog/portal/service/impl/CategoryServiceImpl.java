@@ -1,12 +1,16 @@
 package com.yzg.blog.portal.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.yzg.blog.mapper.BmsArticleTagsMapper;
 import com.yzg.blog.mapper.BmsCategoryMapper;
 import com.yzg.blog.model.BmsCategory;
 import com.yzg.blog.model.BmsCategoryExample;
+import com.yzg.blog.portal.common.exception.ValidateFailedException;
 import com.yzg.blog.portal.controller.dto.CategoryCreateDTO;
+import com.yzg.blog.portal.controller.dto.CategoryUpdateDTO;
 import com.yzg.blog.portal.dao.BmsCategoryDao;
 import com.yzg.blog.portal.model.ArticleTag;
+import com.yzg.blog.portal.model.CategoryStatus;
 import com.yzg.blog.portal.service.CategoryService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -120,7 +124,9 @@ public class CategoryServiceImpl implements CategoryService {
         BeanUtils.copyProperties(categoryCreateDTO, category);
         category.setCreatedDate(new Date());
         category.setIsCategory(false);
-        return categoryMapper.insertSelective(category);
+        category.setStatus(CategoryStatus.LOADING.getCode());
+        categoryMapper.insertSelective(category);
+        return category.getId();
     }
 
     @Override
@@ -145,5 +151,36 @@ public class CategoryServiceImpl implements CategoryService {
         }else {
             return null;
         }
+    }
+
+    @Override
+    public List<BmsCategory> list(int pageNum, int pageSize, boolean isCategory) {
+        PageHelper.startPage(pageNum, pageSize);
+        BmsCategoryExample example = new BmsCategoryExample();
+        example.createCriteria()
+                .andIsCategoryEqualTo(isCategory)
+                .andStatusEqualTo(CategoryStatus.NORMAL.getCode());
+        return categoryMapper.selectByExample(example);
+    }
+
+    @Override
+    public int delete(Integer id) throws ValidateFailedException {
+        BmsCategory category = categoryMapper.selectByPrimaryKey(id);
+        if (category == null) {
+            throw new ValidateFailedException("分类/标签不存在");
+        }
+        category.setStatus(CategoryStatus.DELETE.getCode());
+        return categoryMapper.updateByPrimaryKey(category);
+    }
+
+    @Override
+    public int update(CategoryUpdateDTO params) throws ValidateFailedException {
+        BmsCategory category = categoryMapper.selectByPrimaryKey(params.getId());
+        if (category == null) {
+            throw new ValidateFailedException("分类/标签不存在");
+        }
+        BeanUtils.copyProperties(params, category);
+        category.setUpdatedDate(new Date());
+        return categoryMapper.updateByPrimaryKeySelective(category);
     }
 }

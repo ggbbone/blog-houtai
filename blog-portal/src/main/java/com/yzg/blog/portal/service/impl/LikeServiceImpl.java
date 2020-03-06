@@ -1,6 +1,6 @@
 package com.yzg.blog.portal.service.impl;
 
-import com.yzg.blog.portal.controller.dto.LikeCommonDTO;
+import com.yzg.blog.portal.controller.dto.LikeDTO;
 import com.yzg.blog.portal.common.exception.ValidateFailedException;
 import com.yzg.blog.portal.service.LikeService;
 import com.yzg.blog.portal.utils.CurrentUser;
@@ -21,7 +21,7 @@ public class LikeServiceImpl implements LikeService {
     private RabbitTemplate rabbitTemplate;
 
     @Override
-    public Long like(LikeCommonDTO params) throws Exception {
+    public Long like(LikeDTO params) throws Exception {
         //获取redis key
         String key = RedisKeysUtils.getLikeKey(params.getType(), params.getTargetId());
         //点赞用户写入redis
@@ -29,17 +29,15 @@ public class LikeServiceImpl implements LikeService {
         //将key添加到修改队列，便于同步到数据库时遍历
         redisTemplate.opsForSet().add(RedisKeysUtils.getChangeLikeKey(), key);
         //添加到消息队列
-        params.setActorId(CurrentUser.get().getId());
-        params.setLike(true);
-        rabbitTemplate.convertAndSend("like.queue", params);
+        //rabbitTemplate.convertAndSend("like.queue", params);
         //返回点赞总数
         return getLikeCount(params.getTargetId(), params.getType());
     }
 
     @Override
-    public Long unlike(LikeCommonDTO params) throws Exception {
+    public Long unlike(LikeDTO params) throws Exception {
         if (!hasLike(params.getTargetId(), params.getType())) {
-            throw  new ValidateFailedException("你还没有点赞过");
+            throw new ValidateFailedException("你还没有点赞过");
         }
         //获取redis key
         String key = RedisKeysUtils.getLikeKey(params.getType(), params.getTargetId());
@@ -48,19 +46,20 @@ public class LikeServiceImpl implements LikeService {
         //将key添加到修改队列，便于同步到数据库时遍历
         redisTemplate.opsForSet().add(RedisKeysUtils.getChangeLikeKey(), key);
         //添加到消息队列
-        params.setActorId(CurrentUser.get().getId());
-        params.setLike(false);
-        rabbitTemplate.convertAndSend("like.queue", params);
+        //rabbitTemplate.convertAndSend("like.queue", params);
         //返回点赞总数
         return getLikeCount(params.getTargetId(), params.getType());
     }
 
     @Override
     public Boolean hasLike(int targetId, byte type) {
-        //获取redis key
-        String key = RedisKeysUtils.getLikeKey(type, targetId);
-        //返回当前用户是否在点赞集合中
-        return redisTemplate.opsForSet().isMember(key, String.valueOf(CurrentUser.get().getId()));
+        if (CurrentUser.get() != null) {
+            //获取redis key
+            String key = RedisKeysUtils.getLikeKey(type, targetId);
+            //返回当前用户是否在点赞集合中
+            return redisTemplate.opsForSet().isMember(key, String.valueOf(CurrentUser.get().getId()));
+        }
+        return false;
     }
 
     @Override

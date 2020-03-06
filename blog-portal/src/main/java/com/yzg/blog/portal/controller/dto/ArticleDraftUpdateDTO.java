@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -13,21 +14,19 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 @ToString
-public class ArticleDraftAddDTO {
+public class ArticleDraftUpdateDTO {
     @ApiModelProperty(value = "id")
     @NotNull
     private Integer id;
 
     @ApiModelProperty(value = "标题")
-    @NotNull
     private String title;
 
     @ApiModelProperty(value = "封面图片")
-    @NotNull
     private String cover;
 
     @ApiModelProperty(value = "正文内容")
-    @NotNull
+    @NotEmpty
     private String content;
 
 }

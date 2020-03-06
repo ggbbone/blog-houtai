@@ -1,6 +1,7 @@
 package com.yzg.blog.portal.service;
 
-import com.yzg.blog.portal.controller.dto.LikeCommonDTO;
+import com.yzg.blog.portal.controller.dto.LikeDTO;
+import org.springframework.stereotype.Service;
 
 /**
  * Created by yzg on 2019/12/25
@@ -11,14 +12,14 @@ public interface LikeService {
      * @param params
      * @return 点赞人数
      */
-    Long like(LikeCommonDTO params) throws Exception;
+    Long like(LikeDTO params) throws Exception;
 
     /**
      * 取消点赞
      * @param params
      * @return 点赞人数
      */
-    Long unlike(LikeCommonDTO params) throws Exception;
+    Long unlike(LikeDTO params) throws Exception;
 
     /**
      * @return 是否点赞

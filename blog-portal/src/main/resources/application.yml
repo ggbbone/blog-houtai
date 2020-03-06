@@ -2,8 +2,11 @@ server:
   port: 8081
 logging:
   level:
-    com.yzg.blog.portal.dao : debug
+    com.yzg.blog.portal.dao : info
 spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
   datasource:
     url: jdbc:mysql://localhost:3306/blog?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
     username: root
@@ -17,29 +20,54 @@ spring:
       stat-view-servlet: #访问监控网页的登录用户名和密码
         login-username: druid
         login-password: druid
+  #邮件配置
+  mail:
+    host: smtp.163.com # 发件服务器
+    username: yzgsjy2684828068@163.com # 账号
+    password: yzg847857204 # 密码（163需要授权第三方登录密码，请查看设置-客户端授权码密码开通）
+    port: 465
+    protocol: smtp
+    default-encoding: utf-8
+    # 下面这些配置大家不用深究，主要用于配置ssl
+    properties:
+      mail:
+        imap:
+          ssl:
+            socketFactory:
+              fallback: false
+        smtp:
+          auth: true
+          ssl:
+            enable: true
+            socketFactory:
+              class: com.fintech.modules.base.util.mail.MailSSLSocketFactory
+          starttls:
+            enable: true
+            required: true
+      test-connection: false
 
-#  rabbitmq:
-#    host: localhost #rabbitmq服务器地址
-#    port: 5672
-#    username: guest
-#    password: guest
+  rabbitmq:
+    host: localhost #rabbitmq服务器地址
+    port: 5672
+    username: guest
+    password: guest
 
-#  redis:
-#    host: localhost # Redis服务器地址
-#    database: 0 # Redis数据库索引（默认为0）
-#    port: 6379 # Redis服务器连接端口
-#    password: # Redis服务器连接密码（默认为空）
-#    jedis:
-#      pool:
-#        max-active: 8 # 连接池最大连接数（使用负值表示没有限制）
-#        max-wait: -1ms # 连接池最大阻塞等待时间（使用负值表示没有限制）
-#        max-idle: 8 # 连接池中的最大空闲连接
-#        min-idle: 0 # 连接池中的最小空闲连接
-#    timeout: 3000ms # 连接超时时间（毫秒）
+  redis:
+    host: localhost # Redis服务器地址
+    database: 0 # Redis数据库索引（默认为0）
+    port: 6379 # Redis服务器连接端口
+    password: # Redis服务器连接密码（默认为空）
+    jedis:
+      pool:
+        max-active: 8 # 连接池最大连接数（使用负值表示没有限制）
+        max-wait: -1ms # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-idle: 8 # 连接池中的最大空闲连接
+        min-idle: 0 # 连接池中的最小空闲连接
+    timeout: 3000ms # 连接超时时间（毫秒）
 
-#  cache:
-#    redis:
-#      time-to-live: 3d #全局缓存有效期3天
+  cache:
+    redis:
+      time-to-live: 3d #全局缓存有效期3天
 
 mybatis:
   mapper-locations:
@@ -48,3 +76,4 @@ mybatis:
 pagehelper:
   # 用于控制默认不带 count 查询的方法中，是否执行 count 查询，这里设置为true后，total会为-1
   default-count: false
+

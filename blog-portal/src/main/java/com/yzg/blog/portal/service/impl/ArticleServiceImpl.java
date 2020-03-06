@@ -12,12 +12,14 @@ import com.yzg.blog.portal.controller.dto.ArticleListDTO;
 import com.yzg.blog.portal.controller.dto.ArticleUpdateDTO;
 import com.yzg.blog.portal.model.ArticleInfo;
 import com.yzg.blog.portal.model.ArticleStatus;
+import com.yzg.blog.portal.model.LikeType;
 import com.yzg.blog.portal.service.ArticleService;
 import com.yzg.blog.portal.service.CategoryService;
 import com.yzg.blog.portal.service.LikeService;
 import com.yzg.blog.portal.service.UserInfoService;
 import com.yzg.blog.portal.utils.CurrentUser;
 import com.yzg.blog.portal.utils.RedisKeysUtils;
+import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.BeanUtils;
@@ -59,6 +61,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public List<ArticleInfo> list(int pageNum, int pageSize, ArticleListDTO params) {
+        log.info("ArticleServiceImpl.list");
         if (pageSize > 20) {//一次最多查询20条数据
             pageSize = 20;
         }
@@ -72,16 +75,17 @@ public class ArticleServiceImpl implements ArticleService {
             a.setCategory(categoryService.select(a.getCategoryId()));
             //标签信息
             a.setTags(categoryService.selectArticleTags(a.getId()));
-            if (CurrentUser.get() != null) {
-                //当前登录用户是否对这篇文章点赞
-                a.setHasLike(likeService.hasLike(a.getId(), (byte) 1));
-            }
+            //点赞人数
+            a.setLikeCount(Math.toIntExact(likeService.getLikeCount(a.getId(), LikeType.ARTICLE.getCode())));
+            //是否点赞
+            a.setHasLike(likeService.hasLike(a.getId(), LikeType.ARTICLE.getCode()));
         }
         return articleInfos;
     }
 
     @Override
     public void addArticleViewCount(int articleId, int count) {
+        log.info("ArticleServiceImpl.addArticleViewCount");
         //浏览次数 + count
         redisTemplate.opsForValue().increment(RedisKeysUtils.getArticleViewCountKey(articleId), count);
         //添加到待同步队列
@@ -91,6 +95,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     @Cacheable(key = "#articleId")
     public ArticleInfo getById(int articleId) {
+        log.info("ArticleServiceImpl.getById");
         return articleInfoDao.getById(articleId);
     }
 
@@ -98,8 +103,9 @@ public class ArticleServiceImpl implements ArticleService {
     @CacheEvict(key = "#articleId")
     @Transactional
     public int delete(int articleId) throws ValidateFailedException {
-        int result = 0;
+        log.info("ArticleServiceImpl.delete");
 
+        int result = 0;
         BmsArticleExample example = new BmsArticleExample();
         example.createCriteria()
                 .andStatusEqualTo(ArticleStatus.NORMAL.getCode())//只有正常状态的文章可以删除
@@ -131,10 +137,14 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     @CacheEvict(key = "#params.id")
     @Transactional
-    public int update(ArticleUpdateDTO params) {
+    public int update(ArticleUpdateDTO params) throws ValidateFailedException {
+        log.info("ArticleServiceImpl.update");
+
         //查询更改前的文章
         BmsArticle oldArticle = articleMapper.selectByPrimaryKey(params.getId());
-
+        if (oldArticle == null) {
+            throw new ValidateFailedException("文章不存在");
+        }
         BmsArticleExample example = new BmsArticleExample();
         example.createCriteria()
                 .andStatusNotEqualTo(ArticleStatus.DELETE.getCode())//状态为 已删除 的文章不能更新
@@ -169,6 +179,8 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     @Transactional
     public int add(ArticleCreateDTO params) throws ValidateFailedException {
+        log.info("ArticleServiceImpl.add");
+
         //查询分类
         BmsCategory categoryById = categoryService.getCategoryById(params.getCategoryId());
         if (categoryById == null) {
