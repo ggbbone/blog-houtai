@@ -3,16 +3,18 @@ package com.yzg.blog.portal.model;
 /**
  * Created by yzg on 2020/1/13
  */
-public enum CommentParentType {
-    ARTICLE((byte) 1, "文章"),
+public enum EUserStatus {
+    NORMAL((byte) 1, "正常"),
 
-    PIN((byte)2, "讨论");
+    LOADING((byte) 2, "封禁中"),
+
+    DELETE((byte)0, "已注销");
 
     private byte code;
     private String desc;
 
 
-    CommentParentType(byte code, String desc) {
+    EUserStatus(byte code, String desc) {
         this.code = code;
         this.desc = desc;
     }

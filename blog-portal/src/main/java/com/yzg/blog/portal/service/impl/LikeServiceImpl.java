@@ -26,8 +26,6 @@ public class LikeServiceImpl implements LikeService {
         String key = RedisKeysUtils.getLikeKey(params.getType(), params.getTargetId());
         //点赞用户写入redis
         redisTemplate.opsForSet().add(key, String.valueOf(CurrentUser.get().getId()));//value为当前登录用户id
-        //将key添加到修改队列，便于同步到数据库时遍历
-        redisTemplate.opsForSet().add(RedisKeysUtils.getChangeLikeKey(), key);
         //添加到消息队列
         //rabbitTemplate.convertAndSend("like.queue", params);
         //返回点赞总数
@@ -36,15 +34,10 @@ public class LikeServiceImpl implements LikeService {
 
     @Override
     public Long unlike(LikeDTO params) throws Exception {
-        if (!hasLike(params.getTargetId(), params.getType())) {
-            throw new ValidateFailedException("你还没有点赞过");
-        }
         //获取redis key
         String key = RedisKeysUtils.getLikeKey(params.getType(), params.getTargetId());
         //从redis中删除当前点赞用户
         redisTemplate.opsForSet().remove(key, String.valueOf(CurrentUser.get().getId()));
-        //将key添加到修改队列，便于同步到数据库时遍历
-        redisTemplate.opsForSet().add(RedisKeysUtils.getChangeLikeKey(), key);
         //添加到消息队列
         //rabbitTemplate.convertAndSend("like.queue", params);
         //返回点赞总数

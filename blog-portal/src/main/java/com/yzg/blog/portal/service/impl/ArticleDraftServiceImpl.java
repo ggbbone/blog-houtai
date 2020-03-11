@@ -6,7 +6,7 @@ import com.yzg.blog.model.BmsArticleDraft;
 import com.yzg.blog.model.BmsArticleDraftExample;
 import com.yzg.blog.portal.controller.dto.ArticleDraftCreateDTO;
 import com.yzg.blog.portal.controller.dto.ArticleDraftUpdateDTO;
-import com.yzg.blog.portal.model.ArticleDraftStatus;
+import com.yzg.blog.portal.model.EArticleDraftStatus;
 import com.yzg.blog.portal.service.ArticleDraftService;
 import com.yzg.blog.portal.utils.CurrentUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +36,7 @@ public class ArticleDraftServiceImpl implements ArticleDraftService {
         }
         draft.setContent(params.getContent());
         draft.setCover(params.getCover());
-        draft.setStatus(ArticleDraftStatus.NORMAL.getCode());
+        draft.setStatus(EArticleDraftStatus.NORMAL.getCode());
         draft.setCreatedDate(new Date());
         articleDraftMapper.insertSelective(draft);
         return draft.getId();
@@ -49,7 +49,7 @@ public class ArticleDraftServiceImpl implements ArticleDraftService {
         example.createCriteria()
                 .andUserIdEqualTo(CurrentUser.get().getId())
                 .andIdEqualTo(params.getId())
-                .andStatusEqualTo(ArticleDraftStatus.NORMAL.getCode());
+                .andStatusEqualTo(EArticleDraftStatus.NORMAL.getCode());
         if (params.getTitle() == null || params.getTitle().equals("")) {
             draft.setTitle("无标题");
         } else {
@@ -68,8 +68,8 @@ public class ArticleDraftServiceImpl implements ArticleDraftService {
         example.createCriteria()
                 .andUserIdEqualTo(CurrentUser.get().getId())
                 .andIdEqualTo(id)
-                .andStatusEqualTo(ArticleDraftStatus.NORMAL.getCode());
-        draft.setStatus(ArticleDraftStatus.DELETE.getCode());
+                .andStatusEqualTo(EArticleDraftStatus.NORMAL.getCode());
+        draft.setStatus(EArticleDraftStatus.DELETE.getCode());
         draft.setUpdatedDate(new Date());
         return articleDraftMapper.updateByExampleSelective(draft, example);
     }
@@ -79,7 +79,7 @@ public class ArticleDraftServiceImpl implements ArticleDraftService {
         BmsArticleDraftExample example = new BmsArticleDraftExample();
         example.createCriteria()
                 .andUserIdEqualTo(CurrentUser.get().getId())
-                .andStatusEqualTo(ArticleDraftStatus.NORMAL.getCode());
+                .andStatusEqualTo(EArticleDraftStatus.NORMAL.getCode());
         example.setOrderByClause("id desc");
         PageHelper.startPage(pageNum, pageSize);
         return articleDraftMapper.selectByExample(example);
@@ -89,7 +89,7 @@ public class ArticleDraftServiceImpl implements ArticleDraftService {
     public BmsArticleDraft getById(int draftId) {
         BmsArticleDraftExample example = new BmsArticleDraftExample();
         example.createCriteria()
-                .andStatusEqualTo(ArticleDraftStatus.NORMAL.getCode())
+                .andStatusEqualTo(EArticleDraftStatus.NORMAL.getCode())
                 .andIdEqualTo(draftId);
         List<BmsArticleDraft> drafts = articleDraftMapper.selectByExample(example);
         if (drafts.size() > 0) {

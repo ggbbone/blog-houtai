@@ -48,7 +48,7 @@ public class LikeController {
      */
     @LoginRole
     @ApiOperation("取消点赞")
-    @Delete("")
+    @DeleteMapping("")
     public CommonResult unlike(@Valid LikeDTO params) throws Exception {
         log.info("LikeController.unlike:" + params.toString());
         return CommonResult.success(likeService.unlike(params));

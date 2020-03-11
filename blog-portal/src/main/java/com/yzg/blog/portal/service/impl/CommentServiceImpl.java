@@ -7,7 +7,7 @@ import com.yzg.blog.model.CmsCommentExample;
 import com.yzg.blog.portal.dao.CmsCommentDao;
 import com.yzg.blog.portal.controller.dto.CommentCreateDTO;
 import com.yzg.blog.portal.controller.dto.CommentListDTO;
-import com.yzg.blog.portal.model.CommentStatus;
+import com.yzg.blog.portal.model.ECommentStatus;
 import com.yzg.blog.portal.service.CommentService;
 import com.yzg.blog.portal.utils.CurrentUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +59,7 @@ public class CommentServiceImpl implements CommentService {
         criteria.andParentIdEqualTo(params.getParentId())
                 .andParentTypeEqualTo(params.getParentType())
                 .andTargetIdEqualTo(params.getTargetId())
-                .andStatusEqualTo(CommentStatus.NORMAL.getCode());//查询状态为1（正常）的评论/回复
+                .andStatusEqualTo(ECommentStatus.NORMAL.getCode());//查询状态为1（正常）的评论/回复
         example.setOrderByClause(params.getOrderBy());
         PageHelper.startPage(pageNum, pageSize);
         return commentMapper.selectByExample(example);
@@ -72,7 +72,7 @@ public class CommentServiceImpl implements CommentService {
         CmsCommentExample example = new CmsCommentExample();
         example.createCriteria()
                 .andIdEqualTo(id)
-                .andStatusEqualTo(CommentStatus.NORMAL.getCode())
+                .andStatusEqualTo(ECommentStatus.NORMAL.getCode())
                 .andUserIdEqualTo(CurrentUser.get().getId());//当前登录用户id
         return commentMapper.updateByExampleSelective(comment, example);
     }
@@ -80,7 +80,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public int delete(Integer id) {
         CmsComment comment = new CmsComment();
-        comment.setStatus(CommentStatus.DELETE.getCode());
+        comment.setStatus(ECommentStatus.DELETE.getCode());
         CmsCommentExample example = new CmsCommentExample();
         example.createCriteria()
                 .andIdEqualTo(id)

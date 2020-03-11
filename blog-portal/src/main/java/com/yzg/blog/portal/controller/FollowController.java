@@ -9,11 +9,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -33,28 +32,57 @@ public class FollowController {
     private FollowService followService;
 
     /**
-     * 点赞
-     * @param params
+     * 分页查询用户关注列表
+     * @return
+     */
+    @LoginRole
+    @ApiOperation("分页查询关注列表")
+    @GetMapping("/followees/{type}")
+    public CommonResult listFollowee(@PathVariable Byte type,
+                                     @RequestParam Integer userId,
+                                     @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+                                     @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) throws Exception {
+        log.info("FollowController.listFollowee");
+        return CommonResult.success(followService.listFollowees(userId, type, pageNum, pageSize));
+    }
+
+    /**
+     * 分页查询用户粉丝列表
+     * @return
+     */
+    @LoginRole
+    @ApiOperation("分页查询粉丝列表")
+    @GetMapping("/followers/{type}")
+    public CommonResult listFollower(@PathVariable Byte type,
+                                     @RequestParam Integer userId,
+                                     @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+                                     @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) throws Exception {
+        log.info("FollowController.listFollower");
+        return CommonResult.success(followService.listFollowers(userId, type, pageNum, pageSize));
+    }
+
+    /**
+     * 关注
      * @return
      */
     @LoginRole
     @ApiOperation("关注")
-    @PutMapping("")
-    public CommonResult follow(@Valid FollowDTO params) throws Exception {
-        log.info("FollowController.follow:" + params.toString());
-        return CommonResult.success(followService.follow(params));
+    @PutMapping("/{type}/{targetId}")
+    public CommonResult follow(@PathVariable Byte type,@PathVariable Integer targetId) throws Exception {
+        log.info("FollowController.follow");
+        return CommonResult.success(followService.follow(type, targetId));
     }
 
     /**
-     * 取消点赞
-     * @param params
+     * 取消关注
      * @return
      */
     @LoginRole
     @ApiOperation("取消关注")
-    @Delete("")
-    public CommonResult unFollow(@Valid FollowDTO params) throws Exception {
-        log.info("FollowController.unFollow:" + params.toString());
-        return CommonResult.success(followService.unFollow(params));
+    @DeleteMapping("/{type}/{targetId}")
+    public CommonResult unFollow(@PathVariable Byte type,@PathVariable Integer targetId) throws Exception {
+        log.info("FollowController.unFollow");
+        return CommonResult.success(followService.unFollow(type, targetId));
     }
+
 }

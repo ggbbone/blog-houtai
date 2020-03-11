@@ -3,18 +3,16 @@ package com.yzg.blog.portal.model;
 /**
  * Created by yzg on 2020/1/13
  */
-public enum LikeType {
+public enum ECommentParentType {
     ARTICLE((byte) 1, "文章"),
 
-    COMMENT((byte) 2, "评论"),
-
-    PIN((byte)3, "讨论");
+    PIN((byte)2, "讨论");
 
     private byte code;
     private String desc;
 
 
-    LikeType(byte code, String desc) {
+    ECommentParentType(byte code, String desc) {
         this.code = code;
         this.desc = desc;
     }

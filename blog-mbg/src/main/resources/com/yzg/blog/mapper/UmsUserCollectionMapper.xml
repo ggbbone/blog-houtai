@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yzg.blog.mapper.UmsUserFollowMapper">
-  <resultMap id="BaseResultMap" type="com.yzg.blog.model.UmsUserFollow">
-    <result column="user_id" jdbcType="INTEGER" property="userId" />
-    <result column="type_id" jdbcType="INTEGER" property="typeId" />
+<mapper namespace="com.yzg.blog.mapper.UmsUserCollectionMapper">
+  <resultMap id="BaseResultMap" type="com.yzg.blog.model.UmsUserCollection">
+    <id column="collections_id" jdbcType="INTEGER" property="collectionsId" />
     <result column="type" jdbcType="TINYINT" property="type" />
-    <result column="status" jdbcType="BIT" property="status" />
+    <result column="type_id" jdbcType="INTEGER" property="typeId" />
+    <result column="status" jdbcType="TINYINT" property="status" />
     <result column="created_date" jdbcType="TIMESTAMP" property="createdDate" />
+    <result column="updated_date" jdbcType="TIMESTAMP" property="updatedDate" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -67,15 +68,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    user_id, type_id, type, status, created_date
+    collections_id, type, type_id, status, created_date, updated_date
   </sql>
-  <select id="selectByExample" parameterType="com.yzg.blog.model.UmsUserFollowExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.yzg.blog.model.UmsUserCollectionExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from ums_user_follow
+    from ums_user_collection
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -83,29 +84,41 @@
       order by ${orderByClause}
     </if>
   </select>
-  <delete id="deleteByExample" parameterType="com.yzg.blog.model.UmsUserFollowExample">
-    delete from ums_user_follow
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ums_user_collection
+    where collections_id = #{collectionsId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from ums_user_collection
+    where collections_id = #{collectionsId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yzg.blog.model.UmsUserCollectionExample">
+    delete from ums_user_collection
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.yzg.blog.model.UmsUserFollow">
-    insert into ums_user_follow (user_id, type_id, type, 
-      status, created_date)
-    values (#{userId,jdbcType=INTEGER}, #{typeId,jdbcType=INTEGER}, #{type,jdbcType=TINYINT}, 
-      #{status,jdbcType=BIT}, #{createdDate,jdbcType=TIMESTAMP})
+  <insert id="insert" parameterType="com.yzg.blog.model.UmsUserCollection">
+    insert into ums_user_collection (collections_id, type, type_id, 
+      status, created_date, updated_date
+      )
+    values (#{collectionsId,jdbcType=INTEGER}, #{type,jdbcType=TINYINT}, #{typeId,jdbcType=INTEGER}, 
+      #{status,jdbcType=TINYINT}, #{createdDate,jdbcType=TIMESTAMP}, #{updatedDate,jdbcType=TIMESTAMP}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.yzg.blog.model.UmsUserFollow">
-    insert into ums_user_follow
+  <insert id="insertSelective" parameterType="com.yzg.blog.model.UmsUserCollection">
+    insert into ums_user_collection
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="userId != null">
-        user_id,
-      </if>
-      <if test="typeId != null">
-        type_id,
+      <if test="collectionsId != null">
+        collections_id,
       </if>
       <if test="type != null">
         type,
+      </if>
+      <if test="typeId != null">
+        type_id,
       </if>
       <if test="status != null">
         status,
@@ -113,48 +126,57 @@
       <if test="createdDate != null">
         created_date,
       </if>
+      <if test="updatedDate != null">
+        updated_date,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="userId != null">
-        #{userId,jdbcType=INTEGER},
-      </if>
-      <if test="typeId != null">
-        #{typeId,jdbcType=INTEGER},
+      <if test="collectionsId != null">
+        #{collectionsId,jdbcType=INTEGER},
       </if>
       <if test="type != null">
         #{type,jdbcType=TINYINT},
       </if>
+      <if test="typeId != null">
+        #{typeId,jdbcType=INTEGER},
+      </if>
       <if test="status != null">
-        #{status,jdbcType=BIT},
+        #{status,jdbcType=TINYINT},
       </if>
       <if test="createdDate != null">
         #{createdDate,jdbcType=TIMESTAMP},
       </if>
+      <if test="updatedDate != null">
+        #{updatedDate,jdbcType=TIMESTAMP},
+      </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.yzg.blog.model.UmsUserFollowExample" resultType="java.lang.Long">
-    select count(*) from ums_user_follow
+  <select id="countByExample" parameterType="com.yzg.blog.model.UmsUserCollectionExample" resultType="java.lang.Long">
+    select count(*) from ums_user_collection
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update ums_user_follow
+    update ums_user_collection
     <set>
-      <if test="record.userId != null">
-        user_id = #{record.userId,jdbcType=INTEGER},
-      </if>
-      <if test="record.typeId != null">
-        type_id = #{record.typeId,jdbcType=INTEGER},
+      <if test="record.collectionsId != null">
+        collections_id = #{record.collectionsId,jdbcType=INTEGER},
       </if>
       <if test="record.type != null">
         type = #{record.type,jdbcType=TINYINT},
       </if>
+      <if test="record.typeId != null">
+        type_id = #{record.typeId,jdbcType=INTEGER},
+      </if>
       <if test="record.status != null">
-        status = #{record.status,jdbcType=BIT},
+        status = #{record.status,jdbcType=TINYINT},
       </if>
       <if test="record.createdDate != null">
         created_date = #{record.createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatedDate != null">
+        updated_date = #{record.updatedDate,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null">
@@ -162,14 +184,45 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update ums_user_follow
-    set user_id = #{record.userId,jdbcType=INTEGER},
-      type_id = #{record.typeId,jdbcType=INTEGER},
+    update ums_user_collection
+    set collections_id = #{record.collectionsId,jdbcType=INTEGER},
       type = #{record.type,jdbcType=TINYINT},
-      status = #{record.status,jdbcType=BIT},
-      created_date = #{record.createdDate,jdbcType=TIMESTAMP}
+      type_id = #{record.typeId,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=TINYINT},
+      created_date = #{record.createdDate,jdbcType=TIMESTAMP},
+      updated_date = #{record.updatedDate,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yzg.blog.model.UmsUserCollection">
+    update ums_user_collection
+    <set>
+      <if test="type != null">
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="typeId != null">
+        type_id = #{typeId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createdDate != null">
+        created_date = #{createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedDate != null">
+        updated_date = #{updatedDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where collections_id = #{collectionsId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yzg.blog.model.UmsUserCollection">
+    update ums_user_collection
+    set type = #{type,jdbcType=TINYINT},
+      type_id = #{typeId,jdbcType=INTEGER},
+      status = #{status,jdbcType=TINYINT},
+      created_date = #{createdDate,jdbcType=TIMESTAMP},
+      updated_date = #{updatedDate,jdbcType=TIMESTAMP}
+    where collections_id = #{collectionsId,jdbcType=INTEGER}
   </update>
 </mapper>

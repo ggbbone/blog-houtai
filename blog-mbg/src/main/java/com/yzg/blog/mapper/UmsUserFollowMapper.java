@@ -10,21 +10,13 @@ public interface UmsUserFollowMapper {
 
     int deleteByExample(UmsUserFollowExample example);
 
-    int deleteByPrimaryKey(Integer userId);
-
     int insert(UmsUserFollow record);
 
     int insertSelective(UmsUserFollow record);
 
     List<UmsUserFollow> selectByExample(UmsUserFollowExample example);
 
-    UmsUserFollow selectByPrimaryKey(Integer userId);
-
     int updateByExampleSelective(@Param("record") UmsUserFollow record, @Param("example") UmsUserFollowExample example);
 
     int updateByExample(@Param("record") UmsUserFollow record, @Param("example") UmsUserFollowExample example);
-
-    int updateByPrimaryKeySelective(UmsUserFollow record);
-
-    int updateByPrimaryKey(UmsUserFollow record);
 }

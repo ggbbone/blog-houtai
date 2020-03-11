@@ -9,7 +9,7 @@ import com.yzg.blog.model.UmsUserLoginLog;
 import com.yzg.blog.portal.controller.dto.UserLoginDTO;
 import com.yzg.blog.portal.controller.dto.UserRegisterDTO;
 import com.yzg.blog.portal.common.exception.ValidateFailedException;
-import com.yzg.blog.portal.model.UserStatus;
+import com.yzg.blog.portal.model.EUserStatus;
 import com.yzg.blog.portal.service.UserInfoService;
 import com.yzg.blog.portal.service.UserService;
 import com.yzg.blog.portal.utils.IpUtils;
@@ -93,7 +93,7 @@ public class UserServiceImpl implements UserService {
         //加密密码
         user.setPassword(DigestUtils.md5DigestAsHex((params.getPassword() + salt).getBytes()));
         user.setEmail(params.getEmail());
-        user.setStatus(UserStatus.NORMAL.getCode());
+        user.setStatus(EUserStatus.NORMAL.getCode());
         user.setCreatedDate(new Date());
         if (userMapper.insertSelective(user) > 0) {
             //生成用户详细信息

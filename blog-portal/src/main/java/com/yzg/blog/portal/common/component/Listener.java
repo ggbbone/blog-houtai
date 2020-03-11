@@ -12,6 +12,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -72,5 +73,20 @@ public class Listener {
     public void addArticleMq(BmsArticle article) {
         log.info("处理消息-发表文章：" + article);
 
+    }
+
+    /**
+     * 关注/取消关注 消息队列处理
+     */
+    @RabbitListener(queuesToDeclare = @Queue("follow.queue"))
+    public void follow(Message message) {
+        Boolean follow = (Boolean) message.getData().get("follow");
+        if (follow) {
+            log.info("关注：" + message);
+
+        } else {
+            log.info("取消关注：" + message);
+
+        }
     }
 }

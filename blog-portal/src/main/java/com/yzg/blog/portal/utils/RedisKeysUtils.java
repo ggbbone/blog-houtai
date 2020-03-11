@@ -9,11 +9,8 @@ public class RedisKeysUtils {
     //分隔符
     private static String SPLIT = "::";
 
-    //点赞用户
+    //点赞他的用户
     private static String BIZ_LIKE = "LIKE";
-
-    //点赞待同步队列
-    private static String BIZ_SYNC_LIKE = "SYNC_LIKE";
 
     //文章浏览次数待同步队列
     private static String BIZ_SYNC_ARTICLE_VIEW_COUNT = "SYNC_ARTICLE_VIEW_COUNT";
@@ -63,14 +60,6 @@ public class RedisKeysUtils {
     public static String getFolloweeKey(int userId, int entityType){
         return BIZ_FOLLOWEE + SPLIT +
                 userId + SPLIT + entityType;
-    }
-
-    /**
-     * 点赞修改队列
-     * @return
-     */
-    public static String getChangeLikeKey() {
-        return BIZ_SYNC_LIKE;
     }
 
     public static String getSyncArticleViewCount() {

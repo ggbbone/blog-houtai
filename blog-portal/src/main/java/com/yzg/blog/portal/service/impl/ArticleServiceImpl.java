@@ -11,15 +11,14 @@ import com.yzg.blog.portal.controller.dto.ArticleCreateDTO;
 import com.yzg.blog.portal.controller.dto.ArticleListDTO;
 import com.yzg.blog.portal.controller.dto.ArticleUpdateDTO;
 import com.yzg.blog.portal.model.ArticleInfo;
-import com.yzg.blog.portal.model.ArticleStatus;
-import com.yzg.blog.portal.model.LikeType;
+import com.yzg.blog.portal.model.EArticleStatus;
+import com.yzg.blog.portal.model.ELikeType;
 import com.yzg.blog.portal.service.ArticleService;
 import com.yzg.blog.portal.service.CategoryService;
 import com.yzg.blog.portal.service.LikeService;
 import com.yzg.blog.portal.service.UserInfoService;
 import com.yzg.blog.portal.utils.CurrentUser;
 import com.yzg.blog.portal.utils.RedisKeysUtils;
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.BeanUtils;
@@ -76,9 +75,9 @@ public class ArticleServiceImpl implements ArticleService {
             //标签信息
             a.setTags(categoryService.selectArticleTags(a.getId()));
             //点赞人数
-            a.setLikeCount(Math.toIntExact(likeService.getLikeCount(a.getId(), LikeType.ARTICLE.getCode())));
+            a.setLikeCount(Math.toIntExact(likeService.getLikeCount(a.getId(), ELikeType.ARTICLE.getCode())));
             //是否点赞
-            a.setHasLike(likeService.hasLike(a.getId(), LikeType.ARTICLE.getCode()));
+            a.setHasLike(likeService.hasLike(a.getId(), ELikeType.ARTICLE.getCode()));
         }
         return articleInfos;
     }
@@ -108,7 +107,7 @@ public class ArticleServiceImpl implements ArticleService {
         int result = 0;
         BmsArticleExample example = new BmsArticleExample();
         example.createCriteria()
-                .andStatusEqualTo(ArticleStatus.NORMAL.getCode())//只有正常状态的文章可以删除
+                .andStatusEqualTo(EArticleStatus.NORMAL.getCode())//只有正常状态的文章可以删除
                 .andIdEqualTo(articleId)
                 .andUserIdEqualTo(CurrentUser.get().getId());//当前登录用户
 
@@ -118,7 +117,7 @@ public class ArticleServiceImpl implements ArticleService {
             throw new ValidateFailedException("文章不存在");
         }
         BmsArticle article = new BmsArticle();
-        article.setStatus(ArticleStatus.DELETE.getCode());//设置状态为 已删除
+        article.setStatus(EArticleStatus.DELETE.getCode());//设置状态为 已删除
         result = articleMapper.updateByExampleSelective(article, example);
         //删除成功
         if (result > 0) {
@@ -147,7 +146,7 @@ public class ArticleServiceImpl implements ArticleService {
         }
         BmsArticleExample example = new BmsArticleExample();
         example.createCriteria()
-                .andStatusNotEqualTo(ArticleStatus.DELETE.getCode())//状态为 已删除 的文章不能更新
+                .andStatusNotEqualTo(EArticleStatus.DELETE.getCode())//状态为 已删除 的文章不能更新
                 .andUserIdEqualTo(CurrentUser.get().getId())
                 .andIdEqualTo(params.getId());
 

@@ -4,38 +4,31 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.util.Date;
 
-public class UmsUserFollow implements Serializable {
-    @ApiModelProperty(value = "用户id")
-    private Integer userId;
+public class UmsUserCollection implements Serializable {
+    @ApiModelProperty(value = "收藏集id")
+    private Integer collectionsId;
+
+    @ApiModelProperty(value = "类型")
+    private Byte type;
 
     @ApiModelProperty(value = "类型id")
     private Integer typeId;
 
-    @ApiModelProperty(value = "关注的类型（1：用户， 2：标签）")
-    private Byte type;
+    @ApiModelProperty(value = "状态")
+    private Byte status;
 
-    @ApiModelProperty(value = "状态（1：关注中， 0取消关注）")
-    private Boolean status;
-
-    @ApiModelProperty(value = "关注时间")
     private Date createdDate;
+
+    private Date updatedDate;
 
     private static final long serialVersionUID = 1L;
 
-    public Integer getUserId() {
-        return userId;
+    public Integer getCollectionsId() {
+        return collectionsId;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public Integer getTypeId() {
-        return typeId;
-    }
-
-    public void setTypeId(Integer typeId) {
-        this.typeId = typeId;
+    public void setCollectionsId(Integer collectionsId) {
+        this.collectionsId = collectionsId;
     }
 
     public Byte getType() {
@@ -46,11 +39,19 @@ public class UmsUserFollow implements Serializable {
         this.type = type;
     }
 
-    public Boolean getStatus() {
+    public Integer getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(Integer typeId) {
+        this.typeId = typeId;
+    }
+
+    public Byte getStatus() {
         return status;
     }
 
-    public void setStatus(Boolean status) {
+    public void setStatus(Byte status) {
         this.status = status;
     }
 
@@ -62,17 +63,26 @@ public class UmsUserFollow implements Serializable {
         this.createdDate = createdDate;
     }
 
+    public Date getUpdatedDate() {
+        return updatedDate;
+    }
+
+    public void setUpdatedDate(Date updatedDate) {
+        this.updatedDate = updatedDate;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-        sb.append(", userId=").append(userId);
-        sb.append(", typeId=").append(typeId);
+        sb.append(", collectionsId=").append(collectionsId);
         sb.append(", type=").append(type);
+        sb.append(", typeId=").append(typeId);
         sb.append(", status=").append(status);
         sb.append(", createdDate=").append(createdDate);
+        sb.append(", updatedDate=").append(updatedDate);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

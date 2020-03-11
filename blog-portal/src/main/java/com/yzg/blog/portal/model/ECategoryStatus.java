@@ -3,8 +3,10 @@ package com.yzg.blog.portal.model;
 /**
  * Created by yzg on 2020/1/13
  */
-public enum ArticleDraftStatus {
+public enum ECategoryStatus {
     NORMAL((byte) 1, "正常"),
+
+    LOADING((byte) 2, "审核中"),
 
     DELETE((byte)0, "已删除");
 
@@ -12,7 +14,7 @@ public enum ArticleDraftStatus {
     private String desc;
 
 
-    ArticleDraftStatus(byte code, String desc) {
+    ECategoryStatus(byte code, String desc) {
         this.code = code;
         this.desc = desc;
     }

@@ -10,7 +10,7 @@ import com.yzg.blog.portal.controller.dto.CategoryCreateDTO;
 import com.yzg.blog.portal.controller.dto.CategoryUpdateDTO;
 import com.yzg.blog.portal.dao.BmsCategoryDao;
 import com.yzg.blog.portal.model.ArticleTag;
-import com.yzg.blog.portal.model.CategoryStatus;
+import com.yzg.blog.portal.model.ECategoryStatus;
 import com.yzg.blog.portal.service.CategoryService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -124,7 +124,7 @@ public class CategoryServiceImpl implements CategoryService {
         BeanUtils.copyProperties(categoryCreateDTO, category);
         category.setCreatedDate(new Date());
         category.setIsCategory(false);
-        category.setStatus(CategoryStatus.LOADING.getCode());
+        category.setStatus(ECategoryStatus.LOADING.getCode());
         categoryMapper.insertSelective(category);
         return category.getId();
     }
@@ -159,7 +159,7 @@ public class CategoryServiceImpl implements CategoryService {
         BmsCategoryExample example = new BmsCategoryExample();
         example.createCriteria()
                 .andIsCategoryEqualTo(isCategory)
-                .andStatusEqualTo(CategoryStatus.NORMAL.getCode());
+                .andStatusEqualTo(ECategoryStatus.NORMAL.getCode());
         return categoryMapper.selectByExample(example);
     }
 
@@ -169,7 +169,7 @@ public class CategoryServiceImpl implements CategoryService {
         if (category == null) {
             throw new ValidateFailedException("分类/标签不存在");
         }
-        category.setStatus(CategoryStatus.DELETE.getCode());
+        category.setStatus(ECategoryStatus.DELETE.getCode());
         return categoryMapper.updateByPrimaryKey(category);
     }
 

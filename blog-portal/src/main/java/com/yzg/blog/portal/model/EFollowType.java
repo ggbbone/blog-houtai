@@ -3,18 +3,16 @@ package com.yzg.blog.portal.model;
 /**
  * Created by yzg on 2020/1/13
  */
-public enum CategoryStatus {
-    NORMAL((byte) 1, "正常"),
+public enum EFollowType {
+    USER((byte) 1, "用户"),
 
-    LOADING((byte) 2, "审核中"),
-
-    DELETE((byte)0, "已删除");
-
+    CATEGORY((byte) 2, "标签"),
+    ;
     private byte code;
     private String desc;
 
 
-    CategoryStatus(byte code, String desc) {
+    EFollowType(byte code, String desc) {
         this.code = code;
         this.desc = desc;
     }
