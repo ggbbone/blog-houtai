@@ -1,4 +1,4 @@
-package com.yzg.blog.portal.common.annotation;
+package com.yzg.blog.portal.config;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

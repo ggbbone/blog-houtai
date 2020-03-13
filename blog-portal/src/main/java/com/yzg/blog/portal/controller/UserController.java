@@ -2,7 +2,7 @@ package com.yzg.blog.portal.controller;
 
 import com.yzg.blog.common.api.CommonResult;
 import com.yzg.blog.model.UmsUserInfo;
-import com.yzg.blog.portal.common.annotation.LoginRole;
+import com.yzg.blog.portal.config.LoginRole;
 import com.yzg.blog.portal.service.UserInfoService;
 import com.yzg.blog.portal.utils.CurrentUser;
 import io.swagger.annotations.Api;

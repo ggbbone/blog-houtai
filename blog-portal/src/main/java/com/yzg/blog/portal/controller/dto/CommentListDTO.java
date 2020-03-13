@@ -24,8 +24,8 @@ public class CommentListDTO {
     private Integer parentId;
 
     @ApiModelProperty("排序字段")
-    @NotBlank
-    private String orderBy;
+    @NotNull
+    private Integer orderBy;
 
     @Override
     public String toString() {
@@ -61,11 +61,11 @@ public class CommentListDTO {
         this.parentId = parentId;
     }
 
-    public String getOrderBy() {
+    public Integer getOrderBy() {
         return orderBy;
     }
 
-    public void setOrderBy(String orderBy) {
+    public void setOrderBy(Integer orderBy) {
         this.orderBy = orderBy;
     }
 }

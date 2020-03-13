@@ -2,7 +2,7 @@ package com.yzg.blog.portal.controller;
 
 import com.yzg.blog.common.api.CommonPage;
 import com.yzg.blog.common.api.CommonResult;
-import com.yzg.blog.portal.common.annotation.LoginRole;
+import com.yzg.blog.portal.config.LoginRole;
 import com.yzg.blog.portal.controller.dto.ArticleDraftCreateDTO;
 import com.yzg.blog.portal.controller.dto.ArticleDraftUpdateDTO;
 import com.yzg.blog.portal.service.ArticleDraftService;
@@ -32,7 +32,6 @@ public class ArticleDraftController {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public CommonResult<CommonPage> list(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
                                          @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
-        log.info("ArticleDraftController.list");
         return CommonResult.success(CommonPage.restPage(articleDraftService.list(pageNum, pageSize)));
     }
 
@@ -40,7 +39,6 @@ public class ArticleDraftController {
     @ApiOperation("获取草稿详情")
     @RequestMapping(value = "/{draftId}", method = RequestMethod.GET)
     public CommonResult get(@PathVariable int draftId) {
-        log.info("ArticleDraftController.get");
         return CommonResult.success(articleDraftService.getById(draftId));
     }
 
@@ -48,7 +46,6 @@ public class ArticleDraftController {
     @ApiOperation("创建草稿")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public CommonResult add(@Valid @RequestBody ArticleDraftCreateDTO params) {
-        log.info("ArticleDraftController.add");
         return CommonResult.success(articleDraftService.insert(params));
     }
 
@@ -56,7 +53,6 @@ public class ArticleDraftController {
     @ApiOperation("更新草稿")
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public CommonResult update(@Valid @RequestBody ArticleDraftUpdateDTO params) {
-        log.info("ArticleDraftController.update");
         return CommonResult.success(articleDraftService.update(params));
     }
 
@@ -64,7 +60,6 @@ public class ArticleDraftController {
     @ApiOperation("删除草稿")
     @RequestMapping(value = "/delete/{draftId}", method = RequestMethod.POST)
     public CommonResult delete(@PathVariable Integer draftId) {
-        log.info("ArticleDraftController.delete");
         return CommonResult.success(articleDraftService.delete(draftId));
     }
 }

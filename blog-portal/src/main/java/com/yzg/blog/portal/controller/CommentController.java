@@ -3,7 +3,8 @@ package com.yzg.blog.portal.controller;
 import com.yzg.blog.common.api.CommonPage;
 import com.yzg.blog.common.api.CommonResult;
 import com.yzg.blog.model.CmsComment;
-import com.yzg.blog.portal.common.annotation.LoginRole;
+import com.yzg.blog.portal.common.exception.ValidateFailedException;
+import com.yzg.blog.portal.config.LoginRole;
 import com.yzg.blog.portal.controller.dto.CommentCreateDTO;
 import com.yzg.blog.portal.controller.dto.CommentListDTO;
 import com.yzg.blog.portal.service.CommentService;
@@ -44,7 +45,6 @@ public class CommentController {
     public CommonResult<CommonPage> list(@RequestParam(defaultValue = "1") Integer pageNum,
                                          @RequestParam(defaultValue = "10") Integer pageSize,
                                          @Valid CommentListDTO params) {
-        log.info("CommentController.list");
         List<CmsComment> list = commentService.list(pageNum, pageSize, params);
         return CommonResult.success(CommonPage.restPage(list));
     }
@@ -57,8 +57,7 @@ public class CommentController {
     @LoginRole
     @ApiOperation("添加评论/回复")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public CommonResult add(@Valid @RequestBody CommentCreateDTO params) {
-        log.info("CommentController.add");
+    public CommonResult add(@Valid @RequestBody CommentCreateDTO params) throws ValidateFailedException {
         int result = commentService.add(params);
         return CommonResult.success(result);
     }
@@ -73,7 +72,6 @@ public class CommentController {
     @ApiOperation("修改评论/回复的内容")
     @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
     public CommonResult update(@PathVariable Integer id, @NotEmpty @RequestParam String content) {
-        log.info("CommentController.update");
         int result = commentService.update(id, content);
         return CommonResult.success(result);
     }
@@ -87,7 +85,6 @@ public class CommentController {
     @ApiOperation("删除评论/回复")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
     public CommonResult delete(@PathVariable Integer id) {
-        log.info("CommentController.delete");
         int result = commentService.delete(id);
         return CommonResult.success(result);
     }

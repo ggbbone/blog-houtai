@@ -1,6 +1,7 @@
 package com.yzg.blog.portal.common.exception;
 
 import com.yzg.blog.common.api.CommonResult;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
  */
 
 @ControllerAdvice
+@Slf4j
 public class DefaultExceptionHandler {
 
     /**
@@ -105,10 +107,12 @@ public class DefaultExceptionHandler {
      * @param e
      * @return
      */
-//    @ExceptionHandler(value = Exception.class)
-//    @ResponseBody
-//    public CommonResult  allException(Exception e) {
-//        return CommonResult.failed(e.getMessage());
-//    }
+    @ExceptionHandler(value = Exception.class)
+    @ResponseBody
+    public CommonResult  allException(Exception e) {
+        log.info("未知错误："  + e);
+        log.info("错误信息：" + e.getMessage());
+        return CommonResult.failed(e.getMessage());
+    }
 
 }

@@ -6,7 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.yzg.blog.model.UmsUser;
-import com.yzg.blog.portal.common.annotation.LoginRole;
+import com.yzg.blog.portal.config.LoginRole;
 import com.yzg.blog.portal.common.exception.UnauthorizedException;
 import com.yzg.blog.portal.service.UserService;
 import com.yzg.blog.portal.utils.CurrentUser;
@@ -73,7 +73,6 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
             //用户信息存入ThreadLocal
             CurrentUser.set(user);
             return true;
-
         }
         return true;
     }

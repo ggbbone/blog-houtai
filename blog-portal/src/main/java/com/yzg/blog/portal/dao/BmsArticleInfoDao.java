@@ -75,6 +75,15 @@ public interface BmsArticleInfoDao {
      * @param articleId 文章id
      * @param count 增加的浏览次数
      */
-    @Update("UPDATE bms_article SET view_count = view_count + #{count} WHERE ID = #{articleId}")
-    void addViewCount(@Param("articleId") int articleId, @Param("count") int count);
+    @Update("UPDATE bms_article SET view_count = view_count + #{count} WHERE id = #{articleId}")
+    int addViewCount(@Param("articleId") int articleId, @Param("count") int count);
+
+    /**
+     * 增加文章回复数量
+     * @param articleId
+     * @param count
+     * @return
+     */
+    @Update("UPDATE bms_article SET comment_count = comment_count + #{count} WHERE id = #{articleId}")
+    int addCommentCount(Integer articleId, int count);
 }

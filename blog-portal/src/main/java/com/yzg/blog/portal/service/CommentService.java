@@ -1,6 +1,7 @@
 package com.yzg.blog.portal.service;
 
 import com.yzg.blog.model.CmsComment;
+import com.yzg.blog.portal.common.exception.ValidateFailedException;
 import com.yzg.blog.portal.controller.dto.CommentCreateDTO;
 import com.yzg.blog.portal.controller.dto.CommentListDTO;
 
@@ -16,7 +17,7 @@ public interface CommentService {
      * 添加评论
      * @param params
      */
-    int add(CommentCreateDTO params);
+    int add(CommentCreateDTO params) throws ValidateFailedException;
 
     /**
      * 分页查询评论

@@ -9,7 +9,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @ComponentScan("com.yzg.blog")//扫描包下的注解
-//@EnableCaching//开启缓存自动配置
+@EnableCaching//开启缓存自动配置
 @EnableRabbit//开启rabbit消息队列
 @EnableScheduling//开启定时任务
 public class BlogPortalApplication {

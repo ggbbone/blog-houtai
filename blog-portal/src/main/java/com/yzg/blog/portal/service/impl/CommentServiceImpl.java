@@ -4,10 +4,14 @@ import com.github.pagehelper.PageHelper;
 import com.yzg.blog.mapper.CmsCommentMapper;
 import com.yzg.blog.model.CmsComment;
 import com.yzg.blog.model.CmsCommentExample;
+import com.yzg.blog.portal.common.exception.ValidateFailedException;
 import com.yzg.blog.portal.dao.CmsCommentDao;
 import com.yzg.blog.portal.controller.dto.CommentCreateDTO;
 import com.yzg.blog.portal.controller.dto.CommentListDTO;
+import com.yzg.blog.portal.model.ECommentParentType;
 import com.yzg.blog.portal.model.ECommentStatus;
+import com.yzg.blog.portal.model.EOrderBy;
+import com.yzg.blog.portal.service.ArticleService;
 import com.yzg.blog.portal.service.CommentService;
 import com.yzg.blog.portal.utils.CurrentUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +29,15 @@ public class CommentServiceImpl implements CommentService {
     CmsCommentMapper commentMapper;
     @Autowired
     CmsCommentDao CommentDao;
+    @Autowired
+    ArticleService articleService;
 
     @Override
-    public int add(CommentCreateDTO params) {
+    public int add(CommentCreateDTO params) throws ValidateFailedException {
+        if (ECommentParentType.getDesc(params.getParentType()) == null) {
+            throw new ValidateFailedException("评论提交失败: parentType不存在");
+        }
+
         CmsComment comment = new CmsComment();
         comment.setContent(params.getContent());
         comment.setTargetId(params.getTargetId());
@@ -42,8 +52,15 @@ public class CommentServiceImpl implements CommentService {
         //评论添加成功后
         if (result > 0) {
             //如果是回复，目标评论的回复数量 + 1
-            if (params.getTargetId() != 0) {
+            int notParentComment = 0;
+            if (params.getTargetId() != notParentComment) {
                 CommentDao.addReplyCount(params.getTargetId(), 1);
+            }
+            if (ECommentParentType.ARTICLE.getCode() == params.getParentType()) {
+                //文章回复 + 1
+                articleService.addArticleCommentCount(params.getParentId(), 1);
+            } else if (ECommentParentType.PIN.getCode() == params.getParentType()) {
+                //讨论回复 + 1
             }
         }
         return result;
@@ -60,7 +77,7 @@ public class CommentServiceImpl implements CommentService {
                 .andParentTypeEqualTo(params.getParentType())
                 .andTargetIdEqualTo(params.getTargetId())
                 .andStatusEqualTo(ECommentStatus.NORMAL.getCode());//查询状态为1（正常）的评论/回复
-        example.setOrderByClause(params.getOrderBy());
+        example.setOrderByClause(EOrderBy.getDesc(params.getOrderBy()) + " desc");
         PageHelper.startPage(pageNum, pageSize);
         return commentMapper.selectByExample(example);
     }

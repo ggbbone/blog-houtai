@@ -55,4 +55,11 @@ public interface ArticleService {
     int add(ArticleCreateDTO params) throws ValidateFailedException;
 
 
+    /**
+     * 添加文章回复数量
+     * @param parentId
+     * @param i
+     * @return
+     */
+    int addArticleCommentCount(Integer parentId, int i);
 }

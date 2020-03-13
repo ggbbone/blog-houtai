@@ -60,7 +60,6 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public List<ArticleInfo> list(int pageNum, int pageSize, ArticleListDTO params) {
-        log.info("ArticleServiceImpl.list");
         if (pageSize > 20) {//一次最多查询20条数据
             pageSize = 20;
         }
@@ -84,7 +83,6 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public void addArticleViewCount(int articleId, int count) {
-        log.info("ArticleServiceImpl.addArticleViewCount");
         //浏览次数 + count
         redisTemplate.opsForValue().increment(RedisKeysUtils.getArticleViewCountKey(articleId), count);
         //添加到待同步队列
@@ -94,7 +92,6 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     @Cacheable(key = "#articleId")
     public ArticleInfo getById(int articleId) {
-        log.info("ArticleServiceImpl.getById");
         return articleInfoDao.getById(articleId);
     }
 
@@ -102,7 +99,6 @@ public class ArticleServiceImpl implements ArticleService {
     @CacheEvict(key = "#articleId")
     @Transactional
     public int delete(int articleId) throws ValidateFailedException {
-        log.info("ArticleServiceImpl.delete");
 
         int result = 0;
         BmsArticleExample example = new BmsArticleExample();
@@ -137,7 +133,6 @@ public class ArticleServiceImpl implements ArticleService {
     @CacheEvict(key = "#params.id")
     @Transactional
     public int update(ArticleUpdateDTO params) throws ValidateFailedException {
-        log.info("ArticleServiceImpl.update");
 
         //查询更改前的文章
         BmsArticle oldArticle = articleMapper.selectByPrimaryKey(params.getId());
@@ -178,7 +173,6 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     @Transactional
     public int add(ArticleCreateDTO params) throws ValidateFailedException {
-        log.info("ArticleServiceImpl.add");
 
         //查询分类
         BmsCategory categoryById = categoryService.getCategoryById(params.getCategoryId());
@@ -208,6 +202,11 @@ public class ArticleServiceImpl implements ArticleService {
         //添加到消息队列
         //rabbitTemplate.convertAndSend("add.article.queue", article);
         return result;
+    }
+
+    @Override
+    public int addArticleCommentCount(Integer parentId, int i) {
+        return articleInfoDao.addCommentCount(parentId, i);
     }
 
 

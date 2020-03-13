@@ -3,28 +3,32 @@ package com.yzg.blog.portal.model;
 /**
  * Created by yzg on 2020/1/13
  */
-public enum ECommentParentType {
-    ARTICLE((byte) 1, "文章"),
+public enum EOrderBy {
+    CREATED_TIME((byte) 1, "created_date"),
 
-    PIN((byte)2, "讨论");
+    UPDATED_TIME((byte) 2, "updated_date"),
+
+    LIKES_COUNT((byte)3, "likes_count"),
+
+    REPLY_COUNT((byte)4, "reply_count");
 
     private byte code;
     private String desc;
 
 
-    ECommentParentType(byte code, String desc) {
+    EOrderBy(byte code, String desc) {
         this.code = code;
         this.desc = desc;
     }
-    public static String getDesc(byte code) {
-        for (ECommentParentType type : ECommentParentType.values()) {
-            if (type.getCode() == code) {
-                return type.getDesc();
+
+    public static String getDesc(int code) {
+        for (EOrderBy orderBy : EOrderBy.values()) {
+            if (orderBy.getCode() == code) {
+                return orderBy.getDesc();
             }
         }
         return null;
     }
-
     public byte getCode() {
         return code;
     }

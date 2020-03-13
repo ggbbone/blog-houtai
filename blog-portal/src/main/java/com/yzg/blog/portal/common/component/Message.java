@@ -6,12 +6,14 @@ import java.util.Map;
 
 /**
  * Created by yzg on 2020/3/11
+ *
+ * 消息队列通用消息实体类
  */
 public class Message implements Serializable {
-    private Integer userId;
-    private Byte type;
-    private Integer typeId;
-    private Map<String, Object> data;
+    private Integer userId;//消息作者
+    private Byte type;//消息类型
+    private Integer typeId;//消息类型id
+    private Map<String, Object> data;//其他数据
 
     private Message() {
     }
