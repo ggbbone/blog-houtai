@@ -39,7 +39,7 @@ public class UmsUser implements Serializable {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.email = email == null ? null : email.trim();
     }
 
     public String getPassword() {
@@ -47,7 +47,7 @@ public class UmsUser implements Serializable {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = password == null ? null : password.trim();
     }
 
     public Byte getStatus() {
@@ -63,7 +63,7 @@ public class UmsUser implements Serializable {
     }
 
     public void setSalt(String salt) {
-        this.salt = salt;
+        this.salt = salt == null ? null : salt.trim();
     }
 
     public Date getCreatedDate() {

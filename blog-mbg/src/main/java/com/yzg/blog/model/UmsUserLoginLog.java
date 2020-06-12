@@ -45,7 +45,7 @@ public class UmsUserLoginLog implements Serializable {
     }
 
     public void setIp(String ip) {
-        this.ip = ip;
+        this.ip = ip == null ? null : ip.trim();
     }
 
     public Date getLoginDate() {
@@ -69,7 +69,7 @@ public class UmsUserLoginLog implements Serializable {
     }
 
     public void setToken(String token) {
-        this.token = token;
+        this.token = token == null ? null : token.trim();
     }
 
     @Override

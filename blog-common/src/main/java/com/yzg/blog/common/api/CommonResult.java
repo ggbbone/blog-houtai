@@ -6,15 +6,15 @@ import lombok.Data;
  * 通用返回对象
  */
 @Data
-public class CommonResult<T> {
+public class CommonResult {
     private int status;
     private String message;
-    private T data;
+    private Object data;
 
     protected CommonResult() {
     }
 
-    protected CommonResult(int code, String message, T data) {
+    protected CommonResult(int code, String message, Object data) {
         this.status = code;
         this.message = message;
         this.data = data;
@@ -24,16 +24,16 @@ public class CommonResult<T> {
      * 成功返回结果
      *
      */
-    public static <T> CommonResult<T> success() {
-        return new CommonResult<T>(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getMessage(), null);
+    public static  CommonResult success() {
+        return new CommonResult(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getMessage(), null);
     }
     /**
      * 成功返回结果
      *
      * @param data 获取的数据
      */
-    public static <T> CommonResult<T> success(T data) {
-        return new CommonResult<T>(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getMessage(), data);
+    public static  CommonResult success(Object data) {
+        return new CommonResult(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getMessage(), data);
     }
 
     /**
@@ -42,8 +42,8 @@ public class CommonResult<T> {
      * @param data    获取的数据
      * @param message 提示信息
      */
-    public static <T> CommonResult<T> success(T data, String message) {
-        return new CommonResult<T>(ResultCode.SUCCESS.getCode(), message, data);
+    public static  CommonResult success(Object data, String message) {
+        return new CommonResult(ResultCode.SUCCESS.getCode(), message, data);
     }
 
     /**
@@ -51,8 +51,8 @@ public class CommonResult<T> {
      *
      * @param errorCode 错误码
      */
-    public static <T> CommonResult<T> failed(IErrorCode errorCode) {
-        return new CommonResult<T>(errorCode.getCode(), errorCode.getMessage(), null);
+    public static  CommonResult failed(IErrorCode errorCode) {
+        return new CommonResult(errorCode.getCode(), errorCode.getMessage(), null);
     }
 
     /**
@@ -60,21 +60,21 @@ public class CommonResult<T> {
      *
      * @param message 提示信息
      */
-    public static <T> CommonResult<T> failed(String message) {
-        return new CommonResult<T>(ResultCode.FAILED.getCode(), message, null);
+    public static  CommonResult failed(String message) {
+        return new CommonResult(ResultCode.FAILED.getCode(), message, null);
     }
 
     /**
      * 失败返回结果
      */
-    public static <T> CommonResult<T> failed() {
+    public static  CommonResult failed() {
         return failed(ResultCode.FAILED);
     }
 
     /**
      * 参数验证失败返回结果
      */
-    public static <T> CommonResult<T> failedValidate() {
+    public static  CommonResult failedValidate() {
         return failed(ResultCode.VALIDATE_FAILED);
     }
 
@@ -83,34 +83,34 @@ public class CommonResult<T> {
      * @param t 详细信息
      * @return
      */
-    public static <T> CommonResult<T> failedValidate(T t) {
-        return new CommonResult<T>(ResultCode.VALIDATE_FAILED.getCode(), ResultCode.VALIDATE_FAILED.getMessage(), t);
+    public static  CommonResult failedValidate(Object t) {
+        return new CommonResult(ResultCode.VALIDATE_FAILED.getCode(), ResultCode.VALIDATE_FAILED.getMessage(), t);
     }
 
     /**
      * 未登录返回结果
      */
-    public static <T> CommonResult<T> failedUnauthorized() {
-        return new CommonResult<T>(ResultCode.UNAUTHORIZED.getCode(), ResultCode.UNAUTHORIZED.getMessage(), null);
+    public static  CommonResult failedUnauthorized() {
+        return new CommonResult(ResultCode.UNAUTHORIZED.getCode(), ResultCode.UNAUTHORIZED.getMessage(), null);
     }
     /**
      * 未登录返回结果
      */
-    public static <T> CommonResult<T> failedUnauthorized(T data) {
-        return new CommonResult<T>(ResultCode.UNAUTHORIZED.getCode(), ResultCode.UNAUTHORIZED.getMessage(), data);
+    public static  CommonResult failedUnauthorized(Object data) {
+        return new CommonResult(ResultCode.UNAUTHORIZED.getCode(), ResultCode.UNAUTHORIZED.getMessage(), data);
     }
 
     /**
      * 未授权返回结果
      */
-    public static <T> CommonResult<T> failedForbidden() {
-        return new CommonResult<T>(ResultCode.FORBIDDEN.getCode(), ResultCode.FORBIDDEN.getMessage(), null);
+    public static  CommonResult failedForbidden() {
+        return new CommonResult(ResultCode.FORBIDDEN.getCode(), ResultCode.FORBIDDEN.getMessage(), null);
     }
     /**
      * 未授权返回结果
      */
-    public static <T> CommonResult<T> failedForbidden(T data) {
-        return new CommonResult<T>(ResultCode.FORBIDDEN.getCode(), ResultCode.FORBIDDEN.getMessage(), data);
+    public static  CommonResult failedForbidden(Object data) {
+        return new CommonResult(ResultCode.FORBIDDEN.getCode(), ResultCode.FORBIDDEN.getMessage(), data);
     }
     
 }

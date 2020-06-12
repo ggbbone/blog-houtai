@@ -3,29 +3,37 @@ package com.yzg.blog.model;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 
-public class UmsUserLike implements Serializable {
-    @ApiModelProperty(value = "点赞列表redis key")
-    private String id;
+public class UmsRole implements Serializable {
+    private Integer id;
 
-    @ApiModelProperty(value = "redis value，以 ','  分割")
-    private String value;
+    private String name;
+
+    private Byte status;
 
     private static final long serialVersionUID = 1L;
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id == null ? null : id.trim();
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getValue() {
-        return value;
+    public String getName() {
+        return name;
     }
 
-    public void setValue(String value) {
-        this.value = value == null ? null : value.trim();
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
+    }
+
+    public Byte getStatus() {
+        return status;
+    }
+
+    public void setStatus(Byte status) {
+        this.status = status;
     }
 
     @Override
@@ -35,7 +43,8 @@ public class UmsUserLike implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", value=").append(value);
+        sb.append(", name=").append(name);
+        sb.append(", status=").append(status);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

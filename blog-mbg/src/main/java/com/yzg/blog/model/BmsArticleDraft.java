@@ -51,7 +51,7 @@ public class BmsArticleDraft implements Serializable {
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        this.title = title == null ? null : title.trim();
     }
 
     public String getCover() {
@@ -59,7 +59,7 @@ public class BmsArticleDraft implements Serializable {
     }
 
     public void setCover(String cover) {
-        this.cover = cover;
+        this.cover = cover == null ? null : cover.trim();
     }
 
     public Date getCreatedDate() {
@@ -91,7 +91,7 @@ public class BmsArticleDraft implements Serializable {
     }
 
     public void setContent(String content) {
-        this.content = content;
+        this.content = content == null ? null : content.trim();
     }
 
     @Override

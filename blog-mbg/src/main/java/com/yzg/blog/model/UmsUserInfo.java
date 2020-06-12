@@ -51,7 +51,7 @@ public class UmsUserInfo implements Serializable {
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.username = username == null ? null : username.trim();
     }
 
     public String getAvatar() {
@@ -59,7 +59,7 @@ public class UmsUserInfo implements Serializable {
     }
 
     public void setAvatar(String avatar) {
-        this.avatar = avatar;
+        this.avatar = avatar == null ? null : avatar.trim();
     }
 
     public String getBlogAddress() {
@@ -67,7 +67,7 @@ public class UmsUserInfo implements Serializable {
     }
 
     public void setBlogAddress(String blogAddress) {
-        this.blogAddress = blogAddress;
+        this.blogAddress = blogAddress == null ? null : blogAddress.trim();
     }
 
     public Integer getCollectedEntriesCount() {
@@ -123,7 +123,7 @@ public class UmsUserInfo implements Serializable {
     }
 
     public void setOutline(String outline) {
-        this.outline = outline;
+        this.outline = outline == null ? null : outline.trim();
     }
 
     @Override

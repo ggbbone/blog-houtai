@@ -50,7 +50,7 @@ public class BmsCategory implements Serializable {
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        this.title = title == null ? null : title.trim();
     }
 
     public String getAlias() {
@@ -58,7 +58,7 @@ public class BmsCategory implements Serializable {
     }
 
     public void setAlias(String alias) {
-        this.alias = alias;
+        this.alias = alias == null ? null : alias.trim();
     }
 
     public String getIcon() {
@@ -66,7 +66,7 @@ public class BmsCategory implements Serializable {
     }
 
     public void setIcon(String icon) {
-        this.icon = icon;
+        this.icon = icon == null ? null : icon.trim();
     }
 
     public String getBackground() {
@@ -74,7 +74,7 @@ public class BmsCategory implements Serializable {
     }
 
     public void setBackground(String background) {
-        this.background = background;
+        this.background = background == null ? null : background.trim();
     }
 
     public Date getCreatedDate() {
