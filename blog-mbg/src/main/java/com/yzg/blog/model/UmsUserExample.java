@@ -494,6 +494,66 @@ public class UmsUserExample {
             addCriterion("created_date not between", value1, value2, "createdDate");
             return (Criteria) this;
         }
+
+        public Criteria andUpdatedDateIsNull() {
+            addCriterion("updated_date is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedDateIsNotNull() {
+            addCriterion("updated_date is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedDateEqualTo(Date value) {
+            addCriterion("updated_date =", value, "updatedDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedDateNotEqualTo(Date value) {
+            addCriterion("updated_date <>", value, "updatedDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedDateGreaterThan(Date value) {
+            addCriterion("updated_date >", value, "updatedDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedDateGreaterThanOrEqualTo(Date value) {
+            addCriterion("updated_date >=", value, "updatedDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedDateLessThan(Date value) {
+            addCriterion("updated_date <", value, "updatedDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedDateLessThanOrEqualTo(Date value) {
+            addCriterion("updated_date <=", value, "updatedDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedDateIn(List<Date> values) {
+            addCriterion("updated_date in", values, "updatedDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedDateNotIn(List<Date> values) {
+            addCriterion("updated_date not in", values, "updatedDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedDateBetween(Date value1, Date value2) {
+            addCriterion("updated_date between", value1, value2, "updatedDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedDateNotBetween(Date value1, Date value2) {
+            addCriterion("updated_date not between", value1, value2, "updatedDate");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

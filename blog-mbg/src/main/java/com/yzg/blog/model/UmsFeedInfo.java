@@ -22,6 +22,8 @@ public class UmsFeedInfo implements Serializable {
     @ApiModelProperty(value = "feed创建时间")
     private Date createdDate;
 
+    private Date updatedDate;
+
     @ApiModelProperty(value = "feed内容状态")
     private Byte status;
 
@@ -75,6 +77,14 @@ public class UmsFeedInfo implements Serializable {
         this.createdDate = createdDate;
     }
 
+    public Date getUpdatedDate() {
+        return updatedDate;
+    }
+
+    public void setUpdatedDate(Date updatedDate) {
+        this.updatedDate = updatedDate;
+    }
+
     public Byte getStatus() {
         return status;
     }
@@ -95,6 +105,7 @@ public class UmsFeedInfo implements Serializable {
         sb.append(", type=").append(type);
         sb.append(", typeId=").append(typeId);
         sb.append(", createdDate=").append(createdDate);
+        sb.append(", updatedDate=").append(updatedDate);
         sb.append(", status=").append(status);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");

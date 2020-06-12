@@ -8,6 +8,7 @@
     <result column="status" jdbcType="TINYINT" property="status" />
     <result column="salt" jdbcType="CHAR" property="salt" />
     <result column="created_date" jdbcType="TIMESTAMP" property="createdDate" />
+    <result column="updated_date" jdbcType="TIMESTAMP" property="updatedDate" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -68,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, email, password, status, salt, created_date
+    id, email, password, status, salt, created_date, updated_date
   </sql>
   <select id="selectByExample" parameterType="com.yzg.blog.model.UmsUserExample" resultMap="BaseResultMap">
     select
@@ -105,9 +106,11 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into ums_user (email, password, status, 
-      salt, created_date)
+      salt, created_date, updated_date
+      )
     values (#{email,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
-      #{salt,jdbcType=CHAR}, #{createdDate,jdbcType=TIMESTAMP})
+      #{salt,jdbcType=CHAR}, #{createdDate,jdbcType=TIMESTAMP}, #{updatedDate,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.yzg.blog.model.UmsUser">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -130,6 +133,9 @@
       <if test="createdDate != null">
         created_date,
       </if>
+      <if test="updatedDate != null">
+        updated_date,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="email != null">
@@ -146,6 +152,9 @@
       </if>
       <if test="createdDate != null">
         #{createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedDate != null">
+        #{updatedDate,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -176,6 +185,9 @@
       <if test="record.createdDate != null">
         created_date = #{record.createdDate,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.updatedDate != null">
+        updated_date = #{record.updatedDate,jdbcType=TIMESTAMP},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -188,7 +200,8 @@
       password = #{record.password,jdbcType=VARCHAR},
       status = #{record.status,jdbcType=TINYINT},
       salt = #{record.salt,jdbcType=CHAR},
-      created_date = #{record.createdDate,jdbcType=TIMESTAMP}
+      created_date = #{record.createdDate,jdbcType=TIMESTAMP},
+      updated_date = #{record.updatedDate,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -211,6 +224,9 @@
       <if test="createdDate != null">
         created_date = #{createdDate,jdbcType=TIMESTAMP},
       </if>
+      <if test="updatedDate != null">
+        updated_date = #{updatedDate,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -220,7 +236,8 @@
       password = #{password,jdbcType=VARCHAR},
       status = #{status,jdbcType=TINYINT},
       salt = #{salt,jdbcType=CHAR},
-      created_date = #{createdDate,jdbcType=TIMESTAMP}
+      created_date = #{createdDate,jdbcType=TIMESTAMP},
+      updated_date = #{updatedDate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

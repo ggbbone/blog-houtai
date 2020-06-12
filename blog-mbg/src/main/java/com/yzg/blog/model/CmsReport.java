@@ -22,9 +22,9 @@ public class CmsReport implements Serializable {
     @ApiModelProperty(value = "举报内容")
     private String content;
 
-    private Date createdTime;
+    private Date createdDate;
 
-    private Date updatedTime;
+    private Date updatedDate;
 
     private static final long serialVersionUID = 1L;
 
@@ -76,20 +76,20 @@ public class CmsReport implements Serializable {
         this.content = content;
     }
 
-    public Date getCreatedTime() {
-        return createdTime;
+    public Date getCreatedDate() {
+        return createdDate;
     }
 
-    public void setCreatedTime(Date createdTime) {
-        this.createdTime = createdTime;
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
 
-    public Date getUpdatedTime() {
-        return updatedTime;
+    public Date getUpdatedDate() {
+        return updatedDate;
     }
 
-    public void setUpdatedTime(Date updatedTime) {
-        this.updatedTime = updatedTime;
+    public void setUpdatedDate(Date updatedDate) {
+        this.updatedDate = updatedDate;
     }
 
     @Override
@@ -104,8 +104,8 @@ public class CmsReport implements Serializable {
         sb.append(", respTpye=").append(respTpye);
         sb.append(", respTypeId=").append(respTypeId);
         sb.append(", content=").append(content);
-        sb.append(", createdTime=").append(createdTime);
-        sb.append(", updatedTime=").append(updatedTime);
+        sb.append(", createdDate=").append(createdDate);
+        sb.append(", updatedDate=").append(updatedDate);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

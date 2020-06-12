@@ -1,22 +1,32 @@
 package com.yzg.blog.common.api;
 
+import lombok.Data;
+
 /**
  * 通用返回对象
  */
+@Data
 public class CommonResult<T> {
-    private long code;
+    private int status;
     private String message;
     private T data;
 
     protected CommonResult() {
     }
 
-    protected CommonResult(long code, String message, T data) {
-        this.code = code;
+    protected CommonResult(int code, String message, T data) {
+        this.status = code;
         this.message = message;
         this.data = data;
     }
 
+    /**
+     * 成功返回结果
+     *
+     */
+    public static <T> CommonResult<T> success() {
+        return new CommonResult<T>(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getMessage(), null);
+    }
     /**
      * 成功返回结果
      *
@@ -64,64 +74,43 @@ public class CommonResult<T> {
     /**
      * 参数验证失败返回结果
      */
-    public static <T> CommonResult<T> validateFailed() {
+    public static <T> CommonResult<T> failedValidate() {
         return failed(ResultCode.VALIDATE_FAILED);
-    }
-
-    /**
-     * 参数验证失败返回结果
-     *
-     * @param message 提示信息
-     */
-    public static <T> CommonResult<T> validateFailed(String message) {
-        return new CommonResult<T>(ResultCode.VALIDATE_FAILED.getCode(), message, null);
     }
 
     /**
      * 参数校验失败返回结果
      * @param t 详细信息
-     * @param <T>
      * @return
      */
-    public static <T> CommonResult<T> validateFailed(T t) {
+    public static <T> CommonResult<T> failedValidate(T t) {
         return new CommonResult<T>(ResultCode.VALIDATE_FAILED.getCode(), ResultCode.VALIDATE_FAILED.getMessage(), t);
     }
 
     /**
      * 未登录返回结果
      */
-    public static <T> CommonResult<T> unauthorized(T data) {
+    public static <T> CommonResult<T> failedUnauthorized() {
+        return new CommonResult<T>(ResultCode.UNAUTHORIZED.getCode(), ResultCode.UNAUTHORIZED.getMessage(), null);
+    }
+    /**
+     * 未登录返回结果
+     */
+    public static <T> CommonResult<T> failedUnauthorized(T data) {
         return new CommonResult<T>(ResultCode.UNAUTHORIZED.getCode(), ResultCode.UNAUTHORIZED.getMessage(), data);
     }
 
     /**
      * 未授权返回结果
      */
-    public static <T> CommonResult<T> forbidden(T data) {
+    public static <T> CommonResult<T> failedForbidden() {
+        return new CommonResult<T>(ResultCode.FORBIDDEN.getCode(), ResultCode.FORBIDDEN.getMessage(), null);
+    }
+    /**
+     * 未授权返回结果
+     */
+    public static <T> CommonResult<T> failedForbidden(T data) {
         return new CommonResult<T>(ResultCode.FORBIDDEN.getCode(), ResultCode.FORBIDDEN.getMessage(), data);
     }
-
-    public long getCode() {
-        return code;
-    }
-
-    public void setCode(long code) {
-        this.code = code;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public void setData(T data) {
-        this.data = data;
-    }
+    
 }

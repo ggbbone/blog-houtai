@@ -22,6 +22,8 @@ public class UmsUser implements Serializable {
     @ApiModelProperty(value = "注册时间")
     private Date createdDate;
 
+    private Date updatedDate;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -72,6 +74,14 @@ public class UmsUser implements Serializable {
         this.createdDate = createdDate;
     }
 
+    public Date getUpdatedDate() {
+        return updatedDate;
+    }
+
+    public void setUpdatedDate(Date updatedDate) {
+        this.updatedDate = updatedDate;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -84,6 +94,7 @@ public class UmsUser implements Serializable {
         sb.append(", status=").append(status);
         sb.append(", salt=").append(salt);
         sb.append(", createdDate=").append(createdDate);
+        sb.append(", updatedDate=").append(updatedDate);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

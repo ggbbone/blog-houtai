@@ -8,6 +8,7 @@
     <result column="type" jdbcType="INTEGER" property="type" />
     <result column="type_id" jdbcType="INTEGER" property="typeId" />
     <result column="created_date" jdbcType="TIMESTAMP" property="createdDate" />
+    <result column="updated_date" jdbcType="TIMESTAMP" property="updatedDate" />
     <result column="status" jdbcType="TINYINT" property="status" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -69,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, user_id, create_user_id, type, type_id, created_date, status
+    id, user_id, create_user_id, type, type_id, created_date, updated_date, status
   </sql>
   <select id="selectByExample" parameterType="com.yzg.blog.model.UmsFeedInfoExample" resultMap="BaseResultMap">
     select
@@ -106,11 +107,11 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into ums_feed_info (user_id, create_user_id, type, 
-      type_id, created_date, status
-      )
+      type_id, created_date, updated_date, 
+      status)
     values (#{userId,jdbcType=INTEGER}, #{createUserId,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, 
-      #{typeId,jdbcType=INTEGER}, #{createdDate,jdbcType=TIMESTAMP}, #{status,jdbcType=TINYINT}
-      )
+      #{typeId,jdbcType=INTEGER}, #{createdDate,jdbcType=TIMESTAMP}, #{updatedDate,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.yzg.blog.model.UmsFeedInfo">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -133,6 +134,9 @@
       <if test="createdDate != null">
         created_date,
       </if>
+      <if test="updatedDate != null">
+        updated_date,
+      </if>
       <if test="status != null">
         status,
       </if>
@@ -152,6 +156,9 @@
       </if>
       <if test="createdDate != null">
         #{createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedDate != null">
+        #{updatedDate,jdbcType=TIMESTAMP},
       </if>
       <if test="status != null">
         #{status,jdbcType=TINYINT},
@@ -185,6 +192,9 @@
       <if test="record.createdDate != null">
         created_date = #{record.createdDate,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.updatedDate != null">
+        updated_date = #{record.updatedDate,jdbcType=TIMESTAMP},
+      </if>
       <if test="record.status != null">
         status = #{record.status,jdbcType=TINYINT},
       </if>
@@ -201,6 +211,7 @@
       type = #{record.type,jdbcType=INTEGER},
       type_id = #{record.typeId,jdbcType=INTEGER},
       created_date = #{record.createdDate,jdbcType=TIMESTAMP},
+      updated_date = #{record.updatedDate,jdbcType=TIMESTAMP},
       status = #{record.status,jdbcType=TINYINT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -224,6 +235,9 @@
       <if test="createdDate != null">
         created_date = #{createdDate,jdbcType=TIMESTAMP},
       </if>
+      <if test="updatedDate != null">
+        updated_date = #{updatedDate,jdbcType=TIMESTAMP},
+      </if>
       <if test="status != null">
         status = #{status,jdbcType=TINYINT},
       </if>
@@ -237,6 +251,7 @@
       type = #{type,jdbcType=INTEGER},
       type_id = #{typeId,jdbcType=INTEGER},
       created_date = #{createdDate,jdbcType=TIMESTAMP},
+      updated_date = #{updatedDate,jdbcType=TIMESTAMP},
       status = #{status,jdbcType=TINYINT}
     where id = #{id,jdbcType=INTEGER}
   </update>

@@ -15,7 +15,7 @@
         <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
         <!--生成mapper.xml时覆盖原文件-->
         <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin" />
-        <commentGenerator type="com.yzg.blog.CommentGenerator">
+        <commentGenerator type="com.yzg.CommentGenerator">
             <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
             <property name="suppressAllComments" value="true"/>
             <property name="suppressDate" value="true"/>
@@ -27,15 +27,25 @@
                         userId="${jdbc.userId}"
                         password="${jdbc.password}">
             <!--解决mysql驱动升级到8.0后不生成指定数据库代码的问题-->
-            <property name="nullCatalogMeansCurrent" value="true" />
+            <!--MySQL 不支持 schema 或者 catalog 所以需要添加这个-->
+            <!--参考 : http://www.mybatis.org/generator/usage/mysql.html-->
+            <property name="nullCatalogMeansCurrent" value="true"/>
         </jdbcConnection>
 
-        <javaModelGenerator targetPackage="com.yzg.blog.model" targetProject="blog-mbg\src\main\java"/>
+        <javaModelGenerator targetPackage="com.yzg.blog.model" targetProject="blog-mbg\src\main\java">
+            <!-- 是否允许子包 -->
+            <property name="enableSubPackages" value="false"/>
+            <!-- 是否清理从数据库中查询出的字符串左右两边的空白字符 -->
+            <property name="trimStrings" value="true"/>
+            <!-- 建立modal对象是否不可改变 即生成的modal对象不会有setter方法，只有构造方法 -->
+            <property name="immutable" value="false"/>
+        </javaModelGenerator>
 
         <sqlMapGenerator targetPackage="com.yzg.blog.mapper" targetProject="blog-mbg\src\main\resources"/>
 
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.yzg.blog.mapper"
-                             targetProject="blog-mbg\src\main\java"/>
+                             targetProject="blog-mbg\src\main\java">
+        </javaClientGenerator>
         <!--生成全部表tableName设为%-->
         <table tableName="%">
 <!--            insert对象返回对象主键-->

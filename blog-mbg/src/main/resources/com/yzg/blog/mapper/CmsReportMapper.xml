@@ -8,8 +8,8 @@
     <result column="resp_tpye" jdbcType="TINYINT" property="respTpye" />
     <result column="resp_type_id" jdbcType="INTEGER" property="respTypeId" />
     <result column="content" jdbcType="VARCHAR" property="content" />
-    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
-    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="created_date" jdbcType="TIMESTAMP" property="createdDate" />
+    <result column="updated_date" jdbcType="TIMESTAMP" property="updatedDate" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -70,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, user_id, type, resp_tpye, resp_type_id, content, created_time, updated_time
+    id, user_id, type, resp_tpye, resp_type_id, content, created_date, updated_date
   </sql>
   <select id="selectByExample" parameterType="com.yzg.blog.model.CmsReportExample" resultMap="BaseResultMap">
     select
@@ -107,11 +107,11 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into cms_report (user_id, type, resp_tpye, 
-      resp_type_id, content, created_time, 
-      updated_time)
+      resp_type_id, content, created_date, 
+      updated_date)
     values (#{userId,jdbcType=INTEGER}, #{type,jdbcType=TINYINT}, #{respTpye,jdbcType=TINYINT}, 
-      #{respTypeId,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, 
-      #{updatedTime,jdbcType=TIMESTAMP})
+      #{respTypeId,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{createdDate,jdbcType=TIMESTAMP}, 
+      #{updatedDate,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.yzg.blog.model.CmsReport">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -134,11 +134,11 @@
       <if test="content != null">
         content,
       </if>
-      <if test="createdTime != null">
-        created_time,
+      <if test="createdDate != null">
+        created_date,
       </if>
-      <if test="updatedTime != null">
-        updated_time,
+      <if test="updatedDate != null">
+        updated_date,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -157,11 +157,11 @@
       <if test="content != null">
         #{content,jdbcType=VARCHAR},
       </if>
-      <if test="createdTime != null">
-        #{createdTime,jdbcType=TIMESTAMP},
+      <if test="createdDate != null">
+        #{createdDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="updatedTime != null">
-        #{updatedTime,jdbcType=TIMESTAMP},
+      <if test="updatedDate != null">
+        #{updatedDate,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -192,11 +192,11 @@
       <if test="record.content != null">
         content = #{record.content,jdbcType=VARCHAR},
       </if>
-      <if test="record.createdTime != null">
-        created_time = #{record.createdTime,jdbcType=TIMESTAMP},
+      <if test="record.createdDate != null">
+        created_date = #{record.createdDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.updatedTime != null">
-        updated_time = #{record.updatedTime,jdbcType=TIMESTAMP},
+      <if test="record.updatedDate != null">
+        updated_date = #{record.updatedDate,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null">
@@ -211,8 +211,8 @@
       resp_tpye = #{record.respTpye,jdbcType=TINYINT},
       resp_type_id = #{record.respTypeId,jdbcType=INTEGER},
       content = #{record.content,jdbcType=VARCHAR},
-      created_time = #{record.createdTime,jdbcType=TIMESTAMP},
-      updated_time = #{record.updatedTime,jdbcType=TIMESTAMP}
+      created_date = #{record.createdDate,jdbcType=TIMESTAMP},
+      updated_date = #{record.updatedDate,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -235,11 +235,11 @@
       <if test="content != null">
         content = #{content,jdbcType=VARCHAR},
       </if>
-      <if test="createdTime != null">
-        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      <if test="createdDate != null">
+        created_date = #{createdDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="updatedTime != null">
-        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      <if test="updatedDate != null">
+        updated_date = #{updatedDate,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -251,8 +251,8 @@
       resp_tpye = #{respTpye,jdbcType=TINYINT},
       resp_type_id = #{respTypeId,jdbcType=INTEGER},
       content = #{content,jdbcType=VARCHAR},
-      created_time = #{createdTime,jdbcType=TIMESTAMP},
-      updated_time = #{updatedTime,jdbcType=TIMESTAMP}
+      created_date = #{createdDate,jdbcType=TIMESTAMP},
+      updated_date = #{updatedDate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
