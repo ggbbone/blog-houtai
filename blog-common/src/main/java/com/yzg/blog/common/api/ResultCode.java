@@ -11,9 +11,9 @@ public enum ResultCode implements IErrorCode {
     UNAUTHORIZED(401, "未登录"),
     FORBIDDEN(403, "权限不足");
     private final int code;
-    private String message;
+    private final String message;
 
-    private ResultCode(int code, String message) {
+    ResultCode(int code, String message) {
         this.code = code;
         this.message = message;
     }

@@ -29,10 +29,11 @@
     <version>1.0-SNAPSHOT</version>
 
     <modules>
-        <module>blog-portal</module>
+        <module>blog-controller</module>
         <module>blog-mbg</module>
         <module>blog-common</module>
         <module>blog-demo</module>
+        <module>blog-service</module>
     </modules>
 
     <parent>
@@ -83,14 +84,30 @@
             <artifactId>spring-boot-starter-cache</artifactId>
         </dependency>
         <!--rabbitMQ-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-amqp</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-amqp</artifactId>-->
+<!--        </dependency>-->
         <!--MyBatis分页插件starter-->
         <dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper-spring-boot-starter</artifactId>
+        </dependency>
+        <!--redis依赖配置-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-data-redis</artifactId>-->
+<!--        </dependency>-->
+        <!--        邮件发送-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>3.4.0</version>
         </dependency>
 
     </dependencies>
