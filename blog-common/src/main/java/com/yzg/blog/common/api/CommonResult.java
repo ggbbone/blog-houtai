@@ -77,6 +77,23 @@ public class CommonResult {
     public static  CommonResult failedValidate() {
         return failed(ResultCode.VALIDATE_FAILED);
     }
+    /**
+     * 参数校验失败返回结果
+     * @param message 信息
+     * @return
+     */
+    public static  CommonResult failedValidate(String message) {
+        return new CommonResult(ResultCode.VALIDATE_FAILED.getCode(), message, null);
+    }
+
+    /**
+     * 参数校验失败返回结果
+     * @param message 信息
+     * @return
+     */
+    public static  CommonResult failedValidate(String message, Object data) {
+        return new CommonResult(ResultCode.VALIDATE_FAILED.getCode(), message, data);
+    }
 
     /**
      * 参数校验失败返回结果
@@ -112,5 +129,8 @@ public class CommonResult {
     public static  CommonResult failedForbidden(Object data) {
         return new CommonResult(ResultCode.FORBIDDEN.getCode(), ResultCode.FORBIDDEN.getMessage(), data);
     }
-    
+
+    public static CommonResult failed(int code, String message) {
+        return new CommonResult(code, message, null);
+    }
 }

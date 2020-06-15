@@ -18,6 +18,15 @@ public enum ResultCode implements IErrorCode {
         this.code = code;
         this.message = message;
     }
+    public static String getMessageByCode(int code) {
+        ResultCode[] values = ResultCode.values();
+        for (ResultCode bizErrorCode : values) {
+            if (bizErrorCode.getCode() == code) {
+                return bizErrorCode.getMessage();
+            }
+        }
+        return null;
+    }
 
     @Override
     public int getCode() {
