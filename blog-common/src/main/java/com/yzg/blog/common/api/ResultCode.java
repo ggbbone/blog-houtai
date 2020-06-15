@@ -6,10 +6,11 @@ package com.yzg.blog.common.api;
 public enum ResultCode implements IErrorCode {
     //常用API操作码
     SUCCESS(200, "success"),
-    FAILED(500, "error"),
+    FAILED(500, "系统繁忙，请稍后重试"),
     VALIDATE_FAILED(404, "参数检验失败"),
     UNAUTHORIZED(401, "未登录"),
     FORBIDDEN(403, "权限不足");
+
     private final int code;
     private final String message;
 
