@@ -32,7 +32,7 @@
             <property name="nullCatalogMeansCurrent" value="true"/>
         </jdbcConnection>
 
-        <javaModelGenerator targetPackage="com.yzg.blog.model" targetProject="blog-mbg\src\main\java">
+        <javaModelGenerator targetPackage="com.yzg.blog.dao.mbg.model" targetProject="blog-mbg\src\main\java">
             <!-- 是否允许子包 -->
             <property name="enableSubPackages" value="false"/>
             <!-- 是否清理从数据库中查询出的字符串左右两边的空白字符 -->
@@ -41,9 +41,9 @@
             <property name="immutable" value="false"/>
         </javaModelGenerator>
 
-        <sqlMapGenerator targetPackage="com.yzg.blog.mapper" targetProject="blog-mbg\src\main\resources"/>
+        <sqlMapGenerator targetPackage="com.yzg.blog.dao.mbg.mapper" targetProject="blog-mbg\src\main\resources"/>
 
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.yzg.blog.mapper"
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.yzg.blog.dao.mbg.mapper"
                              targetProject="blog-mbg\src\main\java">
         </javaClientGenerator>
         <!--生成全部表tableName设为%-->

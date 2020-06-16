@@ -1,7 +1,7 @@
 package com.yzg.blog.portal.service.impl;
 
-import com.yzg.blog.mapper.UmsUserMapper;
-import com.yzg.blog.model.UmsUser;
+import com.yzg.blog.dao.mbg.mapper.UmsUserMapper;
+import com.yzg.blog.dao.mbg.model.UmsUser;
 import com.yzg.blog.portal.service.UserService;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;

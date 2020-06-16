@@ -1,6 +1,6 @@
 package com.yzg.blog.portal.exception;
 
-import com.yzg.blog.common.api.CommonResult;
+import com.yzg.blog.demo.api.CommonResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;

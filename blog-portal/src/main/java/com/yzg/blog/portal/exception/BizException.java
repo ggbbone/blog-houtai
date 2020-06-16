@@ -1,6 +1,6 @@
 package com.yzg.blog.portal.exception;
 
-import com.yzg.blog.common.api.IErrorCode;
+import com.yzg.blog.demo.api.IErrorCode;
 
 /**
  * @author yangzg

@@ -1,6 +1,7 @@
 package com.yzg.blog.portal.service;
 
-import com.yzg.blog.model.UmsUser;
+
+import com.yzg.blog.dao.mbg.model.UmsUser;
 
 /**
  * @author yangzg

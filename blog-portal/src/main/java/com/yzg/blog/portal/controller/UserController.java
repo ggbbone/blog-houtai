@@ -1,7 +1,7 @@
 package com.yzg.blog.portal.controller;
 
-import com.yzg.blog.common.api.CommonResult;
-import com.yzg.blog.common.api.ResultCode;
+import com.yzg.blog.demo.api.CommonResult;
+import com.yzg.blog.demo.api.ResultCode;
 import com.yzg.blog.portal.controller.dto.LoginParams;
 import com.yzg.blog.portal.exception.BizException;
 import com.yzg.blog.portal.service.UserService;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 /**
  *
