@@ -13,12 +13,12 @@ import javax.annotation.Resource;
  * @author yangzg
  */
 @Service
-@CacheConfig(cacheNames = "CACHE_USER")
+@CacheConfig(cacheNames = "CACHE:USER")
 public class UserServiceImpl implements UserService {
     @Resource
     UmsUserMapper userMapper;
 
-    @Cacheable(value = "CACHE_USER", key = "#id")
+    @Cacheable(value = "CACHE:USER", key = "#id")
     @Override
     public UmsUser getUserById(Integer id) {
 

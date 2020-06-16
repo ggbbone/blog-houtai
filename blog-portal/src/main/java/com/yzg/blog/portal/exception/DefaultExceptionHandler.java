@@ -39,7 +39,7 @@ public class DefaultExceptionHandler {
      * @return
      */
     @ExceptionHandler(NoHandlerFoundException.class)
-    public CommonResult handlerNoFoundException(NoHandlerFoundException e) {
+    public CommonResult handleNoFoundException(NoHandlerFoundException e) {
         log.error(e.getMessage(), e);
         return CommonResult.failedValidate("路径不存在:" + e.getMessage());
     }
@@ -50,7 +50,7 @@ public class DefaultExceptionHandler {
      * @return
      */
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    public CommonResult handlerMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e) {
+    public CommonResult handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e) {
         log.error("参数转换异常-方法:{},字段:{},参数:{},错误信息:{}", e.getParameter().getMethod(), e.getName(), e.getValue(), e.getMessage());
         return CommonResult.failedValidate("参数异常:" + e.getValue());
     }
@@ -61,7 +61,7 @@ public class DefaultExceptionHandler {
      * @return
      */
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-    public CommonResult handlerHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
+    public CommonResult handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
         log.error(e.getMessage(), e);
         return CommonResult.failedValidate("不支持的请求方法:" + e.getMethod());
     }
@@ -72,7 +72,7 @@ public class DefaultExceptionHandler {
      * @return
      */
     @ExceptionHandler(MissingServletRequestParameterException.class)
-    public CommonResult handlerMissingServletRequestParameterException(MissingServletRequestParameterException e) {
+    public CommonResult handleMissingServletRequestParameterException(MissingServletRequestParameterException e) {
         log.error(e.getMessage(), e);
         return CommonResult.failedValidate("缺少必填请求参数:" + e.getMessage());
     }
@@ -85,7 +85,6 @@ public class DefaultExceptionHandler {
         log.error(e.getMessage(), e);
         return CommonResult.failedValidate(Objects.requireNonNull(e.getBindingResult().getFieldError()).getField() + ":" + Objects.requireNonNull(e.getBindingResult().getFieldError()).getDefaultMessage());
     }
-
 
     /**
      * ValidationException

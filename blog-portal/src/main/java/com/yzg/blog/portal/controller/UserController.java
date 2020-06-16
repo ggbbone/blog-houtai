@@ -1,6 +1,7 @@
 package com.yzg.blog.portal.controller;
 
 import com.yzg.blog.common.api.CommonResult;
+import com.yzg.blog.common.api.ResultCode;
 import com.yzg.blog.portal.controller.dto.LoginParams;
 import com.yzg.blog.portal.exception.BizException;
 import com.yzg.blog.portal.service.UserService;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -37,7 +39,10 @@ public class UserController {
     }
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)
-    public CommonResult test1(@RequestParam @NotNull Integer id) throws BizException {
+    public CommonResult test1(@RequestParam @NotBlank String id) throws BizException {
+        if ("1".equals(id)) {
+            throw BizException.createInstance(ResultCode.FAILED);
+        }
         return CommonResult.success();
     }
 

@@ -10,7 +10,7 @@ import com.yzg.blog.common.api.IErrorCode;
 public class BizException extends RuntimeException implements IErrorCode {
     private static final long serialVersionUID = 1L;
 
-    private final String msg;
+    private String msg;
     private Integer code;
 
     public BizException(Integer code, String msg) {
@@ -34,11 +34,38 @@ public class BizException extends RuntimeException implements IErrorCode {
         this.msg = msg;
         this.code = code;
     }
+    public BizException() {
+        super();
+    }
 
-    public BizException(String msg, int code, Throwable e) {
+    public BizException(int code, String msg, Throwable e) {
         super(msg, e);
         this.msg = msg;
         this.code = code;
+    }
+
+    public static BizException createInstance(int errorCode, String errorMsg) {
+        return new BizException(errorCode, errorMsg);
+    }
+
+    public static BizException createInstance(IErrorCode iErrorCode) {
+        return new BizException(iErrorCode.getCode(), iErrorCode.getMessage());
+    }
+
+    public static BizException createInstance(IErrorCode iErrorCode, Exception e) {
+        return new BizException(iErrorCode.getCode(), iErrorCode.getMessage(), e);
+    }
+
+    public static BizException createInstance(IErrorCode iErrorCode, String errMsg) {
+        return new BizException(iErrorCode.getCode(), "[" + iErrorCode.getMessage() + "]" + errMsg);
+    }
+
+    public static BizException createInstance(IErrorCode iErrorCode, String errMsg, Exception e) {
+        return new BizException(iErrorCode.getCode(), "[" + iErrorCode.getMessage() + "]" + errMsg, e);
+    }
+
+    public static BizException createInstance(int errorCode, String errorMsg, Exception e) {
+        return new BizException(errorCode, errorMsg, e);
     }
 
     @Override

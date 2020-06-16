@@ -61,7 +61,7 @@ public class CommonResult {
      * @param message 提示信息
      */
     public static  CommonResult failed(String message) {
-        return new CommonResult(ResultCode.FAILED.getCode(), message, null);
+        return new CommonResult(ResultCode.FAILED.getCode(), '['+ResultCode.FAILED.getMessage()+']'+message, null);
     }
 
     /**
@@ -75,7 +75,7 @@ public class CommonResult {
      * 参数验证失败返回结果
      */
     public static  CommonResult failedValidate() {
-        return failed(ResultCode.VALIDATE_FAILED);
+        return failed(ResultCode.BAD_REQUEST);
     }
     /**
      * 参数校验失败返回结果
@@ -83,7 +83,7 @@ public class CommonResult {
      * @return
      */
     public static  CommonResult failedValidate(String message) {
-        return new CommonResult(ResultCode.VALIDATE_FAILED.getCode(), message, null);
+        return new CommonResult(ResultCode.BAD_REQUEST.getCode(), '['+ResultCode.BAD_REQUEST.getMessage()+']'+message, null);
     }
 
     /**
@@ -92,7 +92,7 @@ public class CommonResult {
      * @return
      */
     public static  CommonResult failedValidate(String message, Object data) {
-        return new CommonResult(ResultCode.VALIDATE_FAILED.getCode(), message, data);
+        return new CommonResult(ResultCode.BAD_REQUEST.getCode(), '['+ResultCode.BAD_REQUEST.getMessage()+']'+message, data);
     }
 
     /**
@@ -101,7 +101,7 @@ public class CommonResult {
      * @return
      */
     public static  CommonResult failedValidate(Object t) {
-        return new CommonResult(ResultCode.VALIDATE_FAILED.getCode(), ResultCode.VALIDATE_FAILED.getMessage(), t);
+        return new CommonResult(ResultCode.BAD_REQUEST.getCode(), ResultCode.BAD_REQUEST.getMessage(), t);
     }
 
     /**
@@ -132,5 +132,9 @@ public class CommonResult {
 
     public static CommonResult failed(int code, String message) {
         return new CommonResult(code, message, null);
+    }
+
+    public static CommonResult failed(ResultCode resultCode) {
+        return new CommonResult(resultCode.getCode(), resultCode.getMessage(), null);
     }
 }
