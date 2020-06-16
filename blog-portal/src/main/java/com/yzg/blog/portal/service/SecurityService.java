@@ -1,6 +1,8 @@
 package com.yzg.blog.portal.service;
 
-import com.yzg.blog.model.UmsAuth;
+
+
+import com.yzg.blog.dao.mbg.model.UmsAuth;
 
 import java.util.List;
 

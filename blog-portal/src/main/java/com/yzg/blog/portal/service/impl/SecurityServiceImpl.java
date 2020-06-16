@@ -1,10 +1,11 @@
 package com.yzg.blog.portal.service.impl;
 
-import com.yzg.blog.mapper.UmsAuthMapper;
-import com.yzg.blog.mapper.UmsRoleMapper;
-import com.yzg.blog.mapper.UmsRolesAuthsMapper;
-import com.yzg.blog.mapper.UmsUsersRolesMapper;
-import com.yzg.blog.model.UmsAuth;
+;
+import com.yzg.blog.dao.mbg.mapper.UmsAuthMapper;
+import com.yzg.blog.dao.mbg.mapper.UmsRoleMapper;
+import com.yzg.blog.dao.mbg.mapper.UmsRolesAuthsMapper;
+import com.yzg.blog.dao.mbg.mapper.UmsUsersRolesMapper;
+import com.yzg.blog.dao.mbg.model.UmsAuth;
 import com.yzg.blog.portal.service.SecurityService;
 import org.springframework.stereotype.Service;
 

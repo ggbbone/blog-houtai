@@ -11,7 +11,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  */
 @SpringBootApplication
 @ComponentScan("com.yzg.blog")//扫描包下的注解
-@MapperScan("com.yzg.blog.mapper")
+@MapperScan("com.yzg.blog.dao.mbg.mapper")
 @EnableScheduling//开启定时任务
 public class BlogPortalApplication {
     public static void main(String[] args) {

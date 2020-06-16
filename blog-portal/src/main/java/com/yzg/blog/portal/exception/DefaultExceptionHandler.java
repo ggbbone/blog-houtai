@@ -1,6 +1,7 @@
 package com.yzg.blog.portal.exception;
 
 import com.yzg.blog.demo.api.CommonResult;
+import com.yzg.blog.demo.api.ResultCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -34,14 +35,14 @@ public class DefaultExceptionHandler {
     }
 
     /**
-     * url无法匹配接口方法
+     * 404错误
      * @param e
      * @return
      */
     @ExceptionHandler(NoHandlerFoundException.class)
     public CommonResult handleNoFoundException(NoHandlerFoundException e) {
         log.error(e.getMessage(), e);
-        return CommonResult.failedValidate("路径不存在:" + e.getMessage());
+        return CommonResult.failed(ResultCode.NOT_FOUND.getCode(),"路径不存在:" + e.getMessage());
     }
 
     /**

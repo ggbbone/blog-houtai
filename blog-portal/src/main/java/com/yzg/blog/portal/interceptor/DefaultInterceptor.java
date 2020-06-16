@@ -17,6 +17,7 @@ public class DefaultInterceptor extends HandlerInterceptorAdapter {
         String method = request.getMethod();
         String requestURI = request.getRequestURI();
         String token = request.getHeader("token");
+
         return true;
     }
 
