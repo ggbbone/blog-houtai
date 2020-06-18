@@ -11,7 +11,7 @@ public class BmsArticle implements Serializable {
     private Integer userId;
 
     @ApiModelProperty(value = "概要")
-    private String outline;
+    private String content;
 
     @ApiModelProperty(value = "所属类别id")
     private Integer categoryId;
@@ -19,8 +19,11 @@ public class BmsArticle implements Serializable {
     @ApiModelProperty(value = "标题")
     private String title;
 
-    @ApiModelProperty(value = "封面图片")
-    private String cover;
+    @ApiModelProperty(value = "是否有封面图片")
+    private Boolean cover;
+
+    @ApiModelProperty(value = "封面图片url")
+    private String coveUrl;
 
     @ApiModelProperty(value = "创建时间")
     private Date createdDate;
@@ -31,11 +34,11 @@ public class BmsArticle implements Serializable {
     @ApiModelProperty(value = "最后评论时间")
     private Date lastCommentTime;
 
-    @ApiModelProperty(value = "点赞次数")
-    private Integer likeCount;
-
     @ApiModelProperty(value = "阅读次数")
     private Integer viewCount;
+
+    @ApiModelProperty(value = "点赞次数")
+    private Integer likeCount;
 
     @ApiModelProperty(value = "评论数量")
     private Integer commentCount;
@@ -52,8 +55,11 @@ public class BmsArticle implements Serializable {
     @ApiModelProperty(value = "状态（1正常， 2已删除， 3已屏蔽）")
     private Byte status;
 
-    @ApiModelProperty(value = "正文内容")
-    private String content;
+    @ApiModelProperty(value = "正文内容html")
+    private String html;
+
+    @ApiModelProperty(value = "正文内容markdown")
+    private String markdown;
 
     private static final long serialVersionUID = 1L;
 
@@ -73,12 +79,12 @@ public class BmsArticle implements Serializable {
         this.userId = userId;
     }
 
-    public String getOutline() {
-        return outline;
+    public String getContent() {
+        return content;
     }
 
-    public void setOutline(String outline) {
-        this.outline = outline == null ? null : outline.trim();
+    public void setContent(String content) {
+        this.content = content == null ? null : content.trim();
     }
 
     public Integer getCategoryId() {
@@ -97,12 +103,20 @@ public class BmsArticle implements Serializable {
         this.title = title == null ? null : title.trim();
     }
 
-    public String getCover() {
+    public Boolean getCover() {
         return cover;
     }
 
-    public void setCover(String cover) {
-        this.cover = cover == null ? null : cover.trim();
+    public void setCover(Boolean cover) {
+        this.cover = cover;
+    }
+
+    public String getCoveUrl() {
+        return coveUrl;
+    }
+
+    public void setCoveUrl(String coveUrl) {
+        this.coveUrl = coveUrl == null ? null : coveUrl.trim();
     }
 
     public Date getCreatedDate() {
@@ -129,20 +143,20 @@ public class BmsArticle implements Serializable {
         this.lastCommentTime = lastCommentTime;
     }
 
-    public Integer getLikeCount() {
-        return likeCount;
-    }
-
-    public void setLikeCount(Integer likeCount) {
-        this.likeCount = likeCount;
-    }
-
     public Integer getViewCount() {
         return viewCount;
     }
 
     public void setViewCount(Integer viewCount) {
         this.viewCount = viewCount;
+    }
+
+    public Integer getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(Integer likeCount) {
+        this.likeCount = likeCount;
     }
 
     public Integer getCommentCount() {
@@ -185,12 +199,20 @@ public class BmsArticle implements Serializable {
         this.status = status;
     }
 
-    public String getContent() {
-        return content;
+    public String getHtml() {
+        return html;
     }
 
-    public void setContent(String content) {
-        this.content = content == null ? null : content.trim();
+    public void setHtml(String html) {
+        this.html = html == null ? null : html.trim();
+    }
+
+    public String getMarkdown() {
+        return markdown;
+    }
+
+    public void setMarkdown(String markdown) {
+        this.markdown = markdown == null ? null : markdown.trim();
     }
 
     @Override
@@ -201,21 +223,23 @@ public class BmsArticle implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
         sb.append(", userId=").append(userId);
-        sb.append(", outline=").append(outline);
+        sb.append(", content=").append(content);
         sb.append(", categoryId=").append(categoryId);
         sb.append(", title=").append(title);
         sb.append(", cover=").append(cover);
+        sb.append(", coveUrl=").append(coveUrl);
         sb.append(", createdDate=").append(createdDate);
         sb.append(", updatedDate=").append(updatedDate);
         sb.append(", lastCommentTime=").append(lastCommentTime);
-        sb.append(", likeCount=").append(likeCount);
         sb.append(", viewCount=").append(viewCount);
+        sb.append(", likeCount=").append(likeCount);
         sb.append(", commentCount=").append(commentCount);
         sb.append(", recommendIndex=").append(recommendIndex);
         sb.append(", hot=").append(hot);
         sb.append(", hotIndex=").append(hotIndex);
         sb.append(", status=").append(status);
-        sb.append(", content=").append(content);
+        sb.append(", html=").append(html);
+        sb.append(", markdown=").append(markdown);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

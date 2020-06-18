@@ -1,4 +1,4 @@
-package com.yzg.blog.demo.api;
+package com.yzg.blog.common.api;
 
 /**
  * 封装API的错误码

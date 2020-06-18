@@ -1,4 +1,4 @@
-package com.yzg.blog.demo.api;
+package com.yzg.blog.common.api;
 
 /**
  * 常用API操作码

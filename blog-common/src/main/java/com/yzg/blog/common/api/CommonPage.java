@@ -1,4 +1,4 @@
-package com.yzg.blog.demo.api;
+package com.yzg.blog.common.api;
 
 import com.github.pagehelper.PageInfo;
 import lombok.Data;

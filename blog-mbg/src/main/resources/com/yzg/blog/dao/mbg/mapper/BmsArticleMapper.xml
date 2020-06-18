@@ -4,15 +4,16 @@
   <resultMap id="BaseResultMap" type="com.yzg.blog.dao.mbg.model.BmsArticle">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
-    <result column="outline" jdbcType="VARCHAR" property="outline" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
     <result column="category_id" jdbcType="INTEGER" property="categoryId" />
     <result column="title" jdbcType="VARCHAR" property="title" />
-    <result column="cover" jdbcType="VARCHAR" property="cover" />
+    <result column="cover" jdbcType="BIT" property="cover" />
+    <result column="cove_url" jdbcType="VARCHAR" property="coveUrl" />
     <result column="created_date" jdbcType="TIMESTAMP" property="createdDate" />
     <result column="updated_date" jdbcType="TIMESTAMP" property="updatedDate" />
     <result column="last_comment_time" jdbcType="TIMESTAMP" property="lastCommentTime" />
-    <result column="like_count" jdbcType="INTEGER" property="likeCount" />
     <result column="view_count" jdbcType="INTEGER" property="viewCount" />
+    <result column="like_count" jdbcType="INTEGER" property="likeCount" />
     <result column="comment_count" jdbcType="INTEGER" property="commentCount" />
     <result column="recommend_index" jdbcType="INTEGER" property="recommendIndex" />
     <result column="hot" jdbcType="BIT" property="hot" />
@@ -20,7 +21,8 @@
     <result column="status" jdbcType="TINYINT" property="status" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.yzg.blog.dao.mbg.model.BmsArticle">
-    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+    <result column="html" jdbcType="LONGVARCHAR" property="html" />
+    <result column="markdown" jdbcType="LONGVARCHAR" property="markdown" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -81,11 +83,12 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, user_id, outline, category_id, title, cover, created_date, updated_date, last_comment_time, 
-    like_count, view_count, comment_count, recommend_index, hot, hot_index, status
+    id, user_id, content, category_id, title, cover, cove_url, created_date, updated_date, 
+    last_comment_time, view_count, like_count, comment_count, recommend_index, hot, hot_index, 
+    status
   </sql>
   <sql id="Blob_Column_List">
-    content
+    html, markdown
   </sql>
   <select id="selectByExampleWithBLOBs" parameterType="com.yzg.blog.dao.mbg.model.BmsArticleExample" resultMap="ResultMapWithBLOBs">
     select
@@ -139,18 +142,20 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into bms_article (user_id, outline, category_id, 
-      title, cover, created_date, 
-      updated_date, last_comment_time, like_count, 
-      view_count, comment_count, recommend_index, 
-      hot, hot_index, status, 
-      content)
-    values (#{userId,jdbcType=INTEGER}, #{outline,jdbcType=VARCHAR}, #{categoryId,jdbcType=INTEGER}, 
-      #{title,jdbcType=VARCHAR}, #{cover,jdbcType=VARCHAR}, #{createdDate,jdbcType=TIMESTAMP}, 
-      #{updatedDate,jdbcType=TIMESTAMP}, #{lastCommentTime,jdbcType=TIMESTAMP}, #{likeCount,jdbcType=INTEGER}, 
-      #{viewCount,jdbcType=INTEGER}, #{commentCount,jdbcType=INTEGER}, #{recommendIndex,jdbcType=INTEGER}, 
-      #{hot,jdbcType=BIT}, #{hotIndex,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, 
-      #{content,jdbcType=LONGVARCHAR})
+    insert into bms_article (user_id, content, category_id, 
+      title, cover, cove_url, 
+      created_date, updated_date, last_comment_time, 
+      view_count, like_count, comment_count, 
+      recommend_index, hot, hot_index, 
+      status, html, markdown
+      )
+    values (#{userId,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{categoryId,jdbcType=INTEGER}, 
+      #{title,jdbcType=VARCHAR}, #{cover,jdbcType=BIT}, #{coveUrl,jdbcType=VARCHAR}, 
+      #{createdDate,jdbcType=TIMESTAMP}, #{updatedDate,jdbcType=TIMESTAMP}, #{lastCommentTime,jdbcType=TIMESTAMP}, 
+      #{viewCount,jdbcType=INTEGER}, #{likeCount,jdbcType=INTEGER}, #{commentCount,jdbcType=INTEGER}, 
+      #{recommendIndex,jdbcType=INTEGER}, #{hot,jdbcType=BIT}, #{hotIndex,jdbcType=INTEGER}, 
+      #{status,jdbcType=TINYINT}, #{html,jdbcType=LONGVARCHAR}, #{markdown,jdbcType=LONGVARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.yzg.blog.dao.mbg.model.BmsArticle">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -161,8 +166,8 @@
       <if test="userId != null">
         user_id,
       </if>
-      <if test="outline != null">
-        outline,
+      <if test="content != null">
+        content,
       </if>
       <if test="categoryId != null">
         category_id,
@@ -173,6 +178,9 @@
       <if test="cover != null">
         cover,
       </if>
+      <if test="coveUrl != null">
+        cove_url,
+      </if>
       <if test="createdDate != null">
         created_date,
       </if>
@@ -182,11 +190,11 @@
       <if test="lastCommentTime != null">
         last_comment_time,
       </if>
-      <if test="likeCount != null">
-        like_count,
-      </if>
       <if test="viewCount != null">
         view_count,
+      </if>
+      <if test="likeCount != null">
+        like_count,
       </if>
       <if test="commentCount != null">
         comment_count,
@@ -203,16 +211,19 @@
       <if test="status != null">
         status,
       </if>
-      <if test="content != null">
-        content,
+      <if test="html != null">
+        html,
+      </if>
+      <if test="markdown != null">
+        markdown,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="userId != null">
         #{userId,jdbcType=INTEGER},
       </if>
-      <if test="outline != null">
-        #{outline,jdbcType=VARCHAR},
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
       </if>
       <if test="categoryId != null">
         #{categoryId,jdbcType=INTEGER},
@@ -221,7 +232,10 @@
         #{title,jdbcType=VARCHAR},
       </if>
       <if test="cover != null">
-        #{cover,jdbcType=VARCHAR},
+        #{cover,jdbcType=BIT},
+      </if>
+      <if test="coveUrl != null">
+        #{coveUrl,jdbcType=VARCHAR},
       </if>
       <if test="createdDate != null">
         #{createdDate,jdbcType=TIMESTAMP},
@@ -232,11 +246,11 @@
       <if test="lastCommentTime != null">
         #{lastCommentTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="likeCount != null">
-        #{likeCount,jdbcType=INTEGER},
-      </if>
       <if test="viewCount != null">
         #{viewCount,jdbcType=INTEGER},
+      </if>
+      <if test="likeCount != null">
+        #{likeCount,jdbcType=INTEGER},
       </if>
       <if test="commentCount != null">
         #{commentCount,jdbcType=INTEGER},
@@ -253,8 +267,11 @@
       <if test="status != null">
         #{status,jdbcType=TINYINT},
       </if>
-      <if test="content != null">
-        #{content,jdbcType=LONGVARCHAR},
+      <if test="html != null">
+        #{html,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="markdown != null">
+        #{markdown,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -273,8 +290,8 @@
       <if test="record.userId != null">
         user_id = #{record.userId,jdbcType=INTEGER},
       </if>
-      <if test="record.outline != null">
-        outline = #{record.outline,jdbcType=VARCHAR},
+      <if test="record.content != null">
+        content = #{record.content,jdbcType=VARCHAR},
       </if>
       <if test="record.categoryId != null">
         category_id = #{record.categoryId,jdbcType=INTEGER},
@@ -283,7 +300,10 @@
         title = #{record.title,jdbcType=VARCHAR},
       </if>
       <if test="record.cover != null">
-        cover = #{record.cover,jdbcType=VARCHAR},
+        cover = #{record.cover,jdbcType=BIT},
+      </if>
+      <if test="record.coveUrl != null">
+        cove_url = #{record.coveUrl,jdbcType=VARCHAR},
       </if>
       <if test="record.createdDate != null">
         created_date = #{record.createdDate,jdbcType=TIMESTAMP},
@@ -294,11 +314,11 @@
       <if test="record.lastCommentTime != null">
         last_comment_time = #{record.lastCommentTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.likeCount != null">
-        like_count = #{record.likeCount,jdbcType=INTEGER},
-      </if>
       <if test="record.viewCount != null">
         view_count = #{record.viewCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.likeCount != null">
+        like_count = #{record.likeCount,jdbcType=INTEGER},
       </if>
       <if test="record.commentCount != null">
         comment_count = #{record.commentCount,jdbcType=INTEGER},
@@ -315,8 +335,11 @@
       <if test="record.status != null">
         status = #{record.status,jdbcType=TINYINT},
       </if>
-      <if test="record.content != null">
-        content = #{record.content,jdbcType=LONGVARCHAR},
+      <if test="record.html != null">
+        html = #{record.html,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.markdown != null">
+        markdown = #{record.markdown,jdbcType=LONGVARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -327,21 +350,23 @@
     update bms_article
     set id = #{record.id,jdbcType=INTEGER},
       user_id = #{record.userId,jdbcType=INTEGER},
-      outline = #{record.outline,jdbcType=VARCHAR},
+      content = #{record.content,jdbcType=VARCHAR},
       category_id = #{record.categoryId,jdbcType=INTEGER},
       title = #{record.title,jdbcType=VARCHAR},
-      cover = #{record.cover,jdbcType=VARCHAR},
+      cover = #{record.cover,jdbcType=BIT},
+      cove_url = #{record.coveUrl,jdbcType=VARCHAR},
       created_date = #{record.createdDate,jdbcType=TIMESTAMP},
       updated_date = #{record.updatedDate,jdbcType=TIMESTAMP},
       last_comment_time = #{record.lastCommentTime,jdbcType=TIMESTAMP},
-      like_count = #{record.likeCount,jdbcType=INTEGER},
       view_count = #{record.viewCount,jdbcType=INTEGER},
+      like_count = #{record.likeCount,jdbcType=INTEGER},
       comment_count = #{record.commentCount,jdbcType=INTEGER},
       recommend_index = #{record.recommendIndex,jdbcType=INTEGER},
       hot = #{record.hot,jdbcType=BIT},
       hot_index = #{record.hotIndex,jdbcType=INTEGER},
       status = #{record.status,jdbcType=TINYINT},
-      content = #{record.content,jdbcType=LONGVARCHAR}
+      html = #{record.html,jdbcType=LONGVARCHAR},
+      markdown = #{record.markdown,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -350,15 +375,16 @@
     update bms_article
     set id = #{record.id,jdbcType=INTEGER},
       user_id = #{record.userId,jdbcType=INTEGER},
-      outline = #{record.outline,jdbcType=VARCHAR},
+      content = #{record.content,jdbcType=VARCHAR},
       category_id = #{record.categoryId,jdbcType=INTEGER},
       title = #{record.title,jdbcType=VARCHAR},
-      cover = #{record.cover,jdbcType=VARCHAR},
+      cover = #{record.cover,jdbcType=BIT},
+      cove_url = #{record.coveUrl,jdbcType=VARCHAR},
       created_date = #{record.createdDate,jdbcType=TIMESTAMP},
       updated_date = #{record.updatedDate,jdbcType=TIMESTAMP},
       last_comment_time = #{record.lastCommentTime,jdbcType=TIMESTAMP},
-      like_count = #{record.likeCount,jdbcType=INTEGER},
       view_count = #{record.viewCount,jdbcType=INTEGER},
+      like_count = #{record.likeCount,jdbcType=INTEGER},
       comment_count = #{record.commentCount,jdbcType=INTEGER},
       recommend_index = #{record.recommendIndex,jdbcType=INTEGER},
       hot = #{record.hot,jdbcType=BIT},
@@ -374,8 +400,8 @@
       <if test="userId != null">
         user_id = #{userId,jdbcType=INTEGER},
       </if>
-      <if test="outline != null">
-        outline = #{outline,jdbcType=VARCHAR},
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
       </if>
       <if test="categoryId != null">
         category_id = #{categoryId,jdbcType=INTEGER},
@@ -384,7 +410,10 @@
         title = #{title,jdbcType=VARCHAR},
       </if>
       <if test="cover != null">
-        cover = #{cover,jdbcType=VARCHAR},
+        cover = #{cover,jdbcType=BIT},
+      </if>
+      <if test="coveUrl != null">
+        cove_url = #{coveUrl,jdbcType=VARCHAR},
       </if>
       <if test="createdDate != null">
         created_date = #{createdDate,jdbcType=TIMESTAMP},
@@ -395,11 +424,11 @@
       <if test="lastCommentTime != null">
         last_comment_time = #{lastCommentTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="likeCount != null">
-        like_count = #{likeCount,jdbcType=INTEGER},
-      </if>
       <if test="viewCount != null">
         view_count = #{viewCount,jdbcType=INTEGER},
+      </if>
+      <if test="likeCount != null">
+        like_count = #{likeCount,jdbcType=INTEGER},
       </if>
       <if test="commentCount != null">
         comment_count = #{commentCount,jdbcType=INTEGER},
@@ -416,8 +445,11 @@
       <if test="status != null">
         status = #{status,jdbcType=TINYINT},
       </if>
-      <if test="content != null">
-        content = #{content,jdbcType=LONGVARCHAR},
+      <if test="html != null">
+        html = #{html,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="markdown != null">
+        markdown = #{markdown,jdbcType=LONGVARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -425,35 +457,38 @@
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.yzg.blog.dao.mbg.model.BmsArticle">
     update bms_article
     set user_id = #{userId,jdbcType=INTEGER},
-      outline = #{outline,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
       category_id = #{categoryId,jdbcType=INTEGER},
       title = #{title,jdbcType=VARCHAR},
-      cover = #{cover,jdbcType=VARCHAR},
+      cover = #{cover,jdbcType=BIT},
+      cove_url = #{coveUrl,jdbcType=VARCHAR},
       created_date = #{createdDate,jdbcType=TIMESTAMP},
       updated_date = #{updatedDate,jdbcType=TIMESTAMP},
       last_comment_time = #{lastCommentTime,jdbcType=TIMESTAMP},
-      like_count = #{likeCount,jdbcType=INTEGER},
       view_count = #{viewCount,jdbcType=INTEGER},
+      like_count = #{likeCount,jdbcType=INTEGER},
       comment_count = #{commentCount,jdbcType=INTEGER},
       recommend_index = #{recommendIndex,jdbcType=INTEGER},
       hot = #{hot,jdbcType=BIT},
       hot_index = #{hotIndex,jdbcType=INTEGER},
       status = #{status,jdbcType=TINYINT},
-      content = #{content,jdbcType=LONGVARCHAR}
+      html = #{html,jdbcType=LONGVARCHAR},
+      markdown = #{markdown,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.yzg.blog.dao.mbg.model.BmsArticle">
     update bms_article
     set user_id = #{userId,jdbcType=INTEGER},
-      outline = #{outline,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
       category_id = #{categoryId,jdbcType=INTEGER},
       title = #{title,jdbcType=VARCHAR},
-      cover = #{cover,jdbcType=VARCHAR},
+      cover = #{cover,jdbcType=BIT},
+      cove_url = #{coveUrl,jdbcType=VARCHAR},
       created_date = #{createdDate,jdbcType=TIMESTAMP},
       updated_date = #{updatedDate,jdbcType=TIMESTAMP},
       last_comment_time = #{lastCommentTime,jdbcType=TIMESTAMP},
-      like_count = #{likeCount,jdbcType=INTEGER},
       view_count = #{viewCount,jdbcType=INTEGER},
+      like_count = #{likeCount,jdbcType=INTEGER},
       comment_count = #{commentCount,jdbcType=INTEGER},
       recommend_index = #{recommendIndex,jdbcType=INTEGER},
       hot = #{hot,jdbcType=BIT},

@@ -6,6 +6,7 @@ import com.yzg.blog.portal.annotation.validation.groups.Register;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 /**
@@ -14,9 +15,11 @@ import javax.validation.constraints.NotBlank;
 @Data
 public class UserDTO {
 
-    @ApiModelProperty(value = "用户名/邮箱")
-    @NotBlank(message = "用户名/邮箱不能为空", groups = {Login.class, Register.class})
-    private String username;
+
+    @ApiModelProperty(value = "注册邮箱")
+    @NotBlank(message = "邮箱不能为空", groups = {Login.class, Register.class})
+    @Email(message = "邮箱格式不正确")
+    private String email;
 
     @ApiModelProperty(value = "密码")
     @NotBlank(message = "密码不能为空", groups = {Login.class, Register.class})

@@ -1,4 +1,4 @@
-package com.yzg.blog.demo.utils;
+package com.yzg.blog.common.utils;
 
 import org.springframework.cglib.beans.BeanCopier;
 
@@ -23,6 +23,11 @@ public class BeanCopyUtils {
      * @param target 目标对象
      */
     public static void copy(Object source, Object target) {
+        if (target == null || source == null) {
+            source = null;
+            target = null;
+            return;
+        }
         String key = genKey(source.getClass(), target.getClass());
         BeanCopier copier;
         if (!BEAN_COPIERS.containsKey(key)) {
@@ -33,6 +38,7 @@ public class BeanCopyUtils {
         }
         copier.copy(source, target, null);
     }
+
 
     private static String genKey(Class<?> srcClazz, Class<?> destClazz) {
         return srcClazz.getName() + destClazz.getName();

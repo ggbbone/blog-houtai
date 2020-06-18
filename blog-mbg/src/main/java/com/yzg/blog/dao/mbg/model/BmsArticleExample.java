@@ -225,73 +225,73 @@ public class BmsArticleExample {
             return (Criteria) this;
         }
 
-        public Criteria andOutlineIsNull() {
-            addCriterion("outline is null");
+        public Criteria andContentIsNull() {
+            addCriterion("content is null");
             return (Criteria) this;
         }
 
-        public Criteria andOutlineIsNotNull() {
-            addCriterion("outline is not null");
+        public Criteria andContentIsNotNull() {
+            addCriterion("content is not null");
             return (Criteria) this;
         }
 
-        public Criteria andOutlineEqualTo(String value) {
-            addCriterion("outline =", value, "outline");
+        public Criteria andContentEqualTo(String value) {
+            addCriterion("content =", value, "content");
             return (Criteria) this;
         }
 
-        public Criteria andOutlineNotEqualTo(String value) {
-            addCriterion("outline <>", value, "outline");
+        public Criteria andContentNotEqualTo(String value) {
+            addCriterion("content <>", value, "content");
             return (Criteria) this;
         }
 
-        public Criteria andOutlineGreaterThan(String value) {
-            addCriterion("outline >", value, "outline");
+        public Criteria andContentGreaterThan(String value) {
+            addCriterion("content >", value, "content");
             return (Criteria) this;
         }
 
-        public Criteria andOutlineGreaterThanOrEqualTo(String value) {
-            addCriterion("outline >=", value, "outline");
+        public Criteria andContentGreaterThanOrEqualTo(String value) {
+            addCriterion("content >=", value, "content");
             return (Criteria) this;
         }
 
-        public Criteria andOutlineLessThan(String value) {
-            addCriterion("outline <", value, "outline");
+        public Criteria andContentLessThan(String value) {
+            addCriterion("content <", value, "content");
             return (Criteria) this;
         }
 
-        public Criteria andOutlineLessThanOrEqualTo(String value) {
-            addCriterion("outline <=", value, "outline");
+        public Criteria andContentLessThanOrEqualTo(String value) {
+            addCriterion("content <=", value, "content");
             return (Criteria) this;
         }
 
-        public Criteria andOutlineLike(String value) {
-            addCriterion("outline like", value, "outline");
+        public Criteria andContentLike(String value) {
+            addCriterion("content like", value, "content");
             return (Criteria) this;
         }
 
-        public Criteria andOutlineNotLike(String value) {
-            addCriterion("outline not like", value, "outline");
+        public Criteria andContentNotLike(String value) {
+            addCriterion("content not like", value, "content");
             return (Criteria) this;
         }
 
-        public Criteria andOutlineIn(List<String> values) {
-            addCriterion("outline in", values, "outline");
+        public Criteria andContentIn(List<String> values) {
+            addCriterion("content in", values, "content");
             return (Criteria) this;
         }
 
-        public Criteria andOutlineNotIn(List<String> values) {
-            addCriterion("outline not in", values, "outline");
+        public Criteria andContentNotIn(List<String> values) {
+            addCriterion("content not in", values, "content");
             return (Criteria) this;
         }
 
-        public Criteria andOutlineBetween(String value1, String value2) {
-            addCriterion("outline between", value1, value2, "outline");
+        public Criteria andContentBetween(String value1, String value2) {
+            addCriterion("content between", value1, value2, "content");
             return (Criteria) this;
         }
 
-        public Criteria andOutlineNotBetween(String value1, String value2) {
-            addCriterion("outline not between", value1, value2, "outline");
+        public Criteria andContentNotBetween(String value1, String value2) {
+            addCriterion("content not between", value1, value2, "content");
             return (Criteria) this;
         }
 
@@ -435,63 +435,123 @@ public class BmsArticleExample {
             return (Criteria) this;
         }
 
-        public Criteria andCoverEqualTo(String value) {
+        public Criteria andCoverEqualTo(Boolean value) {
             addCriterion("cover =", value, "cover");
             return (Criteria) this;
         }
 
-        public Criteria andCoverNotEqualTo(String value) {
+        public Criteria andCoverNotEqualTo(Boolean value) {
             addCriterion("cover <>", value, "cover");
             return (Criteria) this;
         }
 
-        public Criteria andCoverGreaterThan(String value) {
+        public Criteria andCoverGreaterThan(Boolean value) {
             addCriterion("cover >", value, "cover");
             return (Criteria) this;
         }
 
-        public Criteria andCoverGreaterThanOrEqualTo(String value) {
+        public Criteria andCoverGreaterThanOrEqualTo(Boolean value) {
             addCriterion("cover >=", value, "cover");
             return (Criteria) this;
         }
 
-        public Criteria andCoverLessThan(String value) {
+        public Criteria andCoverLessThan(Boolean value) {
             addCriterion("cover <", value, "cover");
             return (Criteria) this;
         }
 
-        public Criteria andCoverLessThanOrEqualTo(String value) {
+        public Criteria andCoverLessThanOrEqualTo(Boolean value) {
             addCriterion("cover <=", value, "cover");
             return (Criteria) this;
         }
 
-        public Criteria andCoverLike(String value) {
-            addCriterion("cover like", value, "cover");
-            return (Criteria) this;
-        }
-
-        public Criteria andCoverNotLike(String value) {
-            addCriterion("cover not like", value, "cover");
-            return (Criteria) this;
-        }
-
-        public Criteria andCoverIn(List<String> values) {
+        public Criteria andCoverIn(List<Boolean> values) {
             addCriterion("cover in", values, "cover");
             return (Criteria) this;
         }
 
-        public Criteria andCoverNotIn(List<String> values) {
+        public Criteria andCoverNotIn(List<Boolean> values) {
             addCriterion("cover not in", values, "cover");
             return (Criteria) this;
         }
 
-        public Criteria andCoverBetween(String value1, String value2) {
+        public Criteria andCoverBetween(Boolean value1, Boolean value2) {
             addCriterion("cover between", value1, value2, "cover");
             return (Criteria) this;
         }
 
-        public Criteria andCoverNotBetween(String value1, String value2) {
+        public Criteria andCoverNotBetween(Boolean value1, Boolean value2) {
             addCriterion("cover not between", value1, value2, "cover");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoveUrlIsNull() {
+            addCriterion("cove_url is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoveUrlIsNotNull() {
+            addCriterion("cove_url is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoveUrlEqualTo(String value) {
+            addCriterion("cove_url =", value, "coveUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoveUrlNotEqualTo(String value) {
+            addCriterion("cove_url <>", value, "coveUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoveUrlGreaterThan(String value) {
+            addCriterion("cove_url >", value, "coveUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoveUrlGreaterThanOrEqualTo(String value) {
+            addCriterion("cove_url >=", value, "coveUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoveUrlLessThan(String value) {
+            addCriterion("cove_url <", value, "coveUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoveUrlLessThanOrEqualTo(String value) {
+            addCriterion("cove_url <=", value, "coveUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoveUrlLike(String value) {
+            addCriterion("cove_url like", value, "coveUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoveUrlNotLike(String value) {
+            addCriterion("cove_url not like", value, "coveUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoveUrlIn(List<String> values) {
+            addCriterion("cove_url in", values, "coveUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoveUrlNotIn(List<String> values) {
+            addCriterion("cove_url not in", values, "coveUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoveUrlBetween(String value1, String value2) {
+            addCriterion("cove_url between", value1, value2, "coveUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoveUrlNotBetween(String value1, String value2) {
+            addCriterion("cove_url not between", value1, value2, "coveUrl");
             return (Criteria) this;
         }
 
@@ -675,66 +735,6 @@ public class BmsArticleExample {
             return (Criteria) this;
         }
 
-        public Criteria andLikeCountIsNull() {
-            addCriterion("like_count is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andLikeCountIsNotNull() {
-            addCriterion("like_count is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andLikeCountEqualTo(Integer value) {
-            addCriterion("like_count =", value, "likeCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andLikeCountNotEqualTo(Integer value) {
-            addCriterion("like_count <>", value, "likeCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andLikeCountGreaterThan(Integer value) {
-            addCriterion("like_count >", value, "likeCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andLikeCountGreaterThanOrEqualTo(Integer value) {
-            addCriterion("like_count >=", value, "likeCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andLikeCountLessThan(Integer value) {
-            addCriterion("like_count <", value, "likeCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andLikeCountLessThanOrEqualTo(Integer value) {
-            addCriterion("like_count <=", value, "likeCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andLikeCountIn(List<Integer> values) {
-            addCriterion("like_count in", values, "likeCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andLikeCountNotIn(List<Integer> values) {
-            addCriterion("like_count not in", values, "likeCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andLikeCountBetween(Integer value1, Integer value2) {
-            addCriterion("like_count between", value1, value2, "likeCount");
-            return (Criteria) this;
-        }
-
-        public Criteria andLikeCountNotBetween(Integer value1, Integer value2) {
-            addCriterion("like_count not between", value1, value2, "likeCount");
-            return (Criteria) this;
-        }
-
         public Criteria andViewCountIsNull() {
             addCriterion("view_count is null");
             return (Criteria) this;
@@ -792,6 +792,66 @@ public class BmsArticleExample {
 
         public Criteria andViewCountNotBetween(Integer value1, Integer value2) {
             addCriterion("view_count not between", value1, value2, "viewCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andLikeCountIsNull() {
+            addCriterion("like_count is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLikeCountIsNotNull() {
+            addCriterion("like_count is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLikeCountEqualTo(Integer value) {
+            addCriterion("like_count =", value, "likeCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andLikeCountNotEqualTo(Integer value) {
+            addCriterion("like_count <>", value, "likeCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andLikeCountGreaterThan(Integer value) {
+            addCriterion("like_count >", value, "likeCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andLikeCountGreaterThanOrEqualTo(Integer value) {
+            addCriterion("like_count >=", value, "likeCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andLikeCountLessThan(Integer value) {
+            addCriterion("like_count <", value, "likeCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andLikeCountLessThanOrEqualTo(Integer value) {
+            addCriterion("like_count <=", value, "likeCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andLikeCountIn(List<Integer> values) {
+            addCriterion("like_count in", values, "likeCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andLikeCountNotIn(List<Integer> values) {
+            addCriterion("like_count not in", values, "likeCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andLikeCountBetween(Integer value1, Integer value2) {
+            addCriterion("like_count between", value1, value2, "likeCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andLikeCountNotBetween(Integer value1, Integer value2) {
+            addCriterion("like_count not between", value1, value2, "likeCount");
             return (Criteria) this;
         }
 
