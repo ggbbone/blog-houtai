@@ -10,7 +10,9 @@ import com.yzg.blog.dao.mbg.mapper.UmsUserInfoMapper;
 import com.yzg.blog.dao.mbg.mapper.UmsUserMapper;
 import com.yzg.blog.dao.mbg.model.*;
 import com.yzg.blog.portal.controller.dto.UserDTO;
+import com.yzg.blog.portal.dao.CategoryDao;
 import com.yzg.blog.portal.service.CategoryService;
+import com.yzg.blog.portal.service.TagService;
 import com.yzg.blog.portal.service.UserService;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.cache.annotation.CacheConfig;
@@ -32,13 +34,36 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Resource
     BmsCategoryMapper categoryMapper;
+    @Resource
+    CategoryDao categoryDao;
+
+    @Resource
+    TagService tagService;
 
 
+    @Cacheable(value = "CACHE:CATEGORY", key = "#id")
     @Override
     public BmsCategory getCategoryById(Integer id) {
         BmsCategoryExample example = new BmsCategoryExample();
-        example.createCriteria().andIdEqualTo(id).andIsCategoryEqualTo(true);
+        example.createCriteria().andIdEqualTo(id);
         List<BmsCategory> categories = categoryMapper.selectByExample(example);
         return categories.stream().findFirst().orElse(null);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updateTagsByArticleId(Integer id, List<Integer> tagIds) {
+        //解除绑定文章标签
+        tagService.deleteTagsByArticleId(id);
+        tagService.addArticleTags(tagIds, id);
+    }
+
+
+    @Override
+    public List<BmsCategory> getCategoriesByIds(List<Integer> ids) {
+
+        BmsCategoryExample example = new BmsCategoryExample();
+        example.createCriteria().andIdIn(ids);
+        return categoryMapper.selectByExample(example);
     }
 }

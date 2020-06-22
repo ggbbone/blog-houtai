@@ -485,73 +485,73 @@ public class BmsArticleExample {
             return (Criteria) this;
         }
 
-        public Criteria andCoveUrlIsNull() {
-            addCriterion("cove_url is null");
+        public Criteria andCoverUrlIsNull() {
+            addCriterion("cover_url is null");
             return (Criteria) this;
         }
 
-        public Criteria andCoveUrlIsNotNull() {
-            addCriterion("cove_url is not null");
+        public Criteria andCoverUrlIsNotNull() {
+            addCriterion("cover_url is not null");
             return (Criteria) this;
         }
 
-        public Criteria andCoveUrlEqualTo(String value) {
-            addCriterion("cove_url =", value, "coveUrl");
+        public Criteria andCoverUrlEqualTo(String value) {
+            addCriterion("cover_url =", value, "coverUrl");
             return (Criteria) this;
         }
 
-        public Criteria andCoveUrlNotEqualTo(String value) {
-            addCriterion("cove_url <>", value, "coveUrl");
+        public Criteria andCoverUrlNotEqualTo(String value) {
+            addCriterion("cover_url <>", value, "coverUrl");
             return (Criteria) this;
         }
 
-        public Criteria andCoveUrlGreaterThan(String value) {
-            addCriterion("cove_url >", value, "coveUrl");
+        public Criteria andCoverUrlGreaterThan(String value) {
+            addCriterion("cover_url >", value, "coverUrl");
             return (Criteria) this;
         }
 
-        public Criteria andCoveUrlGreaterThanOrEqualTo(String value) {
-            addCriterion("cove_url >=", value, "coveUrl");
+        public Criteria andCoverUrlGreaterThanOrEqualTo(String value) {
+            addCriterion("cover_url >=", value, "coverUrl");
             return (Criteria) this;
         }
 
-        public Criteria andCoveUrlLessThan(String value) {
-            addCriterion("cove_url <", value, "coveUrl");
+        public Criteria andCoverUrlLessThan(String value) {
+            addCriterion("cover_url <", value, "coverUrl");
             return (Criteria) this;
         }
 
-        public Criteria andCoveUrlLessThanOrEqualTo(String value) {
-            addCriterion("cove_url <=", value, "coveUrl");
+        public Criteria andCoverUrlLessThanOrEqualTo(String value) {
+            addCriterion("cover_url <=", value, "coverUrl");
             return (Criteria) this;
         }
 
-        public Criteria andCoveUrlLike(String value) {
-            addCriterion("cove_url like", value, "coveUrl");
+        public Criteria andCoverUrlLike(String value) {
+            addCriterion("cover_url like", value, "coverUrl");
             return (Criteria) this;
         }
 
-        public Criteria andCoveUrlNotLike(String value) {
-            addCriterion("cove_url not like", value, "coveUrl");
+        public Criteria andCoverUrlNotLike(String value) {
+            addCriterion("cover_url not like", value, "coverUrl");
             return (Criteria) this;
         }
 
-        public Criteria andCoveUrlIn(List<String> values) {
-            addCriterion("cove_url in", values, "coveUrl");
+        public Criteria andCoverUrlIn(List<String> values) {
+            addCriterion("cover_url in", values, "coverUrl");
             return (Criteria) this;
         }
 
-        public Criteria andCoveUrlNotIn(List<String> values) {
-            addCriterion("cove_url not in", values, "coveUrl");
+        public Criteria andCoverUrlNotIn(List<String> values) {
+            addCriterion("cover_url not in", values, "coverUrl");
             return (Criteria) this;
         }
 
-        public Criteria andCoveUrlBetween(String value1, String value2) {
-            addCriterion("cove_url between", value1, value2, "coveUrl");
+        public Criteria andCoverUrlBetween(String value1, String value2) {
+            addCriterion("cover_url between", value1, value2, "coverUrl");
             return (Criteria) this;
         }
 
-        public Criteria andCoveUrlNotBetween(String value1, String value2) {
-            addCriterion("cove_url not between", value1, value2, "coveUrl");
+        public Criteria andCoverUrlNotBetween(String value1, String value2) {
+            addCriterion("cover_url not between", value1, value2, "coverUrl");
             return (Criteria) this;
         }
 

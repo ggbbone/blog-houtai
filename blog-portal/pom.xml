@@ -16,14 +16,7 @@
             <groupId>com.yzg.blog</groupId>
             <artifactId>blog-mbg</artifactId>
         </dependency>
-        <!--janino-->
-        <!--若用到了logback的if标签的condition表达式，就需要该坐标-->
-        <!--否则会抛出该错误：ERROR in ch.qos.logback.core.joran.conditional.IfAction - Could not find Janino library on the class path. Skipping conditional processing.-->
-        <dependency>
-            <groupId>org.codehaus.janino</groupId>
-            <artifactId>janino</artifactId>
-            <version>2.6.1</version>
-        </dependency>
+
     </dependencies>
 
     <build>

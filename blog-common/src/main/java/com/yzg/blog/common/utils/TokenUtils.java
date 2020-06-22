@@ -89,18 +89,19 @@ public class TokenUtils {
     }
 
     public static Long getUserIdByTokenNoExp(String token) {
+        Long userId;
         try {
             Map<String, Claim> claims = verifyToken(token);
             Claim userIdClaim = claims.get("userId");
             if (null == userIdClaim || StringUtils.isEmpty(userIdClaim.asString())) {
-                // token 校验失败, 抛出Token验证非法异常
                 return null;
             }
             return Long.valueOf(userIdClaim.asString());
         } catch (Exception e) {
-            return null;
+            userId = null;
         }
 
+        return userId;
     }
 
 }

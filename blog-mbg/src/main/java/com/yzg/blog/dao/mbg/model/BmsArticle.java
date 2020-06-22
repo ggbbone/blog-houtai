@@ -23,7 +23,7 @@ public class BmsArticle implements Serializable {
     private Boolean cover;
 
     @ApiModelProperty(value = "封面图片url")
-    private String coveUrl;
+    private String coverUrl;
 
     @ApiModelProperty(value = "创建时间")
     private Date createdDate;
@@ -111,12 +111,12 @@ public class BmsArticle implements Serializable {
         this.cover = cover;
     }
 
-    public String getCoveUrl() {
-        return coveUrl;
+    public String getCoverUrl() {
+        return coverUrl;
     }
 
-    public void setCoveUrl(String coveUrl) {
-        this.coveUrl = coveUrl == null ? null : coveUrl.trim();
+    public void setCoverUrl(String coverUrl) {
+        this.coverUrl = coverUrl == null ? null : coverUrl.trim();
     }
 
     public Date getCreatedDate() {
@@ -227,7 +227,7 @@ public class BmsArticle implements Serializable {
         sb.append(", categoryId=").append(categoryId);
         sb.append(", title=").append(title);
         sb.append(", cover=").append(cover);
-        sb.append(", coveUrl=").append(coveUrl);
+        sb.append(", coverUrl=").append(coverUrl);
         sb.append(", createdDate=").append(createdDate);
         sb.append(", updatedDate=").append(updatedDate);
         sb.append(", lastCommentTime=").append(lastCommentTime);

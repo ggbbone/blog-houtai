@@ -5,6 +5,7 @@ import com.yzg.blog.dao.mbg.model.UmsUserInfo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -12,7 +13,8 @@ import java.util.List;
  * @author yangzg
  */
 @Data
-public class ArticleInfoVo {
+public class ArticleInfoVo implements Serializable {
+
     private Integer id;
 
     @ApiModelProperty(value = "作者id")

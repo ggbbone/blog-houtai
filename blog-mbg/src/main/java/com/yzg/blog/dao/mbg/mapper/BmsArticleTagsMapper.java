@@ -10,6 +10,8 @@ public interface BmsArticleTagsMapper {
 
     int deleteByExample(BmsArticleTagsExample example);
 
+    int deleteByPrimaryKey(@Param("articleId") Integer articleId, @Param("categoryId") Integer categoryId);
+
     int insert(BmsArticleTags record);
 
     int insertSelective(BmsArticleTags record);
