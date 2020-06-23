@@ -1,5 +1,7 @@
 package com.yzg.blog.portal.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
@@ -16,6 +18,7 @@ import com.yzg.blog.dao.mbg.model.*;
 import com.yzg.blog.portal.controller.dto.ArticleDTO;
 import com.yzg.blog.portal.controller.dto.UserDTO;
 import com.yzg.blog.portal.controller.vo.ArticleInfoVo;
+import com.yzg.blog.portal.controller.vo.ArticleTagVo;
 import com.yzg.blog.portal.dao.ArticleDao;
 import com.yzg.blog.portal.service.ArticleService;
 import com.yzg.blog.portal.service.CategoryService;
@@ -131,9 +134,12 @@ public class ArticleServiceImpl implements ArticleService {
 
     private void setArticleExtInfo(ArticleInfoVo vo) {
         //获取文章分类
-        vo.setCategory(categoryService.getCategoryById(vo.getCategoryId()));
+        vo.setCategory(new ArticleTagVo(categoryService.getCategoryById(vo.getCategoryId())));
         //获取文章标签
-        vo.setTags(tagService.getTagsByArticleId(vo.getId()));
+        List<BmsCategory> tagsByArticleId = tagService.getTagsByArticleId(vo.getId());
+        List<ArticleTagVo> tags = new ArrayList<>();
+        tagsByArticleId.forEach(t->tags.add(new ArticleTagVo(t)));
+        vo.setTags(tags);
         //获取作者信息
         vo.setUserInfo(userService.getUserInfoById(vo.getUserId()));
     }

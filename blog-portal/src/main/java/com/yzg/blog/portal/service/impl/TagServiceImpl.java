@@ -1,15 +1,21 @@
 package com.yzg.blog.portal.service.impl;
 
 import com.yzg.blog.common.exception.BizException;
+import com.yzg.blog.common.utils.BeanCopyUtils;
 import com.yzg.blog.dao.mbg.mapper.BmsArticleTagsMapper;
 import com.yzg.blog.dao.mbg.mapper.BmsCategoryMapper;
 import com.yzg.blog.dao.mbg.model.BmsArticleTags;
 import com.yzg.blog.dao.mbg.model.BmsArticleTagsExample;
 import com.yzg.blog.dao.mbg.model.BmsCategory;
+import com.yzg.blog.dao.mbg.model.BmsCategoryExample;
+import com.yzg.blog.portal.controller.dto.CategoryDTO;
 import com.yzg.blog.portal.dao.CategoryDao;
+import com.yzg.blog.portal.dao.TagDao;
 import com.yzg.blog.portal.service.TagService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +34,8 @@ public class TagServiceImpl implements TagService {
     BmsArticleTagsMapper tagsMapper;
     @Resource
     CategoryDao categoryDao;
+    @Resource
+    TagDao tagDao;
 
     @Cacheable(value = "CACHE:TAG_IDS", key = "#articleId")
     @Override
@@ -57,6 +65,26 @@ public class TagServiceImpl implements TagService {
             tags.setCategoryId(tagId);
             tagsMapper.insert(tags);
         });
+    }
+
+    @Override
+    public void addTag(CategoryDTO dto) {
+        dto.setId(null);
+        BmsCategory tag = new BmsCategory();
+        BeanCopyUtils.copy(dto, tag);
+        tag.setIsCategory(false);
+        categoryMapper.insertSelective(tag);
+    }
+
+    @Override
+    public List<BmsCategory> getTags(CategoryDTO dto) {
+        if (StringUtils.isNotBlank(dto.getTitle())) {
+            dto.setTitle("%" + dto.getTitle() + "%");
+        }
+        if (StringUtils.isNotBlank(dto.getAlias())) {
+            dto.setAlias("%" + dto.getAlias() + "%");
+        }
+        return tagDao.getTags(dto);
     }
 
     @Override

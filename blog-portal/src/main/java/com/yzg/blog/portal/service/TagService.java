@@ -1,6 +1,7 @@
 package com.yzg.blog.portal.service;
 
 import com.yzg.blog.dao.mbg.model.BmsCategory;
+import com.yzg.blog.portal.controller.dto.CategoryDTO;
 import org.springframework.cache.annotation.CacheEvict;
 
 import java.util.List;
@@ -30,4 +31,7 @@ public interface TagService {
      */
     void addArticleTags(List<Integer> tagIds, Integer id);
 
+    void addTag(CategoryDTO dto);
+
+    List<BmsCategory> getTags(CategoryDTO dto);
 }

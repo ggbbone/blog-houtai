@@ -1,6 +1,7 @@
 package com.yzg.blog.portal.service;
 
 import com.yzg.blog.dao.mbg.model.BmsCategory;
+import com.yzg.blog.portal.controller.dto.CategoryDTO;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -27,4 +28,11 @@ public interface CategoryService {
     List<BmsCategory> getCategoriesByIds(List<Integer> ids);
 
 
+    void addCategory(CategoryDTO dto);
+
+    /**
+     * 查询所有分类
+     * @return
+     */
+    List<BmsCategory> getAllCategory();
 }

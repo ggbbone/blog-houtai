@@ -30,10 +30,10 @@ public class ArticleInfoVo implements Serializable {
     private Integer categoryId;
 
     @ApiModelProperty(value = "所属类别")
-    private BmsCategory category;
+    private ArticleTagVo category;
 
     @ApiModelProperty(value = "标签集合")
-    private List<BmsCategory> tags;
+    private List<ArticleTagVo> tags;
 
     @ApiModelProperty(value = "标题")
     private String title;
@@ -79,6 +79,7 @@ public class ArticleInfoVo implements Serializable {
 
     @ApiModelProperty(value = "正文内容markdown")
     private String markdown;
+
 
 
 }

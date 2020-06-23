@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yzg.blog.portal.dao.TagDao">
+    <resultMap id="BaseResultMap" type="com.yzg.blog.dao.mbg.model.BmsCategory">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="alias" jdbcType="VARCHAR" property="alias"/>
+        <result column="icon" jdbcType="VARCHAR" property="icon"/>
+        <result column="background" jdbcType="VARCHAR" property="background"/>
+        <result column="created_date" jdbcType="TIMESTAMP" property="createdDate"/>
+        <result column="updated_date" jdbcType="TIMESTAMP" property="updatedDate"/>
+        <result column="entry_count" jdbcType="INTEGER" property="entryCount"/>
+        <result column="follow_count" jdbcType="INTEGER" property="followCount"/>
+        <result column="is_category" jdbcType="BIT" property="isCategory"/>
+        <result column="status" jdbcType="TINYINT" property="status"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, title, alias, icon, background, created_date, updated_date, entry_count, follow_count,
+    is_category, status
+  </sql>
+    <select id="getTags" parameterType="com.yzg.blog.portal.controller.dto.CategoryDTO"
+            resultType="com.yzg.blog.dao.mbg.model.BmsCategory" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from bms_category
+        where status = 1 and is_category = 0 and
+        (
+        <choose>
+            <when test="title != null and alias != null">
+                 title like #{title} or alias like #{alias}
+            </when>
+            <when test="title != null and alias == null">
+                 title like #{title}
+            </when>
+            <when test="title == null and alias != null">
+                 alias like #{alias}
+            </when>
+        </choose>
+        ) order by entry_count desc
+    </select>
+</mapper>

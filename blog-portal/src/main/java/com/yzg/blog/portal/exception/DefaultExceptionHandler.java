@@ -165,7 +165,7 @@ public class DefaultExceptionHandler {
     @ExceptionHandler(DuplicateKeyException.class)
     public CommonResult handleDuplicateKeyException(DuplicateKeyException e) {
         log.error(e.getMessage(), e);
-        return CommonResult.failed("数据重复，请检查后提交");
+        return CommonResult.failedValidate("数据重复，请检查后提交");
     }
 
     /**

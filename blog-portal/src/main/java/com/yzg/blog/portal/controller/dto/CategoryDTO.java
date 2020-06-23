@@ -1,18 +1,28 @@
-package com.yzg.blog.portal.controller.vo;
+package com.yzg.blog.portal.controller.dto;
 
+
+import com.yzg.blog.portal.annotation.validation.groups.Insert;
+import com.yzg.blog.portal.annotation.validation.groups.Update;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import java.io.Serializable;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.List;
+
 
 @Data
-public class TagVo implements Serializable {
+public class CategoryDTO {
+
+    @NotNull(groups = {Update.class})
     private Integer id;
 
+    @NotBlank(groups = {Insert.class})
     @ApiModelProperty(value = "名称")
     private String title;
 
+    @NotBlank(groups = {Insert.class})
     @ApiModelProperty(value = "拼音或英文")
     private String alias;
 
@@ -22,14 +32,5 @@ public class TagVo implements Serializable {
     @ApiModelProperty(value = "背景图片地址")
     private String background;
 
-    private Date createdDate;
-
-    private Date updatedDate;
-
-    @ApiModelProperty(value = "该分类下的文章数量")
-    private Integer entryCount;
-
-    @ApiModelProperty(value = "关注人数")
-    private Integer followCount;
 
 }

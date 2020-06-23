@@ -9,6 +9,7 @@ import com.yzg.blog.dao.mbg.mapper.BmsCategoryMapper;
 import com.yzg.blog.dao.mbg.mapper.UmsUserInfoMapper;
 import com.yzg.blog.dao.mbg.mapper.UmsUserMapper;
 import com.yzg.blog.dao.mbg.model.*;
+import com.yzg.blog.portal.controller.dto.CategoryDTO;
 import com.yzg.blog.portal.controller.dto.UserDTO;
 import com.yzg.blog.portal.dao.CategoryDao;
 import com.yzg.blog.portal.service.CategoryService;
@@ -65,5 +66,36 @@ public class CategoryServiceImpl implements CategoryService {
         BmsCategoryExample example = new BmsCategoryExample();
         example.createCriteria().andIdIn(ids);
         return categoryMapper.selectByExample(example);
+    }
+
+    @Override
+    public void addCategory(CategoryDTO dto) {
+
+    }
+
+    @Override
+    public List<BmsCategory> getAllCategory() {
+        BmsCategoryExample example = new BmsCategoryExample();
+        example.createCriteria()
+                .andIsCategoryEqualTo(true)
+                .andStatusEqualTo(categoryStatus.NORMAL.getStatus());
+        return categoryMapper.selectByExample(example);
+    }
+
+    public enum categoryStatus {
+        //已删除
+        DELETE((byte) 0),
+        //正常
+        NORMAL((byte) 1);
+
+        private final byte status;
+
+        categoryStatus(byte status) {
+            this.status = status;
+        }
+
+        public byte getStatus() {
+            return status;
+        }
     }
 }

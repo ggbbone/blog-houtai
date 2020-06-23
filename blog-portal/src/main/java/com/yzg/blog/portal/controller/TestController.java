@@ -3,6 +3,7 @@ package com.yzg.blog.portal.controller;
 import cn.hutool.core.util.RandomUtil;
 import com.google.common.collect.Lists;
 import com.yzg.blog.portal.controller.dto.ArticleDTO;
+import com.yzg.blog.portal.controller.dto.CategoryDTO;
 import com.yzg.blog.portal.controller.dto.UserDTO;
 import com.yzg.blog.portal.service.ArticleService;
 import com.yzg.blog.portal.service.CategoryService;
@@ -46,6 +47,17 @@ public class TestController {
         return "success";
     }
 
+    @RequestMapping(value = "/tags/{num}", method = RequestMethod.POST)
+    public String insertTags(@PathVariable Integer num) {
+        CategoryDTO dto = new CategoryDTO();
+        for (int i = 0; i < num; i ++) {
+            String title = RandomUtil.randomString(5) + i;
+            dto.setTitle(title);
+            dto.setAlias(title);
+            tagService.addTag(dto);
+        }
+        return "success";
+    }
     @RequestMapping(value = "/article/{num}", method = RequestMethod.POST)
     public String insertArticle(@PathVariable Integer num) {
         ArticleDTO dto = new ArticleDTO();
