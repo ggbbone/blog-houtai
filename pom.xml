@@ -221,12 +221,7 @@
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${mysql-connector.version}</version>
             </dependency>
-            <!--集成logstash-->
-            <dependency>
-                <groupId>net.logstash.logback</groupId>
-                <artifactId>logstash-logback-encoder</artifactId>
-                <version>${logstash-logback.version}</version>
-            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
