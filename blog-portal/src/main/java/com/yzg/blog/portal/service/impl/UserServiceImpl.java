@@ -53,6 +53,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UmsUserInfo getUserInfoByToken(String token) {
+        Long userId = TokenUtils.getUserIdByTokenNoExp(token);
+        if (userId != null) {
+            return getUserInfoById(Math.toIntExact(userId));
+        }
+        return null;
+    }
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public String register(UserDTO dto) {
         String email = dto.getEmail();
@@ -77,6 +86,7 @@ public class UserServiceImpl implements UserService {
             UmsUserInfo userInfo = new UmsUserInfo();
             userInfo.setUserId(userId);
             userInfo.setUsername("用户" + userId);
+            //默认头像
             userInfo.setAvatar("https://images.nowcoder.com/head/" + RandomUtil.randomInt(1, 999) + "m.png");
             userInfoMapper.insertSelective(userInfo);
             //生成并返回token
@@ -103,7 +113,7 @@ public class UserServiceImpl implements UserService {
                 return TokenUtils.createToken(Long.valueOf(userByEmail.getId()));
             }
         }
-        throw new UnauthorizedException("用户名或密码错误");
+        throw new BadRequestException("用户名或密码错误");
     }
 
 }

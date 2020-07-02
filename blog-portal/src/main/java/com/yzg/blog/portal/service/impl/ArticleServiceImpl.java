@@ -24,11 +24,14 @@ import com.yzg.blog.portal.service.ArticleService;
 import com.yzg.blog.portal.service.CategoryService;
 import com.yzg.blog.portal.service.TagService;
 import com.yzg.blog.portal.service.UserService;
+import com.yzg.blog.portal.utils.RedisKeysUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -54,6 +57,8 @@ public class ArticleServiceImpl implements ArticleService {
     CategoryService categoryService;
     @Resource
     TagService tagService;
+    @Autowired
+    StringRedisTemplate redisTemplate;
 
     @Override
     @Cacheable(value = "CACHE:ARTICLE_INFO", key = "#id")
@@ -86,7 +91,6 @@ public class ArticleServiceImpl implements ArticleService {
         if (result > 0) {
             //更新文章标签
             categoryService.updateTagsByArticleId(dto.getId(), dto.getTagIds());
-
         }
     }
 
@@ -99,9 +103,17 @@ public class ArticleServiceImpl implements ArticleService {
         article.setStatus(ArticleStatus.DELETE.getStatus());
         articleMapper.updateByExampleSelective(article, example);
     }
+
+    @Override
+    public void incrementViewCount(Integer id) {
+        redisTemplate.opsForSet().add(RedisKeysUtil.getSyncArticleViewCount(), String.valueOf(id));
+        redisTemplate.opsForValue().increment(RedisKeysUtil.getArticleViewCountKey(id));
+    }
+
     @Override
     public List<ArticleInfoVo> getArticleList(ArticleDTO params) {
         long start = System.currentTimeMillis();
+        params.setOrderBy(ArticleSort.getOderByCode(params.getSort()));
         List<ArticleInfoVo> articleInfoVos = articleDao.selectArticleList(params);
         log.info("获取文章列表耗时：{}", System.currentTimeMillis() - start);
         start = System.currentTimeMillis();
@@ -114,6 +126,10 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public BmsArticle addArticle(ArticleDTO dto) {
+        BmsCategory categoryById = categoryService.getCategoryById(dto.getCategoryId());
+        if (categoryById == null) {
+            throw BizException.createInstance(-1, "分类不存在");
+        }
         BmsArticle article = new BmsArticle();
         BeanCopyUtils.copy(dto, article);
         article.setContent(StrUtil.subPre(HtmlUtil.cleanHtmlTag(article.getHtml()), 200));
@@ -133,6 +149,9 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     private void setArticleExtInfo(ArticleInfoVo vo) {
+        if (vo == null) {
+            return;
+        }
         //获取文章分类
         vo.setCategory(new ArticleTagVo(categoryService.getCategoryById(vo.getCategoryId())));
         //获取文章标签
@@ -158,6 +177,41 @@ public class ArticleServiceImpl implements ArticleService {
 
         public byte getStatus() {
             return status;
+        }
+    }
+
+    public enum ArticleSort {
+        //默认
+        ID( 0,"id desc"),
+        VIEW_COUNT( 1,"view_count desc"),
+        LIKE_COUNT( 2,"like_count desc"),
+        COMMENT_COUNT( 3,"comment_count desc"),
+        HOT_INDEX( 4,"hot_index desc");
+
+        private final int code;
+        private final String orderBy;
+
+        public static String getOderByCode(Integer code) {
+            if (code == null) {
+                return ID.getOrderBy();
+            }
+            for (ArticleSort g : values()) {
+                if (g.getCode() == code) {
+                    return g.getOrderBy();
+                }
+            }
+            return ID.getOrderBy();
+        }
+        ArticleSort(int code, String desc) {
+            this.orderBy = desc;
+            this.code = code;
+        }
+
+        public String getOrderBy() {
+            return orderBy;
+        }
+        public int getCode() {
+            return code;
         }
     }
 }

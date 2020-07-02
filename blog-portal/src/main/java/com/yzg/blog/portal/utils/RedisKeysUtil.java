@@ -5,7 +5,7 @@ package com.yzg.blog.portal.utils;
  */
 public class RedisKeysUtil {
     //分隔符
-    private static final String SPLIT = ":";
+    public static final String SPLIT = ":";
     //点赞他的用户
     private static final String BIZ_LIKE = "LIKE";
     //文章浏览次数待同步队列

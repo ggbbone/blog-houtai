@@ -13,7 +13,7 @@ public interface TagService {
      * 删除文章的所有标签
      * @param id
      */
-    void deleteTagsByArticleId(Integer id);
+    void deleteTagsByArticleId(List<Integer> tagIds, Integer id);
 
     List<Integer> getArticleIdsByTagId(Integer tagId);
 
@@ -33,5 +33,5 @@ public interface TagService {
 
     void addTag(CategoryDTO dto);
 
-    List<BmsCategory> getTags(CategoryDTO dto);
+    List<BmsCategory> getTagsList(CategoryDTO dto);
 }

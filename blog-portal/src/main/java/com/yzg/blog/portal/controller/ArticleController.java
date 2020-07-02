@@ -50,6 +50,7 @@ public class ArticleController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public CommonResult getArticleInfo(@PathVariable Integer id) throws BizException {
         ArticleInfoVo articleInfoById = articleService.getArticleInfoById(id);
+        articleService.incrementViewCount(id);
         return CommonResult.success().addData("articleInfo", articleInfoById);
     }
 

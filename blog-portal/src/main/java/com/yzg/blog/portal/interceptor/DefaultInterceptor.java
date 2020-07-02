@@ -8,7 +8,6 @@ import com.yzg.blog.portal.annotation.EnableMethodSecurity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-import sun.rmi.runtime.Log;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -51,7 +50,12 @@ public class DefaultInterceptor extends HandlerInterceptorAdapter {
         if (userId != null) {
             ThreadUser.set(Math.toIntExact(userId));
         }
-        HandlerMethod handlerMethod = (HandlerMethod) handler;
+        HandlerMethod handlerMethod;
+        try {
+            handlerMethod = (HandlerMethod) handler;
+        } catch (Exception e) {
+            return;
+        }
         Method method = handlerMethod.getMethod();
         EnableMethodSecurity enableMethodSecurity = method.getAnnotation(EnableMethodSecurity.class);
         if (Objects.nonNull(enableMethodSecurity)) {

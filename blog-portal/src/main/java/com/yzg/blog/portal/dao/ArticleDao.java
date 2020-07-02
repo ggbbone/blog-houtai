@@ -16,4 +16,7 @@ public interface ArticleDao {
 
 
     List<ArticleInfoVo> selectArticleList(ArticleDTO dto);
+
+    int addViewCountById(@Param("id") Integer id, @Param("count") int viewCount);
+
 }

@@ -17,6 +17,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  *
@@ -50,9 +51,12 @@ public class UserController {
      */
     @ApiOperation("用户登陆")
     @RequestMapping(value = "/session", method = RequestMethod.POST)
-    public CommonResult login(@RequestBody @Validated(Login.class) UserDTO params) throws BizException {
+    public CommonResult login(@RequestBody @Validated(Login.class) UserDTO params, HttpServletResponse response) throws BizException {
         String token = userService.login(params);
-        return CommonResult.success().addData("token", token);
+        UmsUserInfo userInfo = userService.getUserInfoByToken(token);
+        return CommonResult.success()
+                .addData("token", token)
+                .addData("userInfo", userInfo);
     }
 
     /**
@@ -66,7 +70,6 @@ public class UserController {
     public CommonResult logout() throws BizException {
         return CommonResult.success();
     }
-
 
     @ApiOperation("获取单个用户详细信息")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -83,6 +86,7 @@ public class UserController {
     }
 
     @ApiOperation("修改用户信息")
+    @EnableMethodSecurity
     @RequestMapping(value = "/info", method = RequestMethod.PUT)
     public CommonResult updateUserInfo(@RequestBody UserInfoDTO params) {
         return CommonResult.success();

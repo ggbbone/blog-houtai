@@ -19,4 +19,6 @@ public interface UserService {
     String login(UserDTO dto);
 
     UmsUserInfo getUserInfoById(Integer id);
+
+    UmsUserInfo getUserInfoByToken(String token);
 }

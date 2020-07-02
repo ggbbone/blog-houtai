@@ -42,7 +42,7 @@ public class ArticleInfoVo implements Serializable {
     private Boolean cover;
 
     @ApiModelProperty(value = "封面图片url")
-    private String coveUrl;
+    private String coverUrl;
 
     @ApiModelProperty(value = "创建时间")
     private Date createdDate;

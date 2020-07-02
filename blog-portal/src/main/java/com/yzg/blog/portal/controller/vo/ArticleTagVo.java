@@ -27,9 +27,11 @@ public class ArticleTagVo  implements Serializable {
     }
 
     public ArticleTagVo(BmsCategory categoryById) {
-        this.id = categoryById.getId();
-        this.title = categoryById.getTitle();
-        this.icon = categoryById.getIcon();
+        if (categoryById != null) {
+            this.id = categoryById.getId();
+            this.title = categoryById.getTitle();
+            this.icon = categoryById.getIcon();
+        }
     }
 
 

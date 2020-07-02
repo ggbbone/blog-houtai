@@ -57,4 +57,10 @@ public interface ArticleService {
      * @param userId
      */
     void deleteArticleByIdAndUserId(Integer id, Integer userId);
+
+    /**
+     * 文章阅读数量 + 1
+     * @param id
+     */
+    void incrementViewCount(Integer id);
 }

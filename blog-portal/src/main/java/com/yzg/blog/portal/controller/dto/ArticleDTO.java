@@ -6,7 +6,9 @@ import com.yzg.blog.portal.annotation.validation.groups.Update;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 
@@ -23,17 +25,20 @@ public class ArticleDTO {
     @ApiModelProperty(value = "排序方式")
     private Integer sort;
 
+    private String orderBy;
+
     @ApiModelProperty(value = "标签查询条件")
     private Integer tagId;
 
     @NotNull(groups = {Insert.class, Update.class})
+    @Size(max = 5, groups = {Insert.class, Update.class})
     @ApiModelProperty(value = "标签id集合")
     private List<Integer> tagIds;
 
     @ApiModelProperty(value = "作者id")
     private Integer userId;
 
-    @NotNull(groups = {Insert.class, Update.class})
+    @NotBlank(groups = {Insert.class, Update.class})
     @ApiModelProperty(value = "标题")
     private String title;
 

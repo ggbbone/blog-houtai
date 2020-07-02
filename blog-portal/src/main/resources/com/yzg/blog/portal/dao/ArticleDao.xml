@@ -28,7 +28,7 @@
     bms_article.category_id,
     bms_article.title,
     bms_article.cover,
-    bms_article.cover_url,
+    bms_article.cover_url as coverUrl,
     bms_article.created_date,
     bms_article.updated_date,
     bms_article.last_comment_time,
@@ -40,8 +40,11 @@
     bms_article.hot_index,
     bms_article.status
   </sql>
+    <update id="addViewCountById">
+      update bms_article set view_count = view_count + #{count} where id = #{id}
+    </update>
 
-  <select id="selectArticleList" parameterType="com.yzg.blog.portal.controller.dto.ArticleDTO"
+    <select id="selectArticleList" parameterType="com.yzg.blog.portal.controller.dto.ArticleDTO"
           resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
@@ -59,7 +62,7 @@
     GROUP BY bms_article.id
     <choose>
       <when test="sort != null">
-        order by ${sort}
+        order by ${orderBy}
       </when>
       <otherwise>
         order by bms_article.id desc

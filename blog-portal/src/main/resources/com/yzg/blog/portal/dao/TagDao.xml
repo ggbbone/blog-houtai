@@ -18,24 +18,41 @@
     id, title, alias, icon, background, created_date, updated_date, entry_count, follow_count,
     is_category, status
   </sql>
+    <update id="addEntryCountByTagIds">
+        update bms_category set entry_count = entry_count + 1 where id in
+        <foreach collection="list" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </update>
+    <update id="lessEntryCountByTagIds">
+        update bms_category set entry_count = entry_count - 1 where id in
+        <foreach collection="list" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </update>
     <select id="getTags" parameterType="com.yzg.blog.portal.controller.dto.CategoryDTO"
             resultType="com.yzg.blog.dao.mbg.model.BmsCategory" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from bms_category
-        where status = 1 and is_category = 0 and
-        (
+        where status = 1
+        <if test="isCategory != null"> and is_category = #{isCategory} </if>
+        and (
         <choose>
             <when test="title != null and alias != null">
-                 title like #{title} or alias like #{alias}
+                title like #{title} or alias like #{alias}
             </when>
             <when test="title != null and alias == null">
-                 title like #{title}
+                title like #{title}
             </when>
             <when test="title == null and alias != null">
-                 alias like #{alias}
+                alias like #{alias}
             </when>
         </choose>
-        ) order by entry_count desc
+        )
+        <choose>
+            <when test="orderBy != null"> order by ${orderBy} </when>
+            <when test="orderBy == null"> order by id desc </when>
+        </choose>
     </select>
 </mapper>

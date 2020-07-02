@@ -55,16 +55,22 @@ public class TagServiceImpl implements TagService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void addArticleTags(List<Integer> tagIds, Integer id) {
-        BmsArticleTags tags = new BmsArticleTags();
-        tagIds.forEach(tagId -> {
-            BmsCategory category = categoryMapper.selectByPrimaryKey(tagId);
-            if (category == null) {
-                throw BizException.createInstance(-1, "标签不存在");
-            }
-            tags.setArticleId(id);
-            tags.setCategoryId(tagId);
-            tagsMapper.insert(tags);
+        BmsArticleTags articleTags = new BmsArticleTags();
+        BmsCategoryExample example = new BmsCategoryExample();
+        example.createCriteria()
+                .andIdIn(tagIds)
+                .andStatusEqualTo(CategoryServiceImpl.categoryStatus.NORMAL.getStatus());
+        List<BmsCategory> categories = categoryMapper.selectByExample(example);
+        if (categories.size() == 0 ) {
+            throw BizException.createInstance(-1, "标签不存在");
+        }
+        categories.forEach(tag -> {
+            articleTags.setArticleId(id);
+            articleTags.setCategoryId(tag.getId());
+            tagsMapper.insert(articleTags);
         });
+        //添加标签下的文章数量
+        tagDao.addEntryCountByTagIds(tagIds);
     }
 
     @Override
@@ -77,23 +83,25 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public List<BmsCategory> getTags(CategoryDTO dto) {
+    public List<BmsCategory> getTagsList(CategoryDTO dto) {
         if (StringUtils.isNotBlank(dto.getTitle())) {
             dto.setTitle("%" + dto.getTitle() + "%");
         }
         if (StringUtils.isNotBlank(dto.getAlias())) {
             dto.setAlias("%" + dto.getAlias() + "%");
         }
+        dto.setOrderBy(TagsSort.getOderByCode(dto.getSort()));
         return tagDao.getTags(dto);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     @CacheEvict(value = "CACHE:ARTICLE_TAGS", key = "#id")
-    public void deleteTagsByArticleId(Integer id) {
+    public void deleteTagsByArticleId(List<Integer> tagIds, Integer id) {
         BmsArticleTagsExample example = new BmsArticleTagsExample();
         example.createCriteria().andArticleIdEqualTo(id);
         tagsMapper.deleteByExample(example);
+        tagDao.lessEntryCountByTagIds(tagIds);
     }
 
     @Override
@@ -102,6 +110,40 @@ public class TagServiceImpl implements TagService {
         example.createCriteria().andCategoryIdEqualTo(tagId);
         List<BmsArticleTags> bmsArticleTags = tagsMapper.selectByExample(example);
         return bmsArticleTags.stream().map(BmsArticleTags::getCategoryId).collect(Collectors.toList());
+    }
+
+
+    public enum TagsSort {
+        //默认
+        ID( 0,"id desc"),
+        ENTRY_COUNT( 1,"entry_count desc"),
+        FOLLOW_COUNT( 2,"follow_count desc");
+
+        private final int code;
+        private final String orderBy;
+
+        public static String getOderByCode(Integer code) {
+            if (code == null) {
+                return ID.getOrderBy();
+            }
+            for (TagsSort g : values()) {
+                if (g.getCode() == code) {
+                    return g.getOrderBy();
+                }
+            }
+            return ID.getOrderBy();
+        }
+        TagsSort(int code, String desc) {
+            this.orderBy = desc;
+            this.code = code;
+        }
+
+        public String getOrderBy() {
+            return orderBy;
+        }
+        public int getCode() {
+            return code;
+        }
     }
 
 }

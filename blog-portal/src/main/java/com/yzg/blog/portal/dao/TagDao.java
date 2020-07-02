@@ -16,4 +16,8 @@ public interface TagDao {
 
 
     List<BmsCategory> getTags(CategoryDTO dto);
+
+    void addEntryCountByTagIds(List<Integer> tagIds);
+
+    void lessEntryCountByTagIds(List<Integer> tagIds);
 }

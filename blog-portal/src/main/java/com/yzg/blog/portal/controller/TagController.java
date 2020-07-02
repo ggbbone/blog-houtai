@@ -7,6 +7,7 @@ import com.yzg.blog.common.exception.BizException;
 import com.yzg.blog.dao.mbg.model.BmsCategory;
 import com.yzg.blog.portal.annotation.EnableMethodSecurity;
 import com.yzg.blog.portal.annotation.validation.groups.Insert;
+import com.yzg.blog.portal.annotation.validation.groups.Select;
 import com.yzg.blog.portal.controller.dto.CategoryDTO;
 import com.yzg.blog.portal.interceptor.ThreadUser;
 import com.yzg.blog.portal.service.CategoryService;
@@ -47,12 +48,12 @@ public class TagController {
 
     @ApiOperation("查询标签列表")
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public CommonResult getTags(@Validated CategoryDTO dto,
+    public CommonResult getTags(@Validated(Select.class) CategoryDTO dto,
                                 @RequestParam(required = false, defaultValue = "1") Integer page,
                                 @Max(100) @RequestParam(required = false, defaultValue = "10") Integer size) throws BizException {
 
         PageHelper.startPage(page,size);
-        List<BmsCategory> tags = tagService.getTags(dto);
+        List<BmsCategory> tags = tagService.getTagsList(dto);
         return CommonResult.success().addPageData(CommonPage.restPage(tags));
     }
 
