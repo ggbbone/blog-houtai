@@ -37,7 +37,6 @@ public class TagServiceImpl implements TagService {
     @Resource
     TagDao tagDao;
 
-    @Cacheable(value = "CACHE:TAG_IDS", key = "#articleId")
     @Override
     public List<Integer> getTagIdsByArticleId(Integer articleId) {
         BmsArticleTagsExample example = new BmsArticleTagsExample();
@@ -74,12 +73,13 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public void addTag(CategoryDTO dto) {
+    public Integer addTag(CategoryDTO dto) {
         dto.setId(null);
         BmsCategory tag = new BmsCategory();
         BeanCopyUtils.copy(dto, tag);
         tag.setIsCategory(false);
         categoryMapper.insertSelective(tag);
+        return tag.getId();
     }
 
     @Override
@@ -96,23 +96,21 @@ public class TagServiceImpl implements TagService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    @CacheEvict(value = "CACHE:ARTICLE_TAGS", key = "#id")
-    public void deleteTagsByArticleId(List<Integer> tagIds, Integer id) {
+    @CacheEvict(value = "CACHE:ARTICLE_TAGS", key = "#articleId")
+    public void deleteTagsByArticleId(Integer articleId) {
+        List<Integer> tagIds = getTagIdsByArticleId(articleId);
+        if (tagIds.size() == 0) {
+            return;
+        }
         BmsArticleTagsExample example = new BmsArticleTagsExample();
-        example.createCriteria().andArticleIdEqualTo(id);
+        example.createCriteria().andArticleIdEqualTo(articleId);
         tagsMapper.deleteByExample(example);
         tagDao.lessEntryCountByTagIds(tagIds);
     }
 
-    @Override
-    public List<Integer> getArticleIdsByTagId(Integer tagId) {
-        BmsArticleTagsExample example = new BmsArticleTagsExample();
-        example.createCriteria().andCategoryIdEqualTo(tagId);
-        List<BmsArticleTags> bmsArticleTags = tagsMapper.selectByExample(example);
-        return bmsArticleTags.stream().map(BmsArticleTags::getCategoryId).collect(Collectors.toList());
-    }
-
-
+    /**
+     * 标签列表排序方式
+     */
     public enum TagsSort {
         //默认
         ID( 0,"id desc"),

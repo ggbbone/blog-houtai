@@ -11,11 +11,9 @@ public interface TagService {
 
     /**
      * 删除文章的所有标签
-     * @param id
+     * @param articleId
      */
-    void deleteTagsByArticleId(List<Integer> tagIds, Integer id);
-
-    List<Integer> getArticleIdsByTagId(Integer tagId);
+    void deleteTagsByArticleId(Integer articleId);
 
     /**
      * 查询文章的标签信息
@@ -31,7 +29,16 @@ public interface TagService {
      */
     void addArticleTags(List<Integer> tagIds, Integer id);
 
-    void addTag(CategoryDTO dto);
+    /**
+     * 添加文章标签
+     * @param dto
+     */
+    Integer addTag(CategoryDTO dto);
 
+    /**
+     * 获取标签列表
+     * @param dto
+     * @return
+     */
     List<BmsCategory> getTagsList(CategoryDTO dto);
 }

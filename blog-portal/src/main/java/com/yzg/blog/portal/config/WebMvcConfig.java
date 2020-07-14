@@ -16,10 +16,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
+    @Bean
+    public DefaultInterceptor defaultInterceptor() {
+        return new DefaultInterceptor();
+    }
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         //权限验证拦截器
-        registry.addInterceptor(new DefaultInterceptor())
+        registry.addInterceptor(defaultInterceptor())
                 .excludePathPatterns("/swagger-ui.html")
                 .excludePathPatterns("/configuration/ui")
                 .excludePathPatterns("/swagger-resources")

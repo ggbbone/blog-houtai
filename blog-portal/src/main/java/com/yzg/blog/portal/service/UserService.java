@@ -21,4 +21,8 @@ public interface UserService {
     UmsUserInfo getUserInfoById(Integer id);
 
     UmsUserInfo getUserInfoByToken(String token);
+
+    Long getUserIps();
+
+    Long getRequests();
 }

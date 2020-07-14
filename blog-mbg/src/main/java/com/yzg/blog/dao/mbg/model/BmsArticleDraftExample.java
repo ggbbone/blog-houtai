@@ -165,6 +165,66 @@ public class BmsArticleDraftExample {
             return (Criteria) this;
         }
 
+        public Criteria andArticleIdIsNull() {
+            addCriterion("article_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andArticleIdIsNotNull() {
+            addCriterion("article_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andArticleIdEqualTo(Integer value) {
+            addCriterion("article_id =", value, "articleId");
+            return (Criteria) this;
+        }
+
+        public Criteria andArticleIdNotEqualTo(Integer value) {
+            addCriterion("article_id <>", value, "articleId");
+            return (Criteria) this;
+        }
+
+        public Criteria andArticleIdGreaterThan(Integer value) {
+            addCriterion("article_id >", value, "articleId");
+            return (Criteria) this;
+        }
+
+        public Criteria andArticleIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("article_id >=", value, "articleId");
+            return (Criteria) this;
+        }
+
+        public Criteria andArticleIdLessThan(Integer value) {
+            addCriterion("article_id <", value, "articleId");
+            return (Criteria) this;
+        }
+
+        public Criteria andArticleIdLessThanOrEqualTo(Integer value) {
+            addCriterion("article_id <=", value, "articleId");
+            return (Criteria) this;
+        }
+
+        public Criteria andArticleIdIn(List<Integer> values) {
+            addCriterion("article_id in", values, "articleId");
+            return (Criteria) this;
+        }
+
+        public Criteria andArticleIdNotIn(List<Integer> values) {
+            addCriterion("article_id not in", values, "articleId");
+            return (Criteria) this;
+        }
+
+        public Criteria andArticleIdBetween(Integer value1, Integer value2) {
+            addCriterion("article_id between", value1, value2, "articleId");
+            return (Criteria) this;
+        }
+
+        public Criteria andArticleIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("article_id not between", value1, value2, "articleId");
+            return (Criteria) this;
+        }
+
         public Criteria andUserIdIsNull() {
             addCriterion("user_id is null");
             return (Criteria) this;
@@ -295,73 +355,73 @@ public class BmsArticleDraftExample {
             return (Criteria) this;
         }
 
-        public Criteria andCoverIsNull() {
-            addCriterion("cover is null");
+        public Criteria andCoverUrlIsNull() {
+            addCriterion("cover_url is null");
             return (Criteria) this;
         }
 
-        public Criteria andCoverIsNotNull() {
-            addCriterion("cover is not null");
+        public Criteria andCoverUrlIsNotNull() {
+            addCriterion("cover_url is not null");
             return (Criteria) this;
         }
 
-        public Criteria andCoverEqualTo(String value) {
-            addCriterion("cover =", value, "cover");
+        public Criteria andCoverUrlEqualTo(String value) {
+            addCriterion("cover_url =", value, "coverUrl");
             return (Criteria) this;
         }
 
-        public Criteria andCoverNotEqualTo(String value) {
-            addCriterion("cover <>", value, "cover");
+        public Criteria andCoverUrlNotEqualTo(String value) {
+            addCriterion("cover_url <>", value, "coverUrl");
             return (Criteria) this;
         }
 
-        public Criteria andCoverGreaterThan(String value) {
-            addCriterion("cover >", value, "cover");
+        public Criteria andCoverUrlGreaterThan(String value) {
+            addCriterion("cover_url >", value, "coverUrl");
             return (Criteria) this;
         }
 
-        public Criteria andCoverGreaterThanOrEqualTo(String value) {
-            addCriterion("cover >=", value, "cover");
+        public Criteria andCoverUrlGreaterThanOrEqualTo(String value) {
+            addCriterion("cover_url >=", value, "coverUrl");
             return (Criteria) this;
         }
 
-        public Criteria andCoverLessThan(String value) {
-            addCriterion("cover <", value, "cover");
+        public Criteria andCoverUrlLessThan(String value) {
+            addCriterion("cover_url <", value, "coverUrl");
             return (Criteria) this;
         }
 
-        public Criteria andCoverLessThanOrEqualTo(String value) {
-            addCriterion("cover <=", value, "cover");
+        public Criteria andCoverUrlLessThanOrEqualTo(String value) {
+            addCriterion("cover_url <=", value, "coverUrl");
             return (Criteria) this;
         }
 
-        public Criteria andCoverLike(String value) {
-            addCriterion("cover like", value, "cover");
+        public Criteria andCoverUrlLike(String value) {
+            addCriterion("cover_url like", value, "coverUrl");
             return (Criteria) this;
         }
 
-        public Criteria andCoverNotLike(String value) {
-            addCriterion("cover not like", value, "cover");
+        public Criteria andCoverUrlNotLike(String value) {
+            addCriterion("cover_url not like", value, "coverUrl");
             return (Criteria) this;
         }
 
-        public Criteria andCoverIn(List<String> values) {
-            addCriterion("cover in", values, "cover");
+        public Criteria andCoverUrlIn(List<String> values) {
+            addCriterion("cover_url in", values, "coverUrl");
             return (Criteria) this;
         }
 
-        public Criteria andCoverNotIn(List<String> values) {
-            addCriterion("cover not in", values, "cover");
+        public Criteria andCoverUrlNotIn(List<String> values) {
+            addCriterion("cover_url not in", values, "coverUrl");
             return (Criteria) this;
         }
 
-        public Criteria andCoverBetween(String value1, String value2) {
-            addCriterion("cover between", value1, value2, "cover");
+        public Criteria andCoverUrlBetween(String value1, String value2) {
+            addCriterion("cover_url between", value1, value2, "coverUrl");
             return (Criteria) this;
         }
 
-        public Criteria andCoverNotBetween(String value1, String value2) {
-            addCriterion("cover not between", value1, value2, "cover");
+        public Criteria andCoverUrlNotBetween(String value1, String value2) {
+            addCriterion("cover_url not between", value1, value2, "coverUrl");
             return (Criteria) this;
         }
 

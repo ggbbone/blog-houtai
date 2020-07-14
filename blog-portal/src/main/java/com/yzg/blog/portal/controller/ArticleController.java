@@ -20,10 +20,12 @@ import com.yzg.blog.portal.service.ArticleService;
 import com.yzg.blog.portal.service.CategoryService;
 import com.yzg.blog.portal.service.TagService;
 import com.yzg.blog.portal.service.UserService;
+import com.yzg.blog.portal.utils.RedisKeysUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Select;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,6 +47,8 @@ public class ArticleController {
     ArticleService articleService;
     @Resource
     TagService tagService;
+    @Resource
+    StringRedisTemplate redisTemplate;
 
     @ApiOperation("获取文章详情")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -60,6 +64,8 @@ public class ArticleController {
                                        @Max(100) @RequestParam(required = false, defaultValue = "20") Integer size,
                                        @Validated(Select.class) ArticleDTO params) throws BizException {
         PageHelper.startPage(page, size);
+        //添加本页请求数
+        redisTemplate.opsForValue().increment(RedisKeysUtil.getRequests());
         List<ArticleInfoVo> articleList = articleService.getArticleList(params);
         return CommonResult.success().addPageData(CommonPage.restPage(articleList));
     }
@@ -70,8 +76,8 @@ public class ArticleController {
     @RequestMapping(value = "", method = RequestMethod.POST)
     public CommonResult postArticle(@RequestBody @Validated(Insert.class) ArticleDTO dto) throws BizException {
         dto.setUserId(ThreadUser.get());
-        articleService.addArticle(dto);
-        return CommonResult.success();
+        BmsArticle article = articleService.addArticle(dto);
+        return CommonResult.success().addData("articleId", article.getId());
     }
 
     @ApiOperation("更新文章")
@@ -79,8 +85,8 @@ public class ArticleController {
     @RequestMapping(value = "", method = RequestMethod.PUT)
     public CommonResult updateArticle(@RequestBody @Validated(Update.class) ArticleDTO dto) throws BizException {
         dto.setUserId(ThreadUser.get());
-        articleService.updateArticleByIdAndUserId(dto);
-        return CommonResult.success();
+        Integer ArticleId = articleService.updateArticleByIdAndUserId(dto);
+        return CommonResult.success().addData("articleId", ArticleId);
     }
 
     @ApiOperation("删除文章")

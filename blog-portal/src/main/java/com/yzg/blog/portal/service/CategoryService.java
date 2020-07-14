@@ -18,6 +18,11 @@ public interface CategoryService {
      */
     BmsCategory getCategoryById(Integer id);
 
+    /**
+     * 更新文章的标签
+     * @param id
+     * @param tagIds
+     */
     void updateTagsByArticleId(Integer id, List<Integer> tagIds);
 
     /**
@@ -27,7 +32,10 @@ public interface CategoryService {
      */
     List<BmsCategory> getCategoriesByIds(List<Integer> ids);
 
-
+    /**
+     * 添加文章分类
+     * @param dto
+     */
     void addCategory(CategoryDTO dto);
 
     /**

@@ -6,6 +6,10 @@ package com.yzg.blog.portal.utils;
 public class RedisKeysUtil {
     //分隔符
     public static final String SPLIT = ":";
+    //访问用户ip
+    private static final String BIZ_USER_IPS = "USER_IPS";
+    //访问次数
+    private static final String BIZ_REQUESTS = "REQUESTS";
     //点赞他的用户
     private static final String BIZ_LIKE = "LIKE";
     //文章浏览次数待同步队列
@@ -21,6 +25,9 @@ public class RedisKeysUtil {
     //请求记录数
     private static final String BIZ_REQUEST_NUMBER = "REQUEST_NUMBER";
 
+    public static String getUserIps(){
+        return BIZ_USER_IPS;
+    }
 
     /**
      * 点赞用户列表
@@ -88,6 +95,14 @@ public class RedisKeysUtil {
      */
     public static String getRequestNumber(String ipAddress) {
         return BIZ_REQUEST_NUMBER + SPLIT + ipAddress;
+    }
+
+    /**
+     * 总访问次数
+     * @return
+     */
+    public static String getRequests() {
+        return BIZ_REQUESTS;
     }
 
 }

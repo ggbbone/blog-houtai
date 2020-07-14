@@ -34,6 +34,11 @@ public class CommonResult {
         return this;
     }
 
+    /**
+     * 添加分页响应参数
+     * @param o
+     * @return
+     */
     public CommonResult addPageData(Object o) {
         this.data.put("items", o);
         return this;

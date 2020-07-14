@@ -32,7 +32,7 @@ public class SyncTask {
     /**
      * 同步文章浏览次数
      */
-    @Scheduled(cron = "0 0/1 * * * *")//一分钟（测试用）
+    @Scheduled(cron = "0 0/30 * * * *")
     void ArticleViewCountSync() {
         log.info("开始同步文章浏览次数");
         long start = System.currentTimeMillis();

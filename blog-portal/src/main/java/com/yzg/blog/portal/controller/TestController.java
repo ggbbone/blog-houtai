@@ -60,6 +60,7 @@ public class TestController {
     }
     @RequestMapping(value = "/article/{num}", method = RequestMethod.POST)
     public String insertArticle(@PathVariable Integer num) {
+
         ArticleDTO dto = new ArticleDTO();
         for (int i = 0; i < num; i ++) {
             dto.setUserId(12743235 + i % 1000);
@@ -75,4 +76,5 @@ public class TestController {
         }
         return "success";
     }
+
 }

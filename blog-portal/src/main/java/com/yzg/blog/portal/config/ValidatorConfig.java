@@ -32,7 +32,6 @@ public class ValidatorConfig {
     @Bean
     public MethodValidationPostProcessor methodValidationPostProcessor() {
         MethodValidationPostProcessor postProcessor = new MethodValidationPostProcessor();
-        //设置validator模式为快速失败返回
         postProcessor.setValidator(validator());
         return postProcessor;
     }

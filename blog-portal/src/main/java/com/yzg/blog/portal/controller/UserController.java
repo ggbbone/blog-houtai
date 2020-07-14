@@ -9,12 +9,14 @@ import com.yzg.blog.portal.annotation.validation.groups.Register;
 import com.yzg.blog.portal.controller.dto.UserDTO;
 import com.yzg.blog.portal.controller.dto.UserInfoDTO;
 import com.yzg.blog.portal.interceptor.ThreadUser;
+import com.yzg.blog.portal.service.UploadService;
 import com.yzg.blog.portal.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -31,6 +33,16 @@ import javax.servlet.http.HttpServletResponse;
 public class UserController {
     @Resource
     UserService userService;
+    @Resource
+    UploadService uploadService;
+
+    @ApiOperation("文件上传")
+    @EnableMethodSecurity
+    @RequestMapping(value = "/upload", method = RequestMethod.POST)
+    public CommonResult uploadFile(MultipartFile file) throws BizException {
+        return CommonResult.success().addData("url", uploadService.uploadFile(file));
+    }
+
     /**
      * 获取当前登录用户信息
      * @return
@@ -92,5 +104,15 @@ public class UserController {
         return CommonResult.success();
     }
 
+    @ApiOperation("获取总访问用户数")
+    @RequestMapping(value = "/ips", method = RequestMethod.PUT)
+    public CommonResult getUserIps() {
+        return CommonResult.success().addData("count", userService.getUserIps());
+    }
+    @ApiOperation("获取首页访问次数")
+    @RequestMapping(value = "/requests", method = RequestMethod.PUT)
+    public CommonResult getRequests() {
+        return CommonResult.success().addData("count", userService.getRequests());
+    }
 
 }

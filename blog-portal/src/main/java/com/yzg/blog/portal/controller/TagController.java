@@ -42,8 +42,7 @@ public class TagController {
     @RequestMapping(value = "", method = RequestMethod.POST)
     public CommonResult addTag(@RequestBody @Validated(Insert.class) CategoryDTO dto) throws BizException {
         Integer userId = ThreadUser.get();
-        tagService.addTag(dto);
-        return CommonResult.success();
+        return CommonResult.success().addData("tagId", tagService.addTag(dto));
     }
 
     @ApiOperation("查询标签列表")

@@ -1,32 +1,19 @@
 package com.yzg.blog.portal.service.impl;
 
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.core.util.RandomUtil;
+
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.crypto.SecureUtil;
 import cn.hutool.http.HtmlUtil;
-import com.yzg.blog.common.exception.BadRequestException;
 import com.yzg.blog.common.exception.BizException;
-import com.yzg.blog.common.exception.UnauthorizedException;
 import com.yzg.blog.common.utils.BeanCopyUtils;
-import com.yzg.blog.common.utils.TokenUtils;
 import com.yzg.blog.dao.mbg.mapper.BmsArticleMapper;
-import com.yzg.blog.dao.mbg.mapper.UmsUserInfoMapper;
-import com.yzg.blog.dao.mbg.mapper.UmsUserMapper;
 import com.yzg.blog.dao.mbg.model.*;
 import com.yzg.blog.portal.controller.dto.ArticleDTO;
-import com.yzg.blog.portal.controller.dto.UserDTO;
 import com.yzg.blog.portal.controller.vo.ArticleInfoVo;
 import com.yzg.blog.portal.controller.vo.ArticleTagVo;
 import com.yzg.blog.portal.dao.ArticleDao;
-import com.yzg.blog.portal.service.ArticleService;
-import com.yzg.blog.portal.service.CategoryService;
-import com.yzg.blog.portal.service.TagService;
-import com.yzg.blog.portal.service.UserService;
+import com.yzg.blog.portal.service.*;
 import com.yzg.blog.portal.utils.RedisKeysUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -56,6 +43,8 @@ public class ArticleServiceImpl implements ArticleService {
     @Resource
     CategoryService categoryService;
     @Resource
+    DraftService draftService;
+    @Resource
     TagService tagService;
     @Autowired
     StringRedisTemplate redisTemplate;
@@ -80,18 +69,16 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     @CacheEvict(value = "CACHE:ARTICLE_INFO", key = "#dto.getId()")
-    public void updateArticleByIdAndUserId(ArticleDTO dto) {
-
+    public Integer updateArticleByIdAndUserId(ArticleDTO dto) {
         BmsArticleExample example = new BmsArticleExample();
         example.createCriteria().andIdEqualTo(dto.getId()).andUserIdEqualTo(dto.getUserId());
-        BmsArticle article = new BmsArticle();
-        BeanCopyUtils.copy(dto, article);
-        article.setContent(StrUtil.subPre(HtmlUtil.cleanHtmlTag(article.getHtml()), 200));
-        int result = articleMapper.updateByExampleSelective(article, example);
-        if (result > 0) {
-            //更新文章标签
-            categoryService.updateTagsByArticleId(dto.getId(), dto.getTagIds());
-        }
+        BmsArticle newArticle = new BmsArticle();
+        BeanCopyUtils.copy(dto, newArticle);
+        newArticle.setContent(StrUtil.subPre(HtmlUtil.cleanHtmlTag(newArticle.getHtml()), 200));
+        //更新文章标签
+        categoryService.updateTagsByArticleId(dto.getId(), dto.getTagIds());
+        articleMapper.updateByExampleSelective(newArticle, example);
+        return dto.getId();
     }
 
     @Override
@@ -112,13 +99,9 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public List<ArticleInfoVo> getArticleList(ArticleDTO params) {
-        long start = System.currentTimeMillis();
         params.setOrderBy(ArticleSort.getOderByCode(params.getSort()));
         List<ArticleInfoVo> articleInfoVos = articleDao.selectArticleList(params);
-        log.info("获取文章列表耗时：{}", System.currentTimeMillis() - start);
-        start = System.currentTimeMillis();
         articleInfoVos.forEach(this::setArticleExtInfo);
-        log.info("获取文章详细信息耗时：{}", System.currentTimeMillis() - start);
 
         return articleInfoVos;
     }
@@ -136,6 +119,10 @@ public class ArticleServiceImpl implements ArticleService {
         articleMapper.insertSelective(article);
         //添加文章标签
         tagService.addArticleTags(dto.getTagIds(), article.getId());
+        if (article.getId() != null && dto.getId() != null && dto.getUserId() != null) {
+            //更改草稿绑定发布的文章
+            draftService.updateDraftInArticle(dto.getId(), dto.getUserId(),article.getId());
+        }
         return article;
     }
 
@@ -148,6 +135,10 @@ public class ArticleServiceImpl implements ArticleService {
         return article;
     }
 
+    /**
+     * 获取文章详细信息
+     * @param vo
+     */
     private void setArticleExtInfo(ArticleInfoVo vo) {
         if (vo == null) {
             return;
@@ -157,7 +148,7 @@ public class ArticleServiceImpl implements ArticleService {
         //获取文章标签
         List<BmsCategory> tagsByArticleId = tagService.getTagsByArticleId(vo.getId());
         List<ArticleTagVo> tags = new ArrayList<>();
-        tagsByArticleId.forEach(t->tags.add(new ArticleTagVo(t)));
+        tagsByArticleId.forEach(t -> tags.add(new ArticleTagVo(t)));
         vo.setTags(tags);
         //获取作者信息
         vo.setUserInfo(userService.getUserInfoById(vo.getUserId()));
@@ -182,11 +173,11 @@ public class ArticleServiceImpl implements ArticleService {
 
     public enum ArticleSort {
         //默认
-        ID( 0,"id desc"),
-        VIEW_COUNT( 1,"view_count desc"),
-        LIKE_COUNT( 2,"like_count desc"),
-        COMMENT_COUNT( 3,"comment_count desc"),
-        HOT_INDEX( 4,"hot_index desc");
+        ID(1, "id desc"),
+        VIEW_COUNT(2, "view_count desc"),
+        LIKE_COUNT(3, "like_count desc"),
+        COMMENT_COUNT(4, "comment_count desc"),
+        HOT_INDEX(5, "hot_index desc");
 
         private final int code;
         private final String orderBy;
@@ -202,6 +193,7 @@ public class ArticleServiceImpl implements ArticleService {
             }
             return ID.getOrderBy();
         }
+
         ArticleSort(int code, String desc) {
             this.orderBy = desc;
             this.code = code;
@@ -210,6 +202,7 @@ public class ArticleServiceImpl implements ArticleService {
         public String getOrderBy() {
             return orderBy;
         }
+
         public int getCode() {
             return code;
         }

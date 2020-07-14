@@ -19,9 +19,9 @@ import java.util.Map;
 public class TokenUtils {
     /** token秘钥，请勿泄露，请勿随便修改 backups:JKKLJOoasdlfj */
     public static final String KEY = "JKKLJOoasdlfj";
-    /** token 过期时间: 10天 */
+    /** token 过期时间: 30天 */
     public static final int CALENDAR_FIELD = Calendar.DATE;
-    public static final int CALENDAR_INTERVAL = 7;
+    public static final int CALENDAR_INTERVAL = 30;
 
     /**
      * JWT生成Token.<br/>

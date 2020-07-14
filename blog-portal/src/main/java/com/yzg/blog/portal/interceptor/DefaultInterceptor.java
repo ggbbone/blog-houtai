@@ -5,7 +5,10 @@ import com.yzg.blog.common.utils.RequestUtils;
 import com.yzg.blog.common.exception.BizException;
 import com.yzg.blog.common.utils.TokenUtils;
 import com.yzg.blog.portal.annotation.EnableMethodSecurity;
+import com.yzg.blog.portal.utils.RedisKeysUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -20,6 +23,9 @@ import java.util.Objects;
 @Slf4j
 public class DefaultInterceptor extends HandlerInterceptorAdapter {
 
+    @Autowired
+    StringRedisTemplate redisTemplate;
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws BizException {
 
@@ -28,10 +34,10 @@ public class DefaultInterceptor extends HandlerInterceptorAdapter {
         String token = request.getHeader("token");
         String ipAddress = RequestUtils.getIpAddress(request);
         log.info("Method:{}, URI:{}, IP:{}, token:{}", requestMethod, requestUri, ipAddress, token);
-
+        //记录ip地址加入访问用户数
+        redisTemplate.opsForSet().add(RedisKeysUtil.getUserIps(), ipAddress);
+        //权限校验
         annotation(token, request, response, handler);
-
-
         return true;
     }
 
@@ -54,6 +60,7 @@ public class DefaultInterceptor extends HandlerInterceptorAdapter {
         try {
             handlerMethod = (HandlerMethod) handler;
         } catch (Exception e) {
+            log.error("(HandlerMethod) handler", e);
             return;
         }
         Method method = handlerMethod.getMethod();

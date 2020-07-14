@@ -7,6 +7,9 @@ import java.util.Date;
 public class BmsArticleDraft implements Serializable {
     private Integer id;
 
+    @ApiModelProperty(value = "绑定已发布文章id")
+    private Integer articleId;
+
     @ApiModelProperty(value = "作者id")
     private Integer userId;
 
@@ -14,7 +17,7 @@ public class BmsArticleDraft implements Serializable {
     private String title;
 
     @ApiModelProperty(value = "封面图片")
-    private String cover;
+    private String coverUrl;
 
     @ApiModelProperty(value = "创建时间")
     private Date createdDate;
@@ -22,7 +25,7 @@ public class BmsArticleDraft implements Serializable {
     @ApiModelProperty(value = "最后修改时间")
     private Date updatedDate;
 
-    @ApiModelProperty(value = "状态（1正常， 2已删除）")
+    @ApiModelProperty(value = "状态（1正常， 0已删除, 2已发布）")
     private Byte status;
 
     @ApiModelProperty(value = "正文内容")
@@ -36,6 +39,14 @@ public class BmsArticleDraft implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getArticleId() {
+        return articleId;
+    }
+
+    public void setArticleId(Integer articleId) {
+        this.articleId = articleId;
     }
 
     public Integer getUserId() {
@@ -54,12 +65,12 @@ public class BmsArticleDraft implements Serializable {
         this.title = title == null ? null : title.trim();
     }
 
-    public String getCover() {
-        return cover;
+    public String getCoverUrl() {
+        return coverUrl;
     }
 
-    public void setCover(String cover) {
-        this.cover = cover == null ? null : cover.trim();
+    public void setCoverUrl(String coverUrl) {
+        this.coverUrl = coverUrl == null ? null : coverUrl.trim();
     }
 
     public Date getCreatedDate() {
@@ -101,9 +112,10 @@ public class BmsArticleDraft implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
+        sb.append(", articleId=").append(articleId);
         sb.append(", userId=").append(userId);
         sb.append(", title=").append(title);
-        sb.append(", cover=").append(cover);
+        sb.append(", coverUrl=").append(coverUrl);
         sb.append(", createdDate=").append(createdDate);
         sb.append(", updatedDate=").append(updatedDate);
         sb.append(", status=").append(status);

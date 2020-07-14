@@ -49,7 +49,7 @@ public interface ArticleService {
      * @param dto
      * @return
      */
-    void updateArticleByIdAndUserId(ArticleDTO dto);
+    Integer updateArticleByIdAndUserId(ArticleDTO dto);
 
     /**
      * 删除文章

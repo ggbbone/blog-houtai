@@ -16,17 +16,20 @@ import com.yzg.blog.dao.mbg.model.UmsUserExample;
 import com.yzg.blog.dao.mbg.model.UmsUserInfo;
 import com.yzg.blog.portal.controller.dto.UserDTO;
 import com.yzg.blog.portal.service.UserService;
+import com.yzg.blog.portal.utils.RedisKeysUtil;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author yangzg
@@ -38,6 +41,8 @@ public class UserServiceImpl implements UserService {
     UmsUserMapper userMapper;
     @Resource
     UmsUserInfoMapper userInfoMapper;
+    @Autowired
+    StringRedisTemplate redisTemplate;
 
     @Cacheable(value = "CACHE:USER", key = "#id")
     @Override
@@ -59,6 +64,17 @@ public class UserServiceImpl implements UserService {
             return getUserInfoById(Math.toIntExact(userId));
         }
         return null;
+    }
+
+    @Override
+    public Long getUserIps() {
+
+        return redisTemplate.opsForSet().size(RedisKeysUtil.getUserIps());
+    }
+
+    @Override
+    public Long getRequests() {
+        return Long.valueOf(Objects.requireNonNull(redisTemplate.opsForValue().get(RedisKeysUtil.getRequests())));
     }
 
     @Override

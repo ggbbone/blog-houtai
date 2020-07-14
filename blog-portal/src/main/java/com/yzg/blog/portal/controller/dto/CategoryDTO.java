@@ -24,7 +24,6 @@ public class CategoryDTO {
     @ApiModelProperty(value = "是否是文章分类")
     private Boolean isCategory;
 
-    @NotBlank(groups = {Insert.class})
     @ApiModelProperty(value = "拼音或英文")
     private String alias;
 

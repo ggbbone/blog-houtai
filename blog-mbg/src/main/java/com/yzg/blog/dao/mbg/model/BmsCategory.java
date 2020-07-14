@@ -32,7 +32,7 @@ public class BmsCategory implements Serializable {
     @ApiModelProperty(value = "是否是分类（1是， 0否）")
     private Boolean isCategory;
 
-    @ApiModelProperty(value = "状态（1正常， 2已删除）")
+    @ApiModelProperty(value = "状态（1正常， 0已删除）")
     private Byte status;
 
     private static final long serialVersionUID = 1L;

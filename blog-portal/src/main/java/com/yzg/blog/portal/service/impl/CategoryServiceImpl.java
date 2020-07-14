@@ -55,7 +55,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional(rollbackFor = Exception.class)
     public void updateTagsByArticleId(Integer id, List<Integer> tagIds) {
         //解除绑定文章标签
-        tagService.deleteTagsByArticleId(tagIds, id);
+        tagService.deleteTagsByArticleId(id);
         //添加新标签
         tagService.addArticleTags(tagIds, id);
     }
