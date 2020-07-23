@@ -3,8 +3,9 @@ package com.yzg.blog.portal.config;
 import com.yzg.blog.portal.interceptor.DefaultInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpHeaders;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -35,19 +36,19 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .addPathPatterns("/**");
     }
 
+    /**
+     * 跨域配置
+     * @return
+     */
     @Bean
-    public WebMvcConfigurer corsConfigurer()
-    {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").
-                        allowedOrigins("*"). //允许跨域的域名，可以用*表示允许任何域名使用
-                        allowedMethods("*"). //允许任何方法（post、get等）
-                        allowedHeaders("*"). //允许任何请求头
-                        allowCredentials(true). //带上cookie信息
-                        exposedHeaders(HttpHeaders.SET_COOKIE).maxAge(300L); //maxAge(300)表明在300秒内，不需要再发送预检验请求，可以缓存该结果
-            }
-        };
+    public CorsFilter corsFilter() {
+        CorsConfiguration config = new CorsConfiguration();
+        config.addAllowedOrigin("*");
+        config.setAllowCredentials(true);
+        config.addAllowedMethod("*");
+        config.addAllowedHeader("*");
+        UrlBasedCorsConfigurationSource configSource = new UrlBasedCorsConfigurationSource();
+        configSource.registerCorsConfiguration("/**", config);
+        return new CorsFilter(configSource);
     }
 }

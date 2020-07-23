@@ -22,8 +22,8 @@ public class RedisKeysUtil {
     private static final String BIZ_FOLLOWEE = "FOLLOWEE";
     //token黑名单
     private static final String BIZ_TOKEN_FILTER = "TOKEN_FILTER";
-    //请求记录数
-    private static final String BIZ_REQUEST_NUMBER = "REQUEST_NUMBER";
+    //提交反馈请求记录
+    private static final String BIZ_POST_FEEDBACK_REQUEST_NUMBER = "POST_FEEDBACK_REQUEST_NUMBER";
 
     public static String getUserIps(){
         return BIZ_USER_IPS;
@@ -93,8 +93,8 @@ public class RedisKeysUtil {
      * @param ipAddress ip地址
      * @return
      */
-    public static String getRequestNumber(String ipAddress) {
-        return BIZ_REQUEST_NUMBER + SPLIT + ipAddress;
+    public static String getPostFeedbackRequest(String ipAddress) {
+        return BIZ_POST_FEEDBACK_REQUEST_NUMBER + SPLIT + ipAddress;
     }
 
     /**

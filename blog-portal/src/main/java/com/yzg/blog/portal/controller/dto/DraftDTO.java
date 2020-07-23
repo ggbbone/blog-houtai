@@ -1,13 +1,17 @@
 package com.yzg.blog.portal.controller.dto;
 
+import com.yzg.blog.portal.annotation.validation.groups.Insert;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.Null;
 import java.io.Serializable;
 import java.util.Date;
 
 @Data
 public class DraftDTO implements Serializable {
+
+    @Null(groups = {Insert.class})
     private Integer id;
 
     @ApiModelProperty(value = "作者id")

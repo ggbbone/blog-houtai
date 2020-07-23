@@ -1,29 +1,20 @@
 package com.yzg.blog.portal.controller;
 
-import com.github.pagehelper.PageHelper;
 import com.yzg.blog.common.api.CommonPage;
 import com.yzg.blog.common.api.CommonResult;
 import com.yzg.blog.common.exception.BizException;
 import com.yzg.blog.dao.mbg.model.BmsCategory;
-import com.yzg.blog.portal.annotation.EnableMethodSecurity;
-import com.yzg.blog.portal.annotation.validation.groups.Insert;
-import com.yzg.blog.portal.annotation.validation.groups.Update;
-import com.yzg.blog.portal.controller.dto.ArticleDTO;
+import com.yzg.blog.portal.security.RequiresRoles;
 import com.yzg.blog.portal.controller.dto.CategoryDTO;
-import com.yzg.blog.portal.controller.vo.ArticleInfoVo;
 import com.yzg.blog.portal.interceptor.ThreadUser;
-import com.yzg.blog.portal.service.ArticleService;
 import com.yzg.blog.portal.service.CategoryService;
-import com.yzg.blog.portal.service.TagService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.annotations.Select;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.validation.constraints.Max;
 import java.util.List;
 
 /**
@@ -40,7 +31,7 @@ public class CategoryController {
     CategoryService categoryService;
 
     @ApiOperation("添加分类")
-    @EnableMethodSecurity
+    @RequiresRoles({"author"})
     @RequestMapping(value = "", method = RequestMethod.POST)
     public CommonResult addCategory(@RequestBody @Validated CategoryDTO dto) throws BizException {
         Integer userId = ThreadUser.get();

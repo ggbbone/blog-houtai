@@ -63,4 +63,10 @@ public interface ArticleService {
      * @param id
      */
     void incrementViewCount(Integer id);
+
+    /**
+     * 文章评论数量+ 1
+     * @param id
+     */
+    void incrementCommentCount(Integer id);
 }

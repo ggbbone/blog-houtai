@@ -3,6 +3,7 @@ package com.yzg.blog.portal.service;
 
 import com.yzg.blog.dao.mbg.model.UmsUser;
 import com.yzg.blog.dao.mbg.model.UmsUserInfo;
+import com.yzg.blog.portal.controller.dto.FeedbackDTO;
 import com.yzg.blog.portal.controller.dto.UserDTO;
 
 /**
@@ -25,4 +26,9 @@ public interface UserService {
     Long getUserIps();
 
     Long getRequests();
+
+    void postFeedback(FeedbackDTO dto);
+
+    String OAuthGithub(String id, String name, String avatarUrl);
+
 }

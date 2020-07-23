@@ -13,13 +13,19 @@ public class CmsComment implements Serializable {
     @ApiModelProperty(value = "点赞人数")
     private Integer likesCount;
 
-    @ApiModelProperty(value = "回复数量")
+    @ApiModelProperty(value = "子回复数量")
     private Integer replyCount;
 
-    @ApiModelProperty(value = "发表用户")
+    @ApiModelProperty(value = "发表用户id")
     private Integer userId;
 
-    @ApiModelProperty(value = "接收用户")
+    @ApiModelProperty(value = "游客昵称")
+    private String nickname;
+
+    @ApiModelProperty(value = "游客邮箱")
+    private String email;
+
+    @ApiModelProperty(value = "评论目标用户id")
     private Integer respUserId;
 
     @ApiModelProperty(value = "父评论id，为0时表示没有父评论")
@@ -80,6 +86,22 @@ public class CmsComment implements Serializable {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname == null ? null : nickname.trim();
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email == null ? null : email.trim();
     }
 
     public Integer getRespUserId() {
@@ -149,6 +171,8 @@ public class CmsComment implements Serializable {
         sb.append(", likesCount=").append(likesCount);
         sb.append(", replyCount=").append(replyCount);
         sb.append(", userId=").append(userId);
+        sb.append(", nickname=").append(nickname);
+        sb.append(", email=").append(email);
         sb.append(", respUserId=").append(respUserId);
         sb.append(", targetId=").append(targetId);
         sb.append(", createdDate=").append(createdDate);

@@ -9,12 +9,14 @@ import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 
 
 @Data
 public class CategoryDTO {
 
     @NotNull(groups = {Update.class})
+    @Null(groups = {Insert.class})
     private Integer id;
 
     @NotBlank(groups = {Insert.class})

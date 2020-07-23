@@ -1,4 +1,5 @@
-package com.yzg.blog.portal.annotation;
+package com.yzg.blog.portal.security;
+
 
 
 import java.lang.annotation.*;
@@ -11,6 +12,8 @@ import java.lang.annotation.*;
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface EnableMethodSecurity {
-    String value() default "";
+public @interface RequiresRoles {
+    String[] value() default "";
+
+    Logical logical() default Logical.AND;
 }

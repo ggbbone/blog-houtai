@@ -40,7 +40,9 @@ public class CommonResult {
      * @return
      */
     public CommonResult addPageData(Object o) {
-        this.data.put("items", o);
+        if (o instanceof CommonPage) {
+            this.data.put("items", o);
+        }
         return this;
     }
 

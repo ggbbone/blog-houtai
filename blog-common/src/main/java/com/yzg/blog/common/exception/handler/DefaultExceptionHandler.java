@@ -1,4 +1,4 @@
-package com.yzg.blog.portal.exception;
+package com.yzg.blog.common.exception.handler;
 
 import com.yzg.blog.common.api.CommonResult;
 import com.yzg.blog.common.api.ResultCode;

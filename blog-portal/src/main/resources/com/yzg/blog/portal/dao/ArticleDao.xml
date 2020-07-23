@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yzg.blog.portal.dao.ArticleDao">
-  <resultMap id="BaseResultMap" type="com.yzg.blog.portal.controller.vo.ArticleInfoVo">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="user_id" jdbcType="INTEGER" property="userId" />
-    <result column="content" jdbcType="VARCHAR" property="content" />
-    <result column="category_id" jdbcType="INTEGER" property="categoryId" />
-    <result column="title" jdbcType="VARCHAR" property="title" />
-    <result column="cover" jdbcType="BIT" property="cover" />
-    <result column="cove_url" jdbcType="VARCHAR" property="coveUrl" />
-    <result column="created_date" jdbcType="TIMESTAMP" property="createdDate" />
-    <result column="updated_date" jdbcType="TIMESTAMP" property="updatedDate" />
-    <result column="last_comment_time" jdbcType="TIMESTAMP" property="lastCommentTime" />
-    <result column="view_count" jdbcType="INTEGER" property="viewCount" />
-    <result column="like_count" jdbcType="INTEGER" property="likeCount" />
-    <result column="comment_count" jdbcType="INTEGER" property="commentCount" />
-    <result column="recommend_index" jdbcType="INTEGER" property="recommendIndex" />
-    <result column="hot" jdbcType="BIT" property="hot" />
-    <result column="hot_index" jdbcType="INTEGER" property="hotIndex" />
-    <result column="status" jdbcType="TINYINT" property="status" />
-  </resultMap>
+    <resultMap id="BaseResultMap" type="com.yzg.blog.portal.controller.vo.ArticleInfoVo">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="content" jdbcType="VARCHAR" property="content"/>
+        <result column="category_id" jdbcType="INTEGER" property="categoryId"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="cover" jdbcType="BIT" property="cover"/>
+        <result column="cove_url" jdbcType="VARCHAR" property="coveUrl"/>
+        <result column="created_date" jdbcType="TIMESTAMP" property="createdDate"/>
+        <result column="updated_date" jdbcType="TIMESTAMP" property="updatedDate"/>
+        <result column="last_comment_time" jdbcType="TIMESTAMP" property="lastCommentTime"/>
+        <result column="view_count" jdbcType="INTEGER" property="viewCount"/>
+        <result column="like_count" jdbcType="INTEGER" property="likeCount"/>
+        <result column="comment_count" jdbcType="INTEGER" property="commentCount"/>
+        <result column="recommend_index" jdbcType="INTEGER" property="recommendIndex"/>
+        <result column="hot" jdbcType="BIT" property="hot"/>
+        <result column="hot_index" jdbcType="INTEGER" property="hotIndex"/>
+        <result column="status" jdbcType="TINYINT" property="status"/>
+    </resultMap>
 
-  <sql id="Base_Column_List">
+    <sql id="Base_Column_List">
     bms_article.id,
     bms_article.user_id,
     bms_article.content,
@@ -40,34 +40,40 @@
     bms_article.hot_index,
     bms_article.status
   </sql>
-    <update id="addViewCountById">
+    <update id="updateViewCountById">
       update bms_article set view_count = view_count + #{count} where id = #{id}
+    </update>
+    <update id="updateCommentCountById">
+     update bms_article set comment_count = comment_count + #{count} where id = #{id}
     </update>
 
     <select id="selectArticleList" parameterType="com.yzg.blog.portal.controller.dto.ArticleDTO"
-          resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from bms_article left join bms_article_tags on bms_article.id = bms_article_tags.article_id
-    where bms_article.status = 1
-    <if test="categoryId != null">
-      and bms_article.category_id = #{categoryId}
-    </if>
-    <if test="userId != null">
-      and bms_article.user_id = #{userId}
-    </if>
-    <if test="tagId != null">
-      and bms_article_tags.category_id = #{tagId}
-    </if>
-    GROUP BY bms_article.id
-    <choose>
-      <when test="sort != null">
-        order by ${orderBy}
-      </when>
-      <otherwise>
-        order by bms_article.id desc
-      </otherwise>
-    </choose>
-  </select>
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from bms_article left join bms_article_tags on bms_article.id = bms_article_tags.article_id
+        where bms_article.status = 1
+        <if test="categoryId != null">
+            and bms_article.category_id = #{categoryId}
+        </if>
+        <if test="userId != null">
+            and bms_article.user_id = #{userId}
+        </if>
+        <if test="tagId != null">
+            and bms_article_tags.category_id = #{tagId}
+        </if>
+        <if test="title != null">
+            and bms_article_tags.title like #{title}
+        </if>
+        GROUP BY bms_article.id
+        <choose>
+            <when test="sort != null">
+                order by ${orderBy}
+            </when>
+            <otherwise>
+                order by bms_article.id desc
+            </otherwise>
+        </choose>
+    </select>
 
 </mapper>

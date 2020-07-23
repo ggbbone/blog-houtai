@@ -2,6 +2,7 @@ package com.yzg.blog.portal.controller;
 
 import cn.hutool.core.util.RandomUtil;
 import com.google.common.collect.Lists;
+import com.yzg.blog.common.exception.ForbiddenException;
 import com.yzg.blog.portal.controller.dto.ArticleDTO;
 import com.yzg.blog.portal.controller.dto.CategoryDTO;
 import com.yzg.blog.portal.controller.dto.UserDTO;
@@ -33,6 +34,11 @@ public class TestController {
     UserService userService;
     @Resource
     TagService tagService;
+
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    public void test() {
+       throw new ForbiddenException("权限不足");
+    }
 
     @RequestMapping(value = "/user/{num}", method = RequestMethod.POST)
     public String insertUser(@PathVariable Integer num) {

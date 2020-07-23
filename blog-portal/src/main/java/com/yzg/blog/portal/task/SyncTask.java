@@ -2,7 +2,6 @@ package com.yzg.blog.portal.task;
 
 import cn.hutool.core.collection.CollectionUtil;
 import com.yzg.blog.portal.dao.ArticleDao;
-import com.yzg.blog.portal.service.ArticleService;
 import com.yzg.blog.portal.utils.RedisKeysUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +47,7 @@ public class SyncTask {
             String s = redisTemplate.opsForValue().get(RedisKeysUtil.getArticleViewCountKey(id));
             if (s != null) {
                 int viewCount = Integer.parseInt(s);
-                int result = articleDao.addViewCountById(id, viewCount);
+                int result = articleDao.updateViewCountById(id, viewCount);
                 if (result > 0) {
                     redisTemplate.delete(RedisKeysUtil.getArticleViewCountKey(id));
                 }

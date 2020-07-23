@@ -98,8 +98,14 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public void incrementCommentCount(Integer id) {
+        articleDao.updateCommentCountById(id, 1);
+    }
+
+    @Override
     public List<ArticleInfoVo> getArticleList(ArticleDTO params) {
         params.setOrderBy(ArticleSort.getOderByCode(params.getSort()));
+        params.setTitle(params.getTitle() != null ? "%" + params.getTitle() + "%" : null);
         List<ArticleInfoVo> articleInfoVos = articleDao.selectArticleList(params);
         articleInfoVos.forEach(this::setArticleExtInfo);
 

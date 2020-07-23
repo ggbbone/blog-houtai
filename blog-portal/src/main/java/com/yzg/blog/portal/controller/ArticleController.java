@@ -5,26 +5,20 @@ import com.yzg.blog.common.api.CommonPage;
 import com.yzg.blog.common.api.CommonResult;
 import com.yzg.blog.common.exception.BizException;
 import com.yzg.blog.dao.mbg.model.BmsArticle;
-import com.yzg.blog.dao.mbg.model.UmsUserInfo;
-import com.yzg.blog.portal.annotation.EnableMethodSecurity;
+import com.yzg.blog.portal.security.RequiresRoles;
 import com.yzg.blog.portal.annotation.validation.groups.Insert;
-import com.yzg.blog.portal.annotation.validation.groups.Login;
-import com.yzg.blog.portal.annotation.validation.groups.Register;
 import com.yzg.blog.portal.annotation.validation.groups.Update;
 import com.yzg.blog.portal.controller.dto.ArticleDTO;
-import com.yzg.blog.portal.controller.dto.UserDTO;
-import com.yzg.blog.portal.controller.dto.UserInfoDTO;
 import com.yzg.blog.portal.controller.vo.ArticleInfoVo;
 import com.yzg.blog.portal.interceptor.ThreadUser;
 import com.yzg.blog.portal.service.ArticleService;
-import com.yzg.blog.portal.service.CategoryService;
 import com.yzg.blog.portal.service.TagService;
-import com.yzg.blog.portal.service.UserService;
 import com.yzg.blog.portal.utils.RedisKeysUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Select;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -47,7 +41,7 @@ public class ArticleController {
     ArticleService articleService;
     @Resource
     TagService tagService;
-    @Resource
+    @Autowired
     StringRedisTemplate redisTemplate;
 
     @ApiOperation("获取文章详情")
@@ -72,7 +66,7 @@ public class ArticleController {
 
 
     @ApiOperation("发表文章")
-    @EnableMethodSecurity
+    @RequiresRoles({"author"})
     @RequestMapping(value = "", method = RequestMethod.POST)
     public CommonResult postArticle(@RequestBody @Validated(Insert.class) ArticleDTO dto) throws BizException {
         dto.setUserId(ThreadUser.get());
@@ -81,7 +75,7 @@ public class ArticleController {
     }
 
     @ApiOperation("更新文章")
-    @EnableMethodSecurity
+    @RequiresRoles({"author"})
     @RequestMapping(value = "", method = RequestMethod.PUT)
     public CommonResult updateArticle(@RequestBody @Validated(Update.class) ArticleDTO dto) throws BizException {
         dto.setUserId(ThreadUser.get());
@@ -90,7 +84,7 @@ public class ArticleController {
     }
 
     @ApiOperation("删除文章")
-    @EnableMethodSecurity
+    @RequiresRoles({"author"})
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public CommonResult deleteArticle(@PathVariable Integer id) throws BizException {
         Integer userId = ThreadUser.get();

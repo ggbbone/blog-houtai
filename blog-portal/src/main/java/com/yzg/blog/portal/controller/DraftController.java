@@ -5,7 +5,7 @@ import com.yzg.blog.common.api.CommonPage;
 import com.yzg.blog.common.api.CommonResult;
 import com.yzg.blog.common.exception.BizException;
 import com.yzg.blog.dao.mbg.model.BmsArticleDraft;
-import com.yzg.blog.portal.annotation.EnableMethodSecurity;
+import com.yzg.blog.portal.security.RequiresRoles;
 import com.yzg.blog.portal.annotation.validation.groups.Insert;
 import com.yzg.blog.portal.annotation.validation.groups.Update;
 import com.yzg.blog.portal.controller.dto.DraftDTO;
@@ -37,20 +37,20 @@ public class DraftController {
 
     @ApiOperation("获取文章草稿详情")
     @RequestMapping(value = "/article/{id}", method = RequestMethod.GET)
-    @EnableMethodSecurity
+    @RequiresRoles("user")
     public CommonResult getArticleDraftInfo(@PathVariable Integer id) throws BizException {
         return CommonResult.success().addData("draft", draftService.getDraftInfoByArticleId(id));
     }
 
     @ApiOperation("获取草稿详情")
-    @EnableMethodSecurity
+    @RequiresRoles("user")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public CommonResult getDraftInfo(@PathVariable Integer id) throws BizException {
         return CommonResult.success().addData("draft", draftService.getDraftInfoById(id));
     }
 
     @ApiOperation("获取草稿列表")
-    @EnableMethodSecurity
+    @RequiresRoles("user")
     @RequestMapping(value = "", method = RequestMethod.GET)
     public CommonResult getDraftList(@RequestParam(required = false, defaultValue = "1") Integer page,
                                        @Max(100) @RequestParam(required = false, defaultValue = "20") Integer size,
@@ -64,7 +64,7 @@ public class DraftController {
 
 
     @ApiOperation("添加草稿")
-    @EnableMethodSecurity
+    @RequiresRoles("user")
     @RequestMapping(value = "", method = RequestMethod.POST)
     public CommonResult postDraft(@RequestBody @Validated(Insert.class) DraftDTO dto) throws BizException {
         Integer userId = ThreadUser.get();
@@ -74,7 +74,7 @@ public class DraftController {
     }
 
     @ApiOperation("更新草稿")
-    @EnableMethodSecurity
+    @RequiresRoles("user")
     @RequestMapping(value = "", method = RequestMethod.PUT)
     public CommonResult updateDraft(@RequestBody @Validated(Update.class) DraftDTO dto) throws BizException {
         Integer userId = ThreadUser.get();
@@ -84,7 +84,7 @@ public class DraftController {
     }
 
     @ApiOperation("删除草稿")
-    @EnableMethodSecurity
+    @RequiresRoles("user")
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public CommonResult deleteDraft(@PathVariable Integer id) throws BizException {
         Integer userId = ThreadUser.get();

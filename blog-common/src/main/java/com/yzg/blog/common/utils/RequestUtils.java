@@ -1,10 +1,13 @@
 package com.yzg.blog.common.utils;
 
+import lombok.extern.slf4j.Slf4j;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author yangzg
  */
+@Slf4j
 public class RequestUtils {
 
     /**
